@@ -16,11 +16,10 @@ import java.sql.Date;
  */
 
 @Service
-@Component
 public class UserService {
 
-    UsernameStorage principal;
-    UserRepository userRepository;
+    private UsernameStorage principal;
+    private UserRepository userRepository;
 
     @Autowired
     public UserService(UsernameStorage principal, UserRepository userRepository) {
@@ -49,7 +48,7 @@ public class UserService {
         return userRepository.findByUsername(principal.getUsername());
     }
 
-    public User addPost(String text, String title) {
+    public User addPost(String text, String title) { //or better return Post???
         Post post = new Post();
         post.setText(text);
         post.setDate(new Date(new java.util.Date().getTime()));
@@ -60,5 +59,4 @@ public class UserService {
         user = userRepository.update(user);
         return user;
     }
-
 }

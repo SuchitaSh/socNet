@@ -1,11 +1,31 @@
 package com.socnet.persistance.entities;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 public class Comment {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "comment_text")
 	private String text;
+	
+	@Column(name = "author_full_name")
 	private String authorFullName;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
 	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name = "post_id")
+	private Post post;
 	
 	public Comment() {
 		// TODO Auto-generated constructor stub
@@ -43,7 +63,14 @@ public class Comment {
 		this.user = user;
 	}
 	
-	
+	public Post getPost() {
+		return post;
+	}
+
+	public void setPost(Post post) {
+		post.getComments().add(this);
+	}
+
 	
 	
 }

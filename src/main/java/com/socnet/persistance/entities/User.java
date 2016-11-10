@@ -1,6 +1,6 @@
 package com.socnet.persistance.entities;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +17,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cascade;
 
@@ -29,7 +31,7 @@ public class User {
 	private Long id;
 	
 	@Column(name = "username")
-	private String userName;
+	private String username;
 	
 	@Column(name = "password")
 	private String password;
@@ -40,17 +42,18 @@ public class User {
 	@Column(name = "last_name")
 	private String lastName;
 	
+	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_birth")
 	private Date dateOfBirth;
 	
-	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Post> posts;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Post> posts = new HashSet<>();
 	
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "friends",
 				joinColumns = @JoinColumn(name = "first_user_id"),
 				inverseJoinColumns = @JoinColumn(name = "second_user_id"))
-	private Set<User> followings;
+	private Set<User> followings = new HashSet<>();
 	
 	public User() {
 	}
@@ -66,13 +69,13 @@ public class User {
 	}
 
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 
@@ -129,12 +132,9 @@ public class User {
 		if(post == null){
 			throw new NullPointerException("Can't add null post");
 		}
-		if(post.getUser() != null){
-			throw new IllegalStateException("Post is already assigned to user");
-		}
-		
 		posts.add(post);
-		post.setUser(this);
+		if(post.getUser() == null)
+			post.setUser(this);
 		
 	}
 	
@@ -182,5 +182,14 @@ public class User {
 		
 		return result;
 	}
-		
+
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", userName=" + username + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", posts=" + posts + ", followings="
+				+ followings + "]";
+	}
+	
+	
 }

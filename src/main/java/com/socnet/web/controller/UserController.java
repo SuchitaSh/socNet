@@ -19,7 +19,7 @@ public class UserController {
 //            return "redirect:/login";
 //        }
         User user = new User();
-        user.setUserName("john_doe");
+        user.setUsername("john_doe");
         user.setFirstName("John");
         user.setLastName("Doe");
 

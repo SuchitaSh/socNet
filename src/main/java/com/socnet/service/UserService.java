@@ -2,7 +2,7 @@ package com.socnet.service;
 
 import com.socnet.persistance.entities.Post;
 import com.socnet.persistance.entities.User;
-import com.socnet.persistance.repository.UserRepository;
+import com.socnet.persistance.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -19,21 +19,21 @@ import java.sql.Date;
 public class UserService {
 
     private UsernameStorage principal;
-    private UserRepository userRepository;
+    private UsersRepository usersRepository;
 
     @Autowired
-    public UserService(UsernameStorage principal, UserRepository userRepository) {
+    public UserService(UsernameStorage principal, UsersRepository usersRepository) {
         this.principal = principal;
-        this.userRepository = userRepository;
+        this.usersRepository = usersRepository;
     }
 
     /*    method returns User object, and saves username in sessionScope "principal"
     returns null if user does not found or password does not match.*/
 
     public User login(String login, String password) {
-        User user = userRepository.findByUsername(login);
+        User user = usersRepository.findByUsername(login);
         if (user != null && user.getPassword().equals(password)) {
-            principal.setUsername(user.getUserName());
+            principal.setUsername(user.getUsername());
         } else {
             user = null;
         }
@@ -45,7 +45,7 @@ public class UserService {
     }
 
     public User getCurrentUser() {
-        return userRepository.findByUsername(principal.getUsername());
+        return usersRepository.findByUsername(principal.getUsername());
     }
 
     public User addPost(String text, String title) { //or better return Post???
@@ -53,10 +53,10 @@ public class UserService {
         post.setText(text);
         post.setPostingDate(new Date(new java.util.Date().getTime()));
         post.setTitle(title);
-        User user = userRepository.findByUsername(principal.getUsername());
+        User user = usersRepository.findByUsername(principal.getUsername());
         post.setUser(user);
         user.getPosts().add(post);
-        user = userRepository.update(user);
+        user = usersRepository.save(user);
         return user;
     }
 }

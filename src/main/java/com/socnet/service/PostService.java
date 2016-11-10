@@ -3,8 +3,11 @@ package com.socnet.service;
 import com.socnet.persistance.entities.Comment;
 import com.socnet.persistance.entities.Post;
 import com.socnet.persistance.entities.User;
-import com.socnet.persistance.repository.PostRepository;
-import com.socnet.persistance.repository.UserRepository;
+import com.socnet.persistance.repository.PostsRepository;
+import com.socnet.persistance.repository.PostsRepository;
+import com.socnet.persistance.repository.UsersRepository;
+import com.socnet.persistance.repository.UsersRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,23 +17,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class PostService {
 
-    private UserRepository userRepository;
-    private PostRepository postRepository;
+    private UsersRepository usersRepository;
+    private PostsRepository postsRepository;
 
     @Autowired
-    public PostService(UserRepository userRepository, PostRepository postRepository) {
-        this.userRepository = userRepository;
-        this.postRepository = postRepository;
+    public PostService(UsersRepository usersRepository, PostsRepository postsRepository) {
+        this.usersRepository = usersRepository;
+        this.postsRepository = postsRepository;
     }
 
     public Post addComment(Long postId, String text, Long authorId) { //may be better return Comment?
         Comment comment = new Comment();
-        User author = userRepository.findById(authorId);
+        User author = usersRepository.findById(authorId);
         comment.setUser(author);
         comment.setAuthorFullName(author.getFirstName() + " " + author.getLastName());
-        Post post = postRepository.findById(postId);
+        Post post = postsRepository.findById(postId);
         post.getComments().add(comment);
-        post = postRepository.update(post);
+        post = postsRepository.save(post);
         return post;
     }
 }

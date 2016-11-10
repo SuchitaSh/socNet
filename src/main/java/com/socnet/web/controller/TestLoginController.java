@@ -24,8 +24,21 @@ public class TestLoginController {
 
     @PostMapping("/login")
     public ModelAndView doLogin(@RequestParam String login, @RequestParam String password) {
+        ModelAndView modelAndView = new ModelAndView();
+        System.out.println("Login = " + login);
+        System.out.println(password);
         User user = userService.login(login, password);
-        ModelAndView modelAndView = new ModelAndView("redirect:/profile");
+        /*if (user==null)
+            modelAndView.setViewName("error");*/
+        modelAndView.setViewName("redirect:/home");
         return modelAndView;
     }
+
+    @GetMapping("/home")
+     public ModelAndView showHomePage() {
+            ModelAndView modelAndView = new ModelAndView("home");
+            return modelAndView;
+
+    }
+
 }

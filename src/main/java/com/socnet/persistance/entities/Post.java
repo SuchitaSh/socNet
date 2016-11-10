@@ -1,20 +1,27 @@
 package com.socnet.persistance.entities;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
+@Entity
+@Table(name = "posts")
 public class Post {
 
 	@Id
@@ -26,7 +33,8 @@ public class Post {
 	
 	@Column(name = "text")
 	private String text;
-	
+
+	@Temporal(TemporalType.DATE)
 	@Column(name = "posting_date")
 	private Date postingDate;
 	
@@ -34,8 +42,8 @@ public class Post {
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Comment> comments;
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Comment> comments = new HashSet<>();
 	
 	public Post() {
 	}
@@ -77,7 +85,12 @@ public class Post {
 	}
 
 	public void setUser(User user) {
-		user.getPosts().add(this);
+		this.user = user;
+		
+		if(! user.getPosts().contains(this)){
+			user.addPost(this);
+		}
+		
 	}
 
 	public Set<Comment> getComments() {
@@ -93,12 +106,10 @@ public class Post {
 			throw new NullPointerException("Can't add null comment");
 		}
 		
-		if(comment.getPost() != null){
-			throw new IllegalStateException("The comment's post is already assigned");
-		}
-		
 		comments.add(comment);
-		comment.setPost(this);
+		
+		if(comment.getPost() == null)
+			comment.setPost(this);
 		
 	}
 	
@@ -106,6 +117,12 @@ public class Post {
 		
 		comments.remove(comment);
 		comment.setPost(null);
+	}
+
+	@Override
+	public String toString() {
+		return "Post [id=" + id + ", title=" + title + ", text=" + text + ", postingDate=" + postingDate + ", user="
+				+ user + ", comments=" + comments + "]";
 	}
 	
 	

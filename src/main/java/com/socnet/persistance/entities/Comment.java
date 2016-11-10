@@ -1,12 +1,16 @@
 package com.socnet.persistance.entities;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "comments")
 public class Comment {
 
 	@Id
@@ -68,9 +72,21 @@ public class Comment {
 	}
 
 	public void setPost(Post post) {
-		post.getComments().add(this);
+		
+		this.post = post;
+
+		if(!post.getComments().contains(this))
+			post.addComment(this);
+		
 	}
 
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", text=" + text + ", authorFullName=" + authorFullName + ", user=" + user
+				+ ", post=" + post + "]";
+	}
+
+	
 	
 	
 }

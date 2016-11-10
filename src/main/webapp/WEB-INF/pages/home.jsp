@@ -28,7 +28,7 @@
                 <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
                     <div class="profile-usertitle-name">
-                        Marcus Doe
+                        <c:out value="${user.firstName} ${user.lastName}" />
                     </div>
                     <div class="profile-usertitle-job">
                         Developer

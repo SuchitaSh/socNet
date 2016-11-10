@@ -9,5 +9,7 @@ import org.springframework.stereotype.Component;
 public interface UserRepository {
     User findByUsername(String login);
 
+    User findById(Long userId);
+
     User update(User user);
 }

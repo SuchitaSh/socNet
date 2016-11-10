@@ -16,4 +16,9 @@ public class UserRepositoryImpl implements UserRepository {
     public User update(User user) {
         return null;
     }
+
+    @Override
+    public User findById(Long userId) {
+        return null;
+    }
 }

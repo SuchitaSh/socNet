@@ -51,7 +51,7 @@ public class UserService {
     public User addPost(String text, String title) { //or better return Post???
         Post post = new Post();
         post.setText(text);
-        post.setDate(new Date(new java.util.Date().getTime()));
+        post.setPostingDate(new Date(new java.util.Date().getTime()));
         post.setTitle(title);
         User user = userRepository.findByUsername(principal.getUsername());
         post.setUser(user);

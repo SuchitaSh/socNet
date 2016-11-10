@@ -1,13 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <head>
     <title>Welcome page</title>
 
-    <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.css">
+    <spring:url value="/resources/css/style.css" var="styleCss" />
+    <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapMinCss" />
+    <spring:url value="/resources/css/bootstrap-theme.min.css" var="bootstrapThemeMinCss" />
+    <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />
+
+    <link rel="stylesheet" type="text/css" href="${styleCss}">
+    <link rel="stylesheet" type="text/css" href="${bootstrapMinCss}">
+    <link rel="stylesheet" type="text/css" href="${bootstrapThemeMinCss}">
+    <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
 
 </head>
 <body>

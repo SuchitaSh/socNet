@@ -12,15 +12,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/")
+    public String showRootPage() {
+        return "redirect:/home";
+    }
+
     @GetMapping("/home")
     public String showHomePage(Model model) {
-        if(userService.getCurrentUser() == null) {
+        User user = userService.getCurrentUser();
+        if(user == null) {
             return "redirect:/login";
         }
-        User user = new User();
-        user.setUsername("john_doe");
-        user.setFirstName("John");
-        user.setLastName("Doe");
 
         model.addAttribute(user);
         return "home";

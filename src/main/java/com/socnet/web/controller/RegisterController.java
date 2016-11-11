@@ -1,13 +1,12 @@
 package com.socnet.web.controller;
 
+import com.socnet.persistance.entities.User;
+import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.socnet.persistance.entities.User;
-import com.socnet.service.UserService;
 
 @Controller
 public class RegisterController {
@@ -19,9 +18,9 @@ public class RegisterController {
 	@PostMapping("/register")
 	public String doRegister(@RequestParam String username,@RequestParam String password,
 							 @RequestParam String email, @RequestParam String name, 
-			                 @RequestParam String surname, @RequestParam String birthday, 
+			                 @RequestParam String surname,
 			                 Model model){
-		
+
 		if(! userService.isUsernameAvailable(username)){
 			model.addAttribute(KEY_REGISTER_ERROR, true);
 			return "redirect:/login";

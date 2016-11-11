@@ -20,13 +20,12 @@
                     </c:if>
 				</span>
         </font>
-        <form class="register-form" id="registerForm">
-            <input type="text" placeholder="name" id="username" autocomplete="off"/>
-            <input type="password" placeholder="password" id="password"/>
-            <input type="email" placeholder="email address" id="email" autocomplete="off"/>
-            <input type="text" placeholder="Your Name" id="name"/>
-            <input type="text" placeholder="Your Surname" id="surname">
-            <input type="date" placeholder="Your Birthday" id="birthday">
+        <form class="register-form" action="register" method="POST" id="registerForm">
+            <input type="text" placeholder="name" name="username" id="username" autocomplete="off"/>
+            <input type="password" placeholder="password" name="password" id="password"/>
+            <input type="email" placeholder="email address" name="email" id="email" autocomplete="off"/>
+            <input type="text" placeholder="Your Name" name="name" id="name"/>
+            <input type="text" placeholder="Your Surname" name="surname" id="surname">
             <button id = "create-button">create</button>
             <p class="message">Already registered? <a href="#" onclick="toggle_visibility(); return false;" class="message">Sign In</a></p>
         </form>

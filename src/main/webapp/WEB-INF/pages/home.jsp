@@ -21,6 +21,7 @@
 <body>
 <div class="container">
     <div class="row profile">
+
         <div class="col-md-3">
             <div class="profile-sidebar">
                 <!-- SIDEBAR USERPIC -->
@@ -83,63 +84,48 @@
                         <p>${post.postingDate}</p>
                     </c:forEach>
                 </div>
-            </div>
-        </div>
 
                 <hr/>
 
-                <!--<div class="row">-->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Posts</h1>
+                    </div>
+                </div>
 
-                    <!--<div class="col-sm-12">-->
-                        <!--<div class="widget-area no-padding blank">-->
-                            <!--<div class="status-upload">-->
-                                <!--<form>-->
-                                    <!--<textarea placeholder="What are you doing right now?" ></textarea>-->
-                                    <!--<ul>-->
-                                        <!--&lt;!&ndash;<li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Audio"><i class="fa fa-music"></i></a></li>&ndash;&gt;-->
-                                    <!--</ul>-->
-                                    <!--<button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Share</button>-->
-                                <!--</form>-->
-                            <!--</div>&lt;!&ndash; Status Upload  &ndash;&gt;-->
-                        <!--</div>&lt;!&ndash; Widget Area &ndash;&gt;-->
-                    <!--</div>-->
+                <div class="row comment">
+                    <div class="col-sm-1 thumbnail-container">
+                        <div class="thumbnail">
+                            <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                        </div>
+                    </div>
 
-                <!--</div>-->
+                    <div class="col-sm-11">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <strong>myusername</strong> <span class="text-muted">posted 5 days ago</span>
+                            </div>
 
-                    <!--<div class="row">-->
-                        <!--<div class="col-sm-12">-->
-                            <!--<h1>Posts</h1>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                            <div class="panel-body">
+                                Panel content
+                            </div>
 
-                    <!--<div class="row comment">-->
-                        <!--<div class="col-sm-1">-->
-                            <!--<div class="thumbnail">-->
-                                <!--<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">-->
-                            <!--</div>-->
-                        <!--</div>-->
+                            <div class="panel-footer clearfix">
+                                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                <div class="col-sm-10">
+                                    Comment 1
+                                </div>
+                            </div>
 
-                        <!--<div class="col-sm-10">-->
-                            <!--<div class="panel panel-default">-->
-                                <!--<div class="panel-heading">-->
-                                    <!--<strong>myusername</strong> <span class="text-muted">commented 5 days ago</span>-->
-                                <!--</div>-->
-                                <!--<div class="panel-body">-->
-                                    <!--Panel content-->
-                                <!--</div>-->
-                                <!--<div class="panel-footer clearfix">-->
-                                        <!--<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">-->
-                                    <!--<div class="col-sm-10">-->
+                        </div>
+                    </div>
 
-                                        <!--Comment 1-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                </div>
+            </div>
+            </div>
 
-                    <!--</div>&lt;!&ndash; /row &ndash;&gt;-->
-            <!--</div>-->
-        <!--</div>-->
+
+
     </div>
 </div>
 <br>

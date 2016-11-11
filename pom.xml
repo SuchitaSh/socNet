@@ -18,6 +18,7 @@
         <jstl-version>1.2</jstl-version>
         <hibernate-version>5.0.7.Final</hibernate-version>
         <mysql-connector-version>6.0.3</mysql-connector-version>
+        <tomcat-jdbc-version>8.5.6</tomcat-jdbc-version>
     </properties>
 
     <dependencies>
@@ -28,6 +29,13 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
 
 	<dependency>
 		<groupId>org.springframework</groupId>
@@ -87,6 +95,12 @@
         <version>${hibernate-version}</version>
     </dependency>
 
+    <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-jdbc</artifactId>
+        <version>${tomcat-jdbc-version}</version>
+    </dependency>
+
     </dependencies>
     <build>
         <finalName>socNet</finalName>
@@ -99,6 +113,12 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
             </plugin>
         </plugins>
     </build>

@@ -20,7 +20,7 @@ import sun.dc.path.PathError;
 			   @Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class))
 public class RootConfig extends WebMvcConfigurerAdapter {
 
-	private static final String PERSISTENCE_SOURCE_BASE_NAME = "properties/persistence";
+	private static final String PERSISTENCE_SOURCE_BASE_NAME = "properties/persistance";
 
 	@Override		
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

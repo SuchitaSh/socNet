@@ -6,10 +6,11 @@ DROP TABLE IF EXISTS friends;
 CREATE  TABLE users (
 	
   id INT NOT NULL AUTO_INCREMENT,
-  username VARCHAR(100) NOT NULL ,
+  username VARCHAR(100) NOT NULL UNIQUE ,
   password VARCHAR(100) NOT NULL ,
   first_name VARCHAR(100) NOT NULL ,
   last_name VARCHAR(100) NOT NULL, 
+  email VARCHAR(100),
   date_of_birth DATE, 
   PRIMARY KEY (id));
   
@@ -29,7 +30,6 @@ CREATE TABLE posts(
 
 	id INT NOT NULL AUTO_INCREMENT,
 	comment_text TEXT NOT NULL,
-	author_full_name VARCHAR(100),
 	post_id INT NOT NULL,
 	user_id INT NOT NULL,
 	PRIMARY KEY(id),

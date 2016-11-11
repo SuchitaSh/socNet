@@ -20,9 +20,6 @@ public class Comment {
 	@Column(name = "comment_text")
 	private String text;
 	
-	@Column(name = "author_full_name")
-	private String authorFullName;
-	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -51,14 +48,6 @@ public class Comment {
 		this.text = text;
 	}
 
-	public String getAuthorFullName() {
-		return authorFullName;
-	}
-
-	public void setAuthorFullName(String authorFullName) {
-		this.authorFullName = authorFullName;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -82,7 +71,7 @@ public class Comment {
 
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", text=" + text + ", authorFullName=" + authorFullName + ", user=" + user
+		return "Comment [id=" + id + ", text=" + text + ", user=" + user
 				+ ", post=" + post + "]";
 	}
 

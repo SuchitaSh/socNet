@@ -27,7 +27,7 @@ public class RootConfig extends WebMvcConfigurerAdapter {
     	
     	registry
     		.addResourceHandler("/resources/**")
-    		.addResourceLocations("/WEB-INF/static/")
+    		.addResourceLocations("/resources/")
     		.setCachePeriod(3600)
     		.resourceChain(true)
     		.addResolver(new PathResourceResolver());

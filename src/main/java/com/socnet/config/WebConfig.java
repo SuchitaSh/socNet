@@ -14,7 +14,7 @@ public class WebConfig {
 
 	@Bean
 	ViewResolver viewResolver(){
-		return new InternalResourceViewResolver("/WEB-INF/views", ".jsp");
+		return new InternalResourceViewResolver("/WEB-INF/pages/", ".jsp");
 		
 	}
 	

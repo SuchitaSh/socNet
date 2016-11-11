@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cascade;
 
@@ -29,8 +30,8 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name = "username")
+
+	@Column(name = "username", unique = true)
 	private String username;
 	
 	@Column(name = "password")
@@ -42,6 +43,9 @@ public class User {
 	@Column(name = "last_name")
 	private String lastName;
 	
+	@Column(name = "email")
+	private String email;
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_birth")
 	private Date dateOfBirth;
@@ -108,7 +112,16 @@ public class User {
 		this.lastName = lastName;
 	}
 
+	
+	public String getEmail() {
+		return email;
+	}
 
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}

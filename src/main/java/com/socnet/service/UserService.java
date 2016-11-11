@@ -4,7 +4,6 @@ import com.socnet.persistance.entities.Post;
 import com.socnet.persistance.entities.User;
 import com.socnet.persistance.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

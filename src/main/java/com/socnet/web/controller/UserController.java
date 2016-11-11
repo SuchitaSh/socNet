@@ -20,9 +20,13 @@ public class UserController {
     @GetMapping("/home")
     public String showHomePage(Model model) {
         User user = userService.getCurrentUser();
+
+
         if(user == null) {
             return "redirect:/login";
         }
+
+        userService.addPost("Post", "Title");
 
         model.addAttribute(user);
         model.addAttribute("posts");

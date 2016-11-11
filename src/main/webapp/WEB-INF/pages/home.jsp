@@ -62,27 +62,84 @@
                 <!-- END MENU -->
             </div>
         </div>
+
         <div class="col-md-9">
             <div class="profile-content">
                 <div class="post-form">
-               <form method="post" action="addPost" id="postForm">
-                   <input id="title" type="text" name="title" placeholder="Enter title of your post">
-                   <br>
-                   <textarea id="text"  name="text" rows="5" cols="100"></textarea>
-                   <input id="create-button" type="submit" value="Post">
-               </form>
+                   <form method="post" action="addPost" id="postForm">
+                       <input id="title" type="text" name="title" placeholder="Enter title of your post">
+                       <br>
+                       <textarea id="text"  name="text" rows="5" cols="100"></textarea>
+                       <input id="create-button" type="submit" value="Post">
+                   </form>
                 </div>
-            <div class="wall-posts">
-                <c:forEach items="${posts}" var="post">
-                    <h2>${post.title}</h2>
-                    <br>
-                    <p>${post.text}</p>
-                    <br>
-                    <p>${post.postingDate}</p>
-                </c:forEach>
-            </div>
+
+                <div class="wall-posts">
+                    <c:forEach items="${posts}" var="post">
+                        <h2>${post.title}</h2>
+                        <br>
+                        <p>${post.text}</p>
+                        <br>
+                        <p>${post.postingDate}</p>
+                    </c:forEach>
+                </div>
             </div>
         </div>
+
+                <hr/>
+
+                <!--<div class="row">-->
+
+                    <!--<div class="col-sm-12">-->
+                        <!--<div class="widget-area no-padding blank">-->
+                            <!--<div class="status-upload">-->
+                                <!--<form>-->
+                                    <!--<textarea placeholder="What are you doing right now?" ></textarea>-->
+                                    <!--<ul>-->
+                                        <!--&lt;!&ndash;<li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Audio"><i class="fa fa-music"></i></a></li>&ndash;&gt;-->
+                                    <!--</ul>-->
+                                    <!--<button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Share</button>-->
+                                <!--</form>-->
+                            <!--</div>&lt;!&ndash; Status Upload  &ndash;&gt;-->
+                        <!--</div>&lt;!&ndash; Widget Area &ndash;&gt;-->
+                    <!--</div>-->
+
+                <!--</div>-->
+
+                    <!--<div class="row">-->
+                        <!--<div class="col-sm-12">-->
+                            <!--<h1>Posts</h1>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="row comment">-->
+                        <!--<div class="col-sm-1">-->
+                            <!--<div class="thumbnail">-->
+                                <!--<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <!--<div class="col-sm-10">-->
+                            <!--<div class="panel panel-default">-->
+                                <!--<div class="panel-heading">-->
+                                    <!--<strong>myusername</strong> <span class="text-muted">commented 5 days ago</span>-->
+                                <!--</div>-->
+                                <!--<div class="panel-body">-->
+                                    <!--Panel content-->
+                                <!--</div>-->
+                                <!--<div class="panel-footer clearfix">-->
+                                        <!--<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">-->
+                                    <!--<div class="col-sm-10">-->
+
+                                        <!--Comment 1-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                    <!--</div>&lt;!&ndash; /row &ndash;&gt;-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </div>
 <br>

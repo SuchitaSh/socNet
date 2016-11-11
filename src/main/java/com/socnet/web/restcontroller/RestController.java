@@ -1,13 +1,11 @@
-package com.socnet.web.controller;
+package com.socnet.web.restcontroller;
 
 import com.socnet.persistance.entities.Post;
 import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by admin on 11.11.2016.

@@ -25,6 +25,7 @@ public class UserController {
         }
 
         model.addAttribute(user);
+        model.addAttribute("posts");
         return "home";
     }
-}
+    }

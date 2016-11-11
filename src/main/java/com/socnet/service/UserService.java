@@ -47,7 +47,7 @@ public class UserService {
     public User getCurrentUser() {
         return usersRepository.findByUsername(principal.getUsername());
     }
-
+    @Transactional
     public User addPost(String text, String title) { //or better return Post???
         Post post = new Post();
         post.setText(text);

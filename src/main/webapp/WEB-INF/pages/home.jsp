@@ -14,6 +14,9 @@
     <link rel="stylesheet" type="text/css" href="${bootstrapThemeMinCss}">
     <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/post.js' />"></script>
+
 </head>
 <body>
 <div class="container">
@@ -61,7 +64,23 @@
         </div>
         <div class="col-md-9">
             <div class="profile-content">
-                Some user related content goes here...
+                <div class="post-form">
+               <form method="post" action="addPost" id="postForm">
+                   <input id="title" type="text" name="title" placeholder="Enter title of your post">
+                   <br>
+                   <textarea id="text"  name="text" rows="5" cols="100"></textarea>
+                   <input id="create-button" type="submit" value="Post">
+               </form>
+                </div>
+            <div class="wall-posts">
+                <c:forEach items="${posts}" var="post">
+                    <h2>${post.title}</h2>
+                    <br>
+                    <p>${post.text}</p>
+                    <br>
+                    <p>${post.postingDate}</p>
+                </c:forEach>
+            </div>
             </div>
         </div>
     </div>

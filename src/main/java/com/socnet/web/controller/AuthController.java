@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class LoginController {
+public class AuthController {
     public static final String KEY_LOGIN_ERROR = "login-error";
+    public static final String KEY_REGISTER_ERROR = "register-error";
 
     @Autowired
     private UserService userService;
@@ -36,5 +37,27 @@ public class LoginController {
         return "redirect:/home";
     }
 
+    @PostMapping("/register")
+    public String doRegister(@RequestParam String username,@RequestParam String password,
+                             @RequestParam String email, @RequestParam String name,
+                             @RequestParam String surname,
+                             Model model){
+
+        if(! userService.isUsernameAvailable(username)){
+            model.addAttribute(KEY_REGISTER_ERROR, true);
+            return "redirect:/login";
+        }
+
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setFirstName(name);
+        user.setLastName(surname);
+        user.setEmail(email);
+
+        userService.save(user);
+
+        return "redirect:/login";
+    }
 
 }

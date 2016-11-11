@@ -50,19 +50,9 @@
                                 Overview </a>
                         </li>
                         <li>
-                            <a href="#">
-                                <i class="glyphicon glyphicon-user"></i>
-                                Account Settings </a>
-                        </li>
-                        <li>
-                            <a href="#" target="_blank">
-                                <i class="glyphicon glyphicon-ok"></i>
-                                Tasks </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="glyphicon glyphicon-flag"></i>
-                                Help </a>
+                            <a href="logout">
+                                <!--<i class="glyphicon glyphicon-flag"></i>-->
+                                Logout </a>
                         </li>
                     </ul>
                 </div>
@@ -76,9 +66,6 @@
         </div>
     </div>
 </div>
-<center>
-    <strong>Powered by <a href="http://j.mp/metronictheme" target="_blank">KeenThemes</a></strong>
-</center>
 <br>
 <br>
 </body>

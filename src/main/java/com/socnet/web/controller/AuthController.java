@@ -19,6 +19,10 @@ public class AuthController {
 
     @GetMapping("/login")
     public String loginPage() {
+        if(userService.getCurrentUser() != null) {
+            return "redirect:/home";
+        }
+
         return "login";
     }
 
@@ -56,6 +60,13 @@ public class AuthController {
         user.setEmail(email);
 
         userService.save(user);
+
+        return "redirect:/login";
+    }
+
+    @GetMapping("/logout")
+    public String doLogout() {
+        userService.logout();
 
         return "redirect:/login";
     }

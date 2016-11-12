@@ -48,7 +48,7 @@ public class UserService {
         return usersRepository.findByUsername(principal.getUsername());
     }
     @Transactional
-    public User addPost(String text, String title) { //or better return Post???
+    public Post addPost(String text, String title) { //now return Post
         Post post = new Post();
         post.setText(text);
         post.setPostingDate(new Date());
@@ -56,8 +56,8 @@ public class UserService {
         User user = usersRepository.findByUsername(principal.getUsername());
         post.setUser(user);
         user.addPost(post);
-        user = usersRepository.save(user);
-        return user;
+        usersRepository.save(user);
+        return post;
     }
    
    public boolean isUsernameAvailable(String username){

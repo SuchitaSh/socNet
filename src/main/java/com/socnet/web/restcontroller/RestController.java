@@ -21,7 +21,7 @@ public class RestController {
         System.out.println("method works");
         System.out.println("Title: "+post.getTitle());
         System.out.println("Text: " + post.getText());
-//        userService.addPost(post.getText(), post.getTitle());
+       // userService.addPost(post.getText(), post.getTitle());
         return null ;
     }
 }

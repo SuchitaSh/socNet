@@ -47,10 +47,6 @@ public class User {
 				inverseJoinColumns = @JoinColumn(name = "second_user_id"))
 	private Set<User> followings = new HashSet<>();
 	
-	@ManyToMany(mappedBy = "followings")
-	@JsonIgnore
-	private Set<User> followed;
-	
 	public User() {
 	}
 
@@ -174,18 +170,6 @@ public class User {
 			followings.remove(user);
 			
 		}
-
-	
-	
-	public Set<User> getFollowed() {
-		return followed;
-	}
-
-
-	public void setFollowed(Set<User> followed) {
-		this.followed = followed;
-	}
-
 
 	public Set<User> getFriends(){
 		Set<User> result = new HashSet<>();

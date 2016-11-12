@@ -1,6 +1,6 @@
 package com.socnet.web.restcontroller;
 
-import com.socnet.persistance.entities.Post;
+import com.socnet.persistence.entities.Post;
 import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

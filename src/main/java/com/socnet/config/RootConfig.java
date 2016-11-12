@@ -18,7 +18,7 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 			   @Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class))
 public class RootConfig extends WebMvcConfigurerAdapter {
 
-	private static final String PERSISTENCE_SOURCE_BASE_NAME = "properties/persistance";
+	private static final String PERSISTENCE_SOURCE_BASE_NAME = "properties/persistence";
 
 	@Override		
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -1,4 +1,4 @@
-package com.socnet.persistance.impl;
+package com.socnet.persistence.impl;
 
 //import com.socnet.persistance.entities.User;
 //import com.socnet.persistance.repository.UserRepository;

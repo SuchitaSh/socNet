@@ -1,10 +1,11 @@
 package com.socnet.web.restcontroller;
 
 import com.socnet.exception.EntityNotFoundException;
-import com.socnet.persistance.entities.Post;
-import com.socnet.persistance.entities.User;
-import com.socnet.persistance.repository.PostsRepository;
-import com.socnet.persistance.repository.UsersRepository;
+import com.socnet.persistence.entities.Post;
+import com.socnet.persistence.entities.User;
+import com.socnet.persistence.repository.PostsRepository;
+import com.socnet.persistence.repository.UsersRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

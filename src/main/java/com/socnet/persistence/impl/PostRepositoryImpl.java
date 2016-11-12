@@ -1,4 +1,4 @@
-package com.socnet.persistance.impl;
+package com.socnet.persistence.impl;
 
 //import com.socnet.persistance.entities.Post;
 //import com.socnet.persistance.repository.PostRepository;

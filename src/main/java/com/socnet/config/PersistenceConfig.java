@@ -17,9 +17,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.socnet.persistance.repository")
+@EnableJpaRepositories(basePackages = "com.socnet.persistence.repository")
 @EnableTransactionManagement
-public class PersistanceConfig {
+public class PersistenceConfig {
 
 	@Autowired
 	MessageSource messageSource;
@@ -31,7 +31,7 @@ public class PersistanceConfig {
 		LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
 		factoryBean.setDataSource(dataSource);
 		factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
-        factoryBean.setPackagesToScan("com.socnet.persistance.entities");
+        factoryBean.setPackagesToScan("com.socnet.persistence.entities");
 		
 	
 		return factoryBean;

@@ -1,4 +1,4 @@
-package com.socnet.persistance.entities;
+package com.socnet.persistence.entities;
 
 import javax.persistence.*;
 import java.util.Date;

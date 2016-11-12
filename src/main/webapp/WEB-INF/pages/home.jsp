@@ -8,17 +8,23 @@
     <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapMinCss" />
     <spring:url value="/resources/css/bootstrap-theme.min.css" var="bootstrapThemeMinCss" />
     <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />
+    <spring:url value="resource/css/navbar.css" var = "navbarCss"/>
+    <spring:url value="/resources/html/navbar.html" var = "navbarHtml"/>
 
     <link rel="stylesheet" type="text/css" href="${styleCss}">
     <link rel="stylesheet" type="text/css" href="${bootstrapMinCss}">
     <link rel="stylesheet" type="text/css" href="${bootstrapThemeMinCss}">
     <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
+    <link rel="stylesheet" type="text/css" href="${navbarCss}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="<c:url value='/resources/js/post.js' />"></script>
 
 </head>
 <body>
+
+<c:import url = "/resources/html/navbar.html"/>
+
 <div class="container">
     <div class="row profile">
 
@@ -53,16 +59,7 @@
                                 <i class="glyphicon glyphicon-home"></i>
                                 Overview </a>
                         </li>
-                        <li>
-                            <a href="logout">
-                                <!--<i class="glyphicon glyphicon-flag"></i>-->
-                                Logout </a>
-                        </li>
-                        <li>
-                            <a href="settings">
-                                <!--<i class="glyphicon glyphicon-flag"></i>-->
-                                Settings </a>
-                        </li>
+                       
                     </ul>
                 </div>
                 <!-- END MENU -->

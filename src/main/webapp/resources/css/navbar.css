@@ -1,0 +1,11 @@
+.navbar{ 
+	margin-top:15px;}
+.nav{
+	margin-right: 10px;
+}
+.dropdown-menu{width:420px;}
+.dropdown-menu.setting{width:140px;min-width: 143px;}
+.media{ padding:0px 5px; width:100%;}
+.media:first-child{ margin-top:10px;}
+.media .media-left{float:left; margin-right:10px;}
+.media .media-body{float:left;}

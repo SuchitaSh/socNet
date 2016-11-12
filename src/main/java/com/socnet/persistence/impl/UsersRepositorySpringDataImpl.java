@@ -1,5 +1,8 @@
 package com.socnet.persistence.impl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,4 +30,15 @@ public class UsersRepositorySpringDataImpl implements UsersRepository {
 	public User save(User user) {
 		return repository.save(user);
 	}
+	
+	@Override
+	public Set<User> getFollowingsByUsername(String username) {
+		return repository.getFollowingsByUsername(username);
+	}
+
+	@Override
+	public Set<User> findAll() {
+		return new HashSet(repository.findAll());
+	}
+	
 }

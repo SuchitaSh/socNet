@@ -4,11 +4,15 @@ import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
 import com.socnet.persistence.repository.UsersRepository;
 
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -68,4 +72,43 @@ public class UserService {
    public void save(User user){
 	   usersRepository.save(user);
    }
-}
+   
+   
+   //get users with with just username, firstName, lastName field
+   //it is possibly stuped solution for self reference json formatting problem
+   @Transactional
+   public Set<User> getCurrentUserFriends(){   
+	   User user = usersRepository.findByUsername(principal.getUsername());
+	   Set<User> friends = new HashSet<>();
+	   User newUser;
+	   for(User u : user.getFriends()){
+		   newUser = new User();
+		   newUser.setId(u.getId());
+		   newUser.setUsername(u.getUsername());
+		   newUser.setFirstName(u.getFirstName());
+		   newUser.setLastName(u.getLastName());
+		   friends.add(newUser);
+	   }
+	   
+	   return friends;
+   }
+   
+   public Set<User> getAllUsersInfo(){
+	
+	   Set<User> allUsers = new HashSet<>();
+	   User newUser;
+	   for(User u : usersRepository.findAll()){
+		   newUser = new User();
+		   newUser.setId(u.getId());
+		   newUser.setUsername(u.getUsername());
+		   newUser.setFirstName(u.getFirstName());
+		   newUser.setLastName(u.getLastName());
+		   allUsers.add(newUser);
+	   }
+	   
+	   return allUsers;
+   }
+   
+	   
+   }
+   

@@ -1,5 +1,7 @@
 package com.socnet.persistence.repository;
 
+import java.util.Set;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +11,8 @@ public interface UsersRepository{
 
 	User findByUsername(String username);
 	User findById(Long id);
+	Set<User> findAll();
+	Set<User> getFollowingsByUsername(String username);
 	User save(User user);
 	
 	

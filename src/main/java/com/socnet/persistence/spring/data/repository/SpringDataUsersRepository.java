@@ -1,5 +1,7 @@
 package com.socnet.persistence.spring.data.repository;
 
+import java.util.Set;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +12,5 @@ public interface SpringDataUsersRepository extends JpaRepository<User, Long>{
 
 	User findByUsername(String username);
 	User findById(Long id);
-	
-	
+	Set<User> getFollowingsByUsername(String username);
 }

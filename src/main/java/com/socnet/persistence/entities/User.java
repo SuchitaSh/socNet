@@ -1,6 +1,11 @@
 package com.socnet.persistence.entities;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,6 +38,7 @@ public class User {
 	private Date dateOfBirth;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
 	private Set<Post> posts = new HashSet<>();
 	
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -164,11 +170,10 @@ public class User {
 			followings.remove(user);
 			
 		}
-		
-	
+
 	public Set<User> getFriends(){
 		Set<User> result = new HashSet<>();
-		
+			
 		for(User user : getFollowings()){
 			if( user.getFollowings().contains(this)) {
 				result.add(user);

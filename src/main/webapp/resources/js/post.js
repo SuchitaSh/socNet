@@ -5,7 +5,7 @@ $(document).ready(function() {
 
         var text = $('#text').val();
         var title = $('#title').val();
-
+        
         var json = { "text" : text,
             "title" : title};
 

@@ -6,6 +6,7 @@ import com.socnet.persistence.entities.User;
 import com.socnet.persistence.repository.PostsRepository;
 import com.socnet.persistence.repository.UsersRepository;
 
+import com.socnet.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,25 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value="/api/users/{userId:[0-9]+}/posts",
-                produces = MediaType.APPLICATION_JSON_VALUE,
-                consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/users/{userId:[0-9]+}/posts",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
 public class UserPostsController {
-    // TODO: should this be in UserPostsController or PostService?
-    @Autowired
-    private PostsRepository postsRepository;
+    private PostService postService;
 
     @Autowired
-    private UsersRepository usersRepository;
+    public UserPostsController(PostService postService) {
+        this.postService = postService;
+    }
 
     @GetMapping
     public ResponseEntity<Set<Post>> getAllPosts(@PathVariable long userId) {
-        User user = usersRepository.findById(userId);
-        if(user == null) {
-            throw new EntityNotFoundException();
-        }
-
-        Set<Post> userPosts = postsRepository.findByUser(user);
+        // moved body to PostService
+        Set<Post> userPosts = postService.getAllPostsOfUser(userId);
         return ResponseEntity.ok(userPosts);
     }
 }

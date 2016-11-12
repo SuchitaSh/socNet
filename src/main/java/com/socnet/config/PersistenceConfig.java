@@ -17,7 +17,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.socnet.persistence.repository")
+@EnableJpaRepositories(basePackages = "com.socnet.persistence.spring.data.repository")
 @EnableTransactionManagement
 public class PersistenceConfig {
 

@@ -1,4 +1,4 @@
-package com.socnet.persistence.repository;
+package com.socnet.persistence.spring.data.repository;
 
 import java.util.Set;
 
@@ -9,12 +9,12 @@ import com.socnet.persistence.entities.Comment;
 import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
 
-public interface CommentsRepository {
-	
+@Repository
+public interface SpringDataCommentsRepository extends JpaRepository<Comment, Long> {
+
 	Comment findById(Long id);
 	Set<Comment> findByUser(User user);
 	Set<Comment> findByPost(Post post);
-	Comment save(Comment comment);
 	
 	
 }

@@ -44,28 +44,30 @@ public class UserController {
     }
 
     @PostMapping("/change-information")
-    public String chageInformation(Model model, @RequestParam(value = "file", required = false) MultipartFile file,
+    public String chageInformation(Model model, @RequestParam(value = "photo", required = false) MultipartFile file,
                                    HttpServletRequest request, @RequestParam(value = "name", required = false) String userName,
                                    @RequestParam(value = "surname", required = false) String surname) {
         User user = userService.getCurrentUser();
-        System.out.println(user.getFirstName());
         if (userName!=null || !userName.equals("")) user.setFirstName(userName);
         if (surname!=null || !surname.equals("")) user.setLastName(surname);
+        userService.save(user);
         String name = null;
         String rootDirectory = request.getSession().getServletContext().getRealPath("/");
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
+        if (file!=null) {
+            if (!file.isEmpty()) {
+                try {
+                    byte[] bytes = file.getBytes();
 
-                name = file.getOriginalFilename();
-                File uploadedFile = new File(rootDirectory + "resources\\usersImages\\" + user.getId() + ".png");
-                file.transferTo(uploadedFile);
-                System.out.println("uploaded: " + uploadedFile.getAbsolutePath());
+                    name = file.getOriginalFilename();
+                    File uploadedFile = new File(rootDirectory + "resources\\usersImages\\" + user.getId() + ".png");
+                    file.transferTo(uploadedFile);
+                    System.out.println("uploaded: " + uploadedFile.getAbsolutePath());
 
-                System.out.println("You successfully uploaded file=" + name);
+                    System.out.println("You successfully uploaded file=" + name);
 
-            } catch (Exception e) {
-                return "You failed to upload " + name + " => " + e.getMessage();
+                } catch (Exception e) {
+                    return "You failed to upload " + name + " => " + e.getMessage();
+                }
             }
         }
             return "redirect:/home";

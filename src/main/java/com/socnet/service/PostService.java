@@ -29,8 +29,10 @@ public class PostService {
         User author = usersRepository.findById(authorId);
         comment.setUser(author);
         Post post = postsRepository.findById(postId);
-        post.getComments().add(comment);
+        post.addComment(comment);
         post = postsRepository.save(post);
         return post;
     }
+
+
 }

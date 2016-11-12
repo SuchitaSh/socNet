@@ -55,7 +55,7 @@ public class UserService {
         post.setTitle(title);
         User user = usersRepository.findByUsername(principal.getUsername());
         post.setUser(user);
-        user.getPosts().add(post);
+        user.addPost(post);
         user = usersRepository.save(user);
         return user;
     }

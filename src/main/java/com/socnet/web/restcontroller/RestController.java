@@ -18,9 +18,10 @@ public class RestController {
 
     @PostMapping(value = "/addPost", produces= MediaType.APPLICATION_JSON_VALUE, consumes= MediaType.APPLICATION_JSON_VALUE)
     public String addPost(@RequestBody Post post) {
+        System.out.println("method works");
         System.out.println("Title: "+post.getTitle());
         System.out.println("Text: " + post.getText());
-        userService.addPost(post.getText(), post.getTitle());
+       // userService.addPost(post.getText(), post.getTitle());
         return null ;
     }
 }

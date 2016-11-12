@@ -58,6 +58,11 @@
                                 <!--<i class="glyphicon glyphicon-flag"></i>-->
                                 Logout </a>
                         </li>
+                        <li>
+                            <a href="settings">
+                                <!--<i class="glyphicon glyphicon-flag"></i>-->
+                                Settings </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- END MENU -->

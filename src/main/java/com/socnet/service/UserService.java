@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.Date;
+import java.util.Date;
 
 
 /**
@@ -51,7 +51,7 @@ public class UserService {
     public User addPost(String text, String title) { //or better return Post???
         Post post = new Post();
         post.setText(text);
-        post.setPostingDate(new Date(new java.util.Date().getTime()));
+        post.setPostingDate(new Date());
         post.setTitle(title);
         User user = usersRepository.findByUsername(principal.getUsername());
         post.setUser(user);
@@ -63,7 +63,6 @@ public class UserService {
    public boolean isUsernameAvailable(String username){
 	   
 	   return usersRepository.findByUsername(username) == null;
-	   
    }
    
    public void save(User user){

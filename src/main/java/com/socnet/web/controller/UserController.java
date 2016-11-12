@@ -36,6 +36,12 @@ public class UserController {
         model.addAttribute("posts");
         return "home";
     }
+    
+    @GetMapping("/home/{username}")
+    public String showUserHomePage(){
+    	
+    	return "home";
+    }
 
     @GetMapping("/settings")
     public String showSettingsPage(Model model) {

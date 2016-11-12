@@ -4,7 +4,8 @@
 
 function getFriends(){
 	
-	var pathname = "http://localhost:8080/socNet/friends";
+	var pathname = window.location.pathname;
+	console.log(pathname);
 	var index = pathname.lastIndexOf("/")
 	var friend = pathname.substring(index, pathname.length)
         if(friend == "/friends")

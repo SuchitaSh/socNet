@@ -119,7 +119,7 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-
+	@JsonIgnore
 	public Set<Post> getPosts() {
 		return posts;
 	}
@@ -146,7 +146,7 @@ public class User {
 		
 	}
 
-
+	@JsonIgnore
 	public Set<User> getFollowings() {
 		return followings;
 	}
@@ -171,6 +171,7 @@ public class User {
 			
 		}
 
+	@JsonIgnore
 	public Set<User> getFriends(){
 		Set<User> result = new HashSet<>();
 			

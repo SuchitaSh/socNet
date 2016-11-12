@@ -23,8 +23,8 @@ public class PostService {
         this.usersRepository = usersRepository;
         this.postsRepository = postsRepository;
     }
-
     public Comment addCommentToPost(Long postId, String text, Long authorId) { //now return Comment
+
         Comment comment = new Comment();
         User author = usersRepository.findById(authorId);
         comment.setUser(author);

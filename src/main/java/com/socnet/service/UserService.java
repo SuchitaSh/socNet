@@ -93,6 +93,25 @@ public class UserService {
 	   return friends;
    }
    
+   @Transactional
+   public Set<User> getUserFriends(String username){
+	   
+	   User user = usersRepository.findByUsername(username);
+	   Set<User> friends = new HashSet<>();
+	   User newUser;
+	   for(User u : user.getFriends()){
+		   newUser = new User();
+		   newUser.setId(u.getId());
+		   newUser.setUsername(u.getUsername());
+		   newUser.setFirstName(u.getFirstName());
+		   newUser.setLastName(u.getLastName());
+		   friends.add(newUser);
+	   }
+	   
+	   return friends;
+   }
+   
+   @Transactional
    public Set<User> getAllUsersInfo(){
 	
 	   Set<User> allUsers = new HashSet<>();
@@ -109,6 +128,9 @@ public class UserService {
 	   return allUsers;
    }
    
+   public User findUserByUsername(String username){
+	   return usersRepository.findByUsername(username);
+   }
 	   
    }
    

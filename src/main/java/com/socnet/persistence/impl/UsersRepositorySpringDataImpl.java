@@ -14,7 +14,7 @@ import com.socnet.persistence.spring.data.repository.SpringDataUsersRepository;
 public class UsersRepositorySpringDataImpl implements UsersRepository {
 
 	@Autowired
-	SpringDataUsersRepository repository;
+    SpringDataUsersRepository repository;
 	
 	@Override
 	public User findById(Long id) {

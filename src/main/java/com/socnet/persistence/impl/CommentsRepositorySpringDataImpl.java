@@ -15,7 +15,7 @@ import com.socnet.persistence.spring.data.repository.SpringDataCommentsRepositor
 public class CommentsRepositorySpringDataImpl implements CommentsRepository{
 
 	@Autowired
-	SpringDataCommentsRepository repository;
+	CommentsRepository repository;
 	
 	@Override
 	public Comment findById(Long id) {

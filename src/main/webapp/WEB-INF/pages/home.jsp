@@ -46,7 +46,7 @@
                 <!-- END SIDEBAR USER TITLE -->
                 <!-- SIDEBAR BUTTONS -->
                 <div class="profile-userbuttons">
-                    <button type="button" class="btn btn-success btn-sm">Friends</button>
+                    <button type="button" class="btn btn-success btn-sm">Messages</button>
                     <button type="button" class="btn btn-danger btn-sm">Followers</button>
                 </div>
                 <!-- END SIDEBAR BUTTONS -->
@@ -75,17 +75,6 @@
                        <input id="create-button" type="submit" value="Post">
                    </form>
                 </div>
-
-                <div class="wall-posts">
-                    <c:forEach items="${posts}" var="post">
-                        <h2>${post.title}</h2>
-                        <br>
-                        <p>${post.text}</p>
-                        <br>
-                        <p>${post.postingDate}</p>
-                    </c:forEach>
-                </div>
-
                 <hr/>
 
                 <div class="row">

@@ -38,7 +38,6 @@ public class User {
 	private Date dateOfBirth;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonManagedReference
 	private Set<Post> posts = new HashSet<>();
 	
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

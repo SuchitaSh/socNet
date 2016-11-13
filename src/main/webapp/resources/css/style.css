@@ -104,14 +104,14 @@ body {
     min-height: 460px;
 }
 
-.comment > .thumbnail-container {
+.post > .thumbnail-container {
     padding: 0px;
 }
 
-.comment .panel {
+.post .panel {
 	position:relative;
 }
-.comment .panel>.panel-heading:after,.comment .panel>.panel-heading:before{
+.post .panel>.panel-heading:after,.post .panel>.panel-heading:before{
 	position:absolute;
 	top:11px;left:-16px;
 	right:100%;
@@ -123,23 +123,23 @@ body {
 	border-style:solid solid outset;
 	pointer-events:none;
 }
-.comment .panel>.panel-heading:after{
+.post .panel>.panel-heading:after{
 	border-width:7px;
 	border-right-color:#f5f5f5;
 	margin-top:1px;
 	margin-left:2px;
 }
-.comment .panel>.panel-heading:before{
+.post .panel>.panel-heading:before{
 	border-right-color:#ddd;
 	border-width:8px;
 }
 
-.comment .panel-footer {
+.post .panel-footer {
     padding: 4px 45px;
     background-color: #fff;
 }
 
-.comment .panel-footer .user-photo {
+.post .panel-footer .user-photo {
     width: 30px;
     height: 30px;
     border-radius: 50%;

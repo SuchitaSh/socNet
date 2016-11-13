@@ -18,7 +18,6 @@
     <link rel="stylesheet" type="text/css" href="${navbarCss}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="<c:url value='/resources/js/post.js' />"></script>
 
 </head>
 <body>
@@ -95,42 +94,58 @@
                     </div>
                 </div>
 
-                <div class="row comment">
-                    <div class="col-sm-1 thumbnail-container">
-                        <div class="thumbnail">
-                            <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-11">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <strong>myusername</strong> <span class="text-muted">posted 5 days ago</span>
-                            </div>
-
-                            <div class="panel-body">
-                                Panel content
-                            </div>
-
-                            <div class="panel-footer clearfix">
-                                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-                                <div class="col-sm-10">
-                                    Comment 1
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+                <div id="posts">
 
                 </div>
-            </div>
+
             </div>
 
-
+        </div>
 
     </div>
 </div>
+
 <br>
 <br>
+
+<script type="template" data-template-name="post">
+    <div class="row post">
+
+        <div class="col-sm-1 thumbnail-container">
+            <div class="thumbnail">
+                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+            </div>
+        </div>
+
+        <div class="col-sm-11">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong class="placeholder-username">John Doe</strong>
+                    <span class="text-muted placeholder-time">posted 5 days ago</span>
+                </div>
+
+                <div class="panel-body placeholder-post">
+                    Post Placeholder
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</script>
+
+<script type="template" data-template-name="comment">
+    <div class="panel-footer clearfix comment" data-template="comment">
+        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+        <div class="col-sm-10 placeholder-comment">
+            Comment Placeholder
+        </div>
+    </div>
+</script>
+
+
+<script type="text/javascript" src="<c:url value='/resources/js/post.js' />"></script>
+
 </body>
 </html>

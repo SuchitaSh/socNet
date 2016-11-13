@@ -17,7 +17,13 @@
     <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
     <link rel="stylesheet" type="text/css" href="${navbarCss}">
 
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/message.js' />"></script>
+
+
 
 </head>
 <body>
@@ -46,8 +52,8 @@
                 <!-- END SIDEBAR USER TITLE -->
                 <!-- SIDEBAR BUTTONS -->
                 <div class="profile-userbuttons">
-                    <button type="button" class="btn btn-success btn-sm">Friends</button>
-                    <button type="button" class="btn btn-danger btn-sm">Followers</button>
+                    <button type="button" class="btn btn-success btn-sm">Follow</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Message</button>
                 </div>
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->
@@ -58,7 +64,7 @@
                                 <i class="glyphicon glyphicon-home"></i>
                                 Overview </a>
                         </li>
-                       
+
                     </ul>
                 </div>
                 <!-- END MENU -->
@@ -68,12 +74,12 @@
         <div class="col-md-9">
             <div class="profile-content">
                 <div class="post-form">
-                   <form method="post" action="addPost" id="postForm">
-                       <input id="title" type="text" name="title" placeholder="Enter title of your post">
-                       <br>
-                       <textarea id="text"  name="text" rows="5" cols="100"></textarea>
-                       <input id="create-button" type="submit" value="Post">
-                   </form>
+                    <form method="post" action="addPost" id="postForm">
+                        <input id="title" type="text" name="title" placeholder="Enter title of your post">
+                        <br>
+                        <textarea id="text"  name="text" rows="5" cols="100"></textarea>
+                        <input id="create-button" type="submit" value="Post">
+                    </form>
                 </div>
 
                 <div class="wall-posts">
@@ -147,5 +153,24 @@
 
 <script type="text/javascript" src="<c:url value='/resources/js/post.js' />"></script>
 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+               <textarea id="message" name="message" rows="5" cols="80"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="send" class="btn btn-primary">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -2,28 +2,16 @@ $(function() {
     // Cache
 
     var $posts = $('#posts');
+    var $postForm = $('#post-form');
+    var $formPostTitle = $('#form-post-title');
+    var $formPostText = $('#form-post-text')
     var templates = getTemplates(true);
+    var userId = $('#user-id').val();
 
 
-    // Logic
+//     Logic
 
-//    retrievePosts();
-    addPosts([{
-        title: 'Hello, World',
-        text: 'Lorem ipsum dolor sit amet, vim tempor denique singulis' +
-              'eu, an has intellegam disputando, esse novum omnium at has. Sit ut dolorum dolores',
-        user: {
-            firstName: "Jane",
-            lastName: "Doe"
-        }
-    }, {
-          title: '42',
-          text: 'eu, an has intellegam disputando, esse novum omnium at has. Sit ut dolorum dolores',
-          user: {
-              firstName: "John",
-              lastName: "Doe"
-          }
-     } ]);
+    retrievePosts();
 
     registerEventHandlers();
 
@@ -37,7 +25,7 @@ $(function() {
             post.user = post.user || {};
 
             $post = templates['post'].clone();
-            $post.find('.placeholder-username').html(post.user.firstName + ' ' + post.user.lastName);
+            $post.find('.placeholder-title').html(post.title);
             $post.find('.placeholder-post').html(post.text);
             $posts.prepend($post);
             // TODO: add all posts in one batch
@@ -45,41 +33,26 @@ $(function() {
     }
 
     function retrievePosts() {
-        getJson("/socNet/api/users/1/posts")
+        getJson('/socNet/api/users/' + userId + '/posts')
          .success(function(posts) {
             addPosts(posts);
          });
     }
 
+    function sendPost(post) {
+        addPosts(post);
+        postJson('/socNet/api/users/' + userId + '/posts', post);
+    }
+
     function registerEventHandlers() {
-//        $('#postForm').submit(function(event) {
-//
-//            var text = $('#text').val();
-//            var title = $('#title').val();
-//
-//            var json = { "text" : text,
-//                "title" : title};
-//
-//            $.post(url, json);
-//            document.getElementById("postForm").reset();
 
-            /* $.ajax({
-             url: "addPost",
-             data: JSON.stringify(json),
-             type: "POST",
-             beforeSend: function(xhr) {
-             xhr.setRequestHeader("Accept", "application/json");
-             xhr.setRequestHeader("Content-Type", "application/json");
-             },
-             success: function(message) {
-             var respContent = "";
-             respContent += message.text;
-             $("#demo").html(respContent);
-             }
-             });*/
-
-//            event.preventDefault();
-//        });
+        $postForm.submit(function(e) {
+            e.preventDefault();
+            sendPost({
+                title: $formPostTitle.val(),
+                text: $formPostText.val()
+            })
+        });
     }
 
 });
@@ -88,6 +61,15 @@ function getJson(url, data) {
     return $.ajax(url, {
         method: 'GET',
         data: data,
+        dataType: 'json',
+        contentType: 'application/json',
+    });
+}
+
+function postJson(url, data) {
+    return $.ajax(url, {
+        method: 'POST',
+        data: JSON.stringify(data),
         dataType: 'json',
         contentType: 'application/json',
     });

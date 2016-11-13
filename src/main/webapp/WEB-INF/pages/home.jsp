@@ -25,6 +25,7 @@
 <c:import url = "/resources/html/navbar.html"/>
 
 <div class="container">
+    <input type="hidden" id="user-id" value="${user.id}"/>
     <div class="row profile">
 
         <div class="col-md-3">
@@ -67,23 +68,14 @@
 
         <div class="col-md-9">
             <div class="profile-content">
+
                 <div class="post-form">
-                   <form method="post" action="addPost" id="postForm">
-                       <input id="title" type="text" name="title" placeholder="Enter title of your post">
+                   <form id="post-form">
+                       <input id="form-post-title" type="text" name="title" placeholder="Enter title of your post">
                        <br>
-                       <textarea id="text"  name="text" rows="5" cols="100"></textarea>
+                       <textarea id="form-post-text"  name="text" rows="5" cols="100"></textarea>
                        <input id="create-button" type="submit" value="Post">
                    </form>
-                </div>
-
-                <div class="wall-posts">
-                    <c:forEach items="${posts}" var="post">
-                        <h2>${post.title}</h2>
-                        <br>
-                        <p>${post.text}</p>
-                        <br>
-                        <p>${post.postingDate}</p>
-                    </c:forEach>
                 </div>
 
                 <hr/>
@@ -119,9 +111,10 @@
 
         <div class="col-sm-11">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong class="placeholder-username">John Doe</strong>
-                    <span class="text-muted placeholder-time">posted 5 days ago</span>
+                <div class="panel-heading clearfix">
+                    <strong class="placeholder-title pull-left">John Doe</strong>
+                    <div class="pull-right placeholder-author"></div>
+                    <span class="text-muted placeholder-time pull-left"></span>
                 </div>
 
                 <div class="panel-body placeholder-post">

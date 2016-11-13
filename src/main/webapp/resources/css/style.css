@@ -2,6 +2,10 @@ body {
     background:  #F1F3FA !important;
 }
 
+.clearfix {
+    overflow: hidden;
+}
+
 /* Profile container */
 .profile {
     margin: 1px 0;

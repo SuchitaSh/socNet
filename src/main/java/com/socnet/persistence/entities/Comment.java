@@ -1,15 +1,10 @@
 package com.socnet.persistence.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.socnet.web.Views;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "comments")
@@ -17,18 +12,22 @@ public class Comment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView({Views.Summary.class})
 	private Long id;
 	
 	@Column(name = "comment_text")
+	@JsonView({Views.Summary.class})
 	private String text;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
+	@JsonView({Views.WithChildren.class})
 	private User user;
 	
 	@ManyToOne
 	@JoinColumn(name = "post_id")
 	@JsonBackReference
+	@JsonView({Views.WithParent.class})
 	private Post post;
 	
 	public Comment() {

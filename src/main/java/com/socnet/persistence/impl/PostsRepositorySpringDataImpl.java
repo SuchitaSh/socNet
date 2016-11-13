@@ -2,6 +2,7 @@ package com.socnet.persistence.impl;
 
 import java.util.Set;
 
+import com.socnet.persistence.spring.data.repository.SpringDataPostsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

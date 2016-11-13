@@ -70,10 +70,10 @@
 <div style="margin: auto">
 
                 <form action="change-information" method="post" enctype="multipart/form-data">
-                    <input type="text" name="name" placeholder="Name">
+                    <input type="text" name="name" value="${user.firstName}">
                     <br>
                     <br>
-                    <input type="text" name="surname" placeholder="Surname">
+                    <input type="text" name="surname" value="${user.lastName}">
                     <br>
                     <br>
                     <input type="file" name="photo">

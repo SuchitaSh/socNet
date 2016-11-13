@@ -45,7 +45,7 @@ public class UserController {
 
     @GetMapping("/settings")
     public String showSettingsPage(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", userService.getCurrentUser());
         return "user_settings";
     }
 

@@ -49,8 +49,12 @@ public class UserService {
     }
 
     public User getCurrentUser() {
+        if (principal.getUsername() == null) {
+            return null;
+        }
         return usersRepository.findByUsername(principal.getUsername());
     }
+
     @Transactional
     public Post addPost(String text, String title) { //now return Post
         Post post = new Post();

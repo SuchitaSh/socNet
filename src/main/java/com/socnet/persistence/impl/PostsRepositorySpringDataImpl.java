@@ -13,7 +13,7 @@ import com.socnet.persistence.repository.PostsRepository;
 public class PostsRepositorySpringDataImpl implements PostsRepository {
 
 	@Autowired
-	PostsRepository repository;
+	SpringDataPostsRepository repository;
 	
 	@Override
 	public Post findById(Long id) {

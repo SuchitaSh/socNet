@@ -27,6 +27,7 @@ public class PostService {
         this.usersRepository = usersRepository;
         this.postsRepository = postsRepository;
     }
+
     public Comment addCommentToPost(Long postId, String text, Long authorId) { //now return Comment
 
         Comment comment = new Comment();
@@ -48,7 +49,6 @@ public class PostService {
 
 
     /**
-     *
      * @return Post entities with all comments
      */
     @Transactional
@@ -61,17 +61,24 @@ public class PostService {
         Set<Post> userPosts = postsRepository.findByUser(user);
 
         userPosts.stream()
-                    .forEach(Hibernate::initialize);
+                .forEach(Hibernate::initialize);
 
 //        userPosts.stream()
 //                 .map(Post::getComments)
 //                 .forEach(Hibernate::initialize);
 
         userPosts.stream()
-                 .map(Post::getComments)
-                 .flatMap(Set::stream)
-                 .forEach(Hibernate::initialize);
+                .map(Post::getComments)
+                .flatMap(Set::stream)
+                .forEach(Hibernate::initialize);
 
         return userPosts;
+    }
+
+    /**
+     * @return Post just entity
+     */
+    public Post getPost(Long postId) {
+        return postsRepository.findById(postId);
     }
 }

@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     // Cache
 
     var $comments = $('#comments');
@@ -22,7 +22,7 @@ $(function() {
 
         comments = makeArray(comments);
 
-        comments.forEach(function(comment) {
+        comments.forEach(function (comment) {
             comment.user = comment.user || {};
 
             $comment = templates['comment'].clone();
@@ -33,9 +33,9 @@ $(function() {
 
     function retrieveComments() {
         getJson('/socNet/api/posts/' + postId + '/comments')
-         .success(function(comments) {
-            addComments(comments);
-         });
+            .success(function (comments) {
+                addComments(comments);
+            });
     }
 
     function sendComment(comment) {
@@ -45,7 +45,7 @@ $(function() {
 
     function registerEventHandlers() {
 
-        $commentsForm.submit(function(e) {
+        $commentsForm.submit(function (e) {
             e.preventDefault();
             sendComment({
                 text: $formCommentText.val()
@@ -61,7 +61,7 @@ function getJson(url, data) {
         method: 'GET',
         data: data,
         dataType: 'json',
-        contentType: 'application/json',
+        contentType: 'application/json'
     });
 }
 
@@ -70,7 +70,7 @@ function postJson(url, data) {
         method: 'POST',
         data: JSON.stringify(data),
         dataType: 'json',
-        contentType: 'application/json',
+        contentType: 'application/json'
     });
 }
 
@@ -78,7 +78,7 @@ function getTemplates(remove) {
     var templateSources = getTemplatesSources(remove);
 
     var templates = {};
-        Object.keys(templateSources).forEach(function(templateName) {
+    Object.keys(templateSources).forEach(function (templateName) {
         templates[templateName] = $(templateSources[templateName]);
     });
 
@@ -89,11 +89,11 @@ function getTemplatesSources(remove) {
     var templates = {};
     var templateScripts = [];
 
-    $('script').each(function(i, el) {
+    $('script').each(function (i, el) {
         var $el = $(el);
         var templateName = $el.data('template-name');
 
-        if(templateName === undefined) {
+        if (templateName === undefined) {
             return;
         }
 
@@ -101,17 +101,17 @@ function getTemplatesSources(remove) {
         templateScripts.push($el);
     })
 
-    if(remove === true) {
-        templateScripts.forEach(function(el) {
+    if (remove === true) {
+        templateScripts.forEach(function (el) {
             el.remove();
-        }) ;
+        });
     }
 
     return templates;
 }
 
 function makeArray(maybeArray) {
-    if(!(maybeArray instanceof Array)) {
+    if (!(maybeArray instanceof Array)) {
         return [maybeArray];
     }
 

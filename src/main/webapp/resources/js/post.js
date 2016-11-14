@@ -51,7 +51,8 @@ $(function() {
             sendPost({
                 title: $formPostTitle.val(),
                 text: $formPostText.val()
-            })
+            });
+            $postForm.find('*').val('');
         });
     }
 

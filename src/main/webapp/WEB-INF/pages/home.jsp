@@ -69,15 +69,6 @@
         <div class="col-md-9">
             <div class="profile-content">
 
-                <div class="post-form">
-                   <form id="post-form">
-                       <input id="form-post-title" type="text" name="title" placeholder="Enter title of your post">
-                       <br>
-                       <textarea id="form-post-text"  name="text" rows="5" cols="100"></textarea>
-                       <input id="create-button" type="submit" value="Post">
-                   </form>
-                </div>
-
                 <hr/>
 
                 <div class="row">
@@ -85,6 +76,24 @@
                         <h1>Posts</h1>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="widget-area no-padding blank">
+
+                            <div class="status-upload">
+                                <form id="post-form">
+                                    <input type="text" id="form-post-title" placeholder="Title"/>
+                                    <textarea id="form-post-text" placeholder="What are you doing right now?" ></textarea>
+                                    <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Share</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <br/>
 
                 <div id="posts">
 

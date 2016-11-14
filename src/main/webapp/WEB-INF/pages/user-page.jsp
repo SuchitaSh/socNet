@@ -28,7 +28,7 @@
 <body>
 
 <c:import url = "/resources/html/navbar.html"/>
-
+<input type="hidden" id="user-id" value="${user.id}"/>
 <div class="container">
     <div class="row profile">
 
@@ -74,23 +74,12 @@
             <div class="profile-content">
                 <div class="post-form">
                     <form method="post" action="addPost" id="postForm">
-                        <input id="title" type="text" name="title" placeholder="Enter title of your post">
+                        <input id="title" type="text" name="title" placeholder="Enter title of your post" <c:if test="${!friend}">disabled</c:if> >
                         <br>
-                        <textarea id="text"  name="text" rows="5" cols="100"></textarea>
-                        <input id="create-button" type="submit" value="Post">
+                        <textarea id="text"  name="text" rows="5" cols="100" <c:if test="${!friend}">disabled</c:if>></textarea>
+                        <input id="create-button" type="submit" value="Post" <c:if test="${!friend}">disabled</c:if>>
                     </form>
                 </div>
-
-                <div class="wall-posts">
-                    <c:forEach items="${posts}" var="post">
-                        <h2>${post.title}</h2>
-                        <br>
-                        <p>${post.text}</p>
-                        <br>
-                        <p>${post.postingDate}</p>
-                    </c:forEach>
-                </div>
-
                 <hr/>
 
                 <div class="row">
@@ -113,42 +102,8 @@
 <br>
 <br>
 
-<script type="template" data-template-name="post">
-    <div class="row post">
-
-        <div class="col-sm-1 thumbnail-container">
-            <div class="thumbnail">
-                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-            </div>
-        </div>
-
-        <div class="col-sm-11">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong class="placeholder-username">John Doe</strong>
-                    <span class="text-muted placeholder-time">posted 5 days ago</span>
-                </div>
-
-                <div class="panel-body placeholder-post">
-                    Post Placeholder
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-</script>
-
-<script type="template" data-template-name="comment">
-    <div class="panel-footer clearfix comment" data-template="comment">
-        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-        <div class="col-sm-10 placeholder-comment">
-            Comment Placeholder
-        </div>
-    </div>
-</script>
-
+<c:import url="/resources/html/post.template.html"/>
+<c:import url="/resources/html/comment.template.html"/>
 
 <script type="text/javascript" src="<c:url value='/resources/js/post.js' />"></script>
 
@@ -162,7 +117,7 @@
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
             </div>
             <div class="modal-body">
-               <textarea id="message" name="message" rows="5" cols="80"></textarea>
+                <textarea id="message" name="message" rows="5" cols="80"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

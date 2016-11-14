@@ -3,7 +3,6 @@ $(function () {
 
     var $comments = $('#comments');
     var $commentsForm = $('#comments-form');
-    // var $formPostTitle = $('#form-post-title');
     var $formCommentText = $('#form-comment-text')
     var templates = getTemplates(true);
     var userId = $('#user-id').val();
@@ -99,7 +98,7 @@ function getTemplatesSources(remove) {
 
         templates[templateName] = $el.html();
         templateScripts.push($el);
-    })
+    });
 
     if (remove === true) {
         templateScripts.forEach(function (el) {

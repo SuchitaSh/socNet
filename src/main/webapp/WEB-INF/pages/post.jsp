@@ -31,10 +31,8 @@
 
         <div class="col-md-3">
             <div class="profile-sidebar">
-                <div class="profile-usertitle">
-                    <div class="profile-usertitle-name">
-                        Author
-                    </div>
+                <div class="profile-author">
+                    Author
                 </div>
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
@@ -81,7 +79,7 @@
                 <hr/>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h2>Comments</h2>
+                        <h3>Comments</h3>
                     </div>
                 </div>
 

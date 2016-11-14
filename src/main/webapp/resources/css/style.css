@@ -25,6 +25,15 @@ body {
     border-radius: 50% !important;
 }
 
+.profile-author{
+    text-align: center;
+    margin-top: 20px;
+    color: #4a6381;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
 .profile-usertitle {
     text-align: center;
     margin-top: 20px;
@@ -150,7 +159,22 @@ body {
     float: left;
 }
 
+/*simple css for testing comments. change if you want*/
+.comment .panel {
+    position:relative;
+}
 
+.comment .panel-footer {
+    padding: 4px 25px;
+    background-color: #fafafa;
+}
+
+.comment .panel-footer .user-photo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    float: left;
+}
 
 
 

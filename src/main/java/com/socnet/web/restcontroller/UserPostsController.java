@@ -22,7 +22,6 @@ import java.util.Set;
         consumes = MediaType.APPLICATION_JSON_VALUE)
 public class UserPostsController {
     private PostService postService;
-
     private UserService userService;
 
     @Autowired

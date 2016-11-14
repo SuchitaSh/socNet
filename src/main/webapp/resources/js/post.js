@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     // Cache
 
     var $posts = $('#posts');
@@ -21,7 +21,7 @@ $(function() {
 
         posts = makeArray(posts);
 
-        posts.forEach(function(post) {
+        posts.forEach(function (post) {
             post.user = post.user || {};
 
             $post = templates['post'].clone();
@@ -34,9 +34,9 @@ $(function() {
 
     function retrievePosts() {
         getJson('/socNet/api/users/' + userId + '/posts')
-         .success(function(posts) {
-            addPosts(posts);
-         });
+            .success(function (posts) {
+                addPosts(posts);
+            });
     }
 
     function sendPost(post) {
@@ -46,7 +46,7 @@ $(function() {
 
     function registerEventHandlers() {
 
-        $postForm.submit(function(e) {
+        $postForm.submit(function (e) {
             e.preventDefault();
             sendPost({
                 title: $formPostTitle.val(),
@@ -80,7 +80,7 @@ function getTemplates(remove) {
     var templateSources = getTemplatesSources(remove);
 
     var templates = {};
-        Object.keys(templateSources).forEach(function(templateName) {
+    Object.keys(templateSources).forEach(function (templateName) {
         templates[templateName] = $(templateSources[templateName]);
     });
 
@@ -91,11 +91,11 @@ function getTemplatesSources(remove) {
     var templates = {};
     var templateScripts = [];
 
-    $('script').each(function(i, el) {
+    $('script').each(function (i, el) {
         var $el = $(el);
         var templateName = $el.data('template-name');
 
-        if(templateName === undefined) {
+        if (templateName === undefined) {
             return;
         }
 
@@ -103,20 +103,19 @@ function getTemplatesSources(remove) {
         templateScripts.push($el);
     })
 
-    if(remove === true) {
-        templateScripts.forEach(function(el) {
+    if (remove === true) {
+        templateScripts.forEach(function (el) {
             el.remove();
-        }) ;
+        });
     }
 
     return templates;
 }
 
 function makeArray(maybeArray) {
-    if(!(maybeArray instanceof Array)) {
+    if (!(maybeArray instanceof Array)) {
         return [maybeArray];
     }
 
     return maybeArray;
 }
-

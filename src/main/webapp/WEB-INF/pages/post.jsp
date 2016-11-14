@@ -1,15 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <head>
-    <title>Welcome page</title>
+    <title>Post page</title>
 
-    <spring:url value="/resources/css/style.css" var="styleCss"/>
-    <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapMinCss"/>
-    <spring:url value="/resources/css/bootstrap-theme.min.css" var="bootstrapThemeMinCss"/>
-    <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss"/>
-    <spring:url value="resource/css/navbar.css" var="navbarCss"/>
-    <spring:url value="/resources/html/navbar.html" var="navbarHtml"/>
+    <spring:url value="/resources/css/style.css" var="styleCss" />
+    <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapMinCss" />
+    <spring:url value="/resources/css/bootstrap-theme.min.css" var="bootstrapThemeMinCss" />
+    <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />
+    <spring:url value="resources/css/navbar.css" var = "navbarCss"/>
+    <spring:url value="/resources/html/navbar.html" var = "navbarHtml"/>
 
     <link rel="stylesheet" type="text/css" href="${styleCss}">
     <link rel="stylesheet" type="text/css" href="${bootstrapMinCss}">
@@ -22,13 +22,19 @@
 </head>
 <body>
 
-<c:import url="/resources/html/navbar.html"/>
+<c:import url = "/resources/html/navbar.html"/>
 
 <div class="container">
+    <input type="hidden" id="user-id" value="${user.id}"/>
     <div class="row profile">
 
         <div class="col-md-3">
             <div class="profile-sidebar">
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+                        Author
+                    </div>
+                </div>
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
                     <img src="/resources/usersImages/${user.id}.png" class="img-responsive" alt="">
@@ -37,17 +43,14 @@
                 <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
                     <div class="profile-usertitle-name">
-                        <c:out value="${user.firstName} ${user.lastName}"/>
-                    </div>
-                    <div class="profile-usertitle-job">
-                        Developer
+                        <c:out value="${user.firstName} ${user.lastName}" />
                     </div>
                 </div>
                 <!-- END SIDEBAR USER TITLE -->
                 <!-- SIDEBAR BUTTONS -->
                 <div class="profile-userbuttons">
-                    <button type="button" class="btn btn-success btn-sm">Follow</button>
-                    <button type="button" class="btn btn-danger btn-sm">Message</button>
+                    <button type="button" class="btn btn-success btn-sm">Messages</button>
+                    <button type="button" class="btn btn-danger btn-sm">Followers</button>
                 </div>
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->
@@ -58,7 +61,7 @@
                                 <i class="glyphicon glyphicon-home"></i>
                                 Overview </a>
                         </li>
-
+                       
                     </ul>
                 </div>
                 <!-- END MENU -->
@@ -67,22 +70,14 @@
 
         <div class="col-md-9">
             <div class="profile-content">
-                <div class="post-form">
-                    <form method="post" action="addPost" id="postForm">
-                        <input id="title" type="text" name="title" placeholder="Enter title of your post">
-                        <br>
-                        <textarea id="text" name="text" rows="5" cols="100"></textarea>
-                        <input id="create-button" type="submit" value="Post">
-                    </form>
-                </div>
 
-                <div class="wall-posts">
+                <div >
 
                     <h2>${post.title}</h2>
                     <br>
                     <p>${post.text}</p>
                     <br>
-                    <p>${post.postingDate}</p>
+                    <p>Published: <i>${post.postingDate}</i></p>
 
                 </div>
 
@@ -90,9 +85,26 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1>Posts</h1>
+                        <h2>Comments</h2>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="widget-area no-padding blank">
+
+                            <div class="status-upload">
+                                <form id="post-form">
+                                    <textarea id="form-post-text" placeholder="Add comment here" ></textarea>
+                                    <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Comment</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <br/>
 
                 <div id="posts">
 
@@ -119,9 +131,10 @@
 
         <div class="col-sm-11">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong class="placeholder-username">John Doe</strong>
-                    <span class="text-muted placeholder-time">posted 5 days ago</span>
+                <div class="panel-heading clearfix">
+                    <strong class="placeholder-title pull-left">John Doe</strong>
+                    <div class="pull-right placeholder-author"></div>
+                    <span class="text-muted placeholder-time pull-left"></span>
                 </div>
 
                 <div class="panel-body placeholder-post">

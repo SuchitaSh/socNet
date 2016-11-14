@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Set;
 
 @RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE,
-                consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/posts/{postId:[0-9]+}/comments",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
 public class PostsController {
     private CommentService commentService;
 
@@ -24,10 +25,18 @@ public class PostsController {
         this.commentService = commentService;
     }
 
-    @RequestMapping(value = "/api/posts/{postId:[0-9]+}/comments", method = RequestMethod.GET)
+    @GetMapping
     @JsonView(Views.WithChildren.class)
     public ResponseEntity<Set<Comment>> getAllCommentsOfPost(@PathVariable long postId) {
         Set<Comment> commentsOfPost = commentService.getAllCommentsOfPost(postId);
         return ResponseEntity.ok(commentsOfPost);
+    }
+
+
+    @PostMapping
+    public ResponseEntity<Comment> addComment(@PathVariable long postId, @RequestBody Comment comment) {
+        System.out.println(comment.getText());
+        Comment newComment = commentService.addCommentToPost(postId, comment.getText());
+        return ResponseEntity.ok(newComment);
     }
 }

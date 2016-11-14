@@ -28,20 +28,6 @@ public class PostService {
         this.postsRepository = postsRepository;
     }
 
-    public Comment addCommentToPost(Long postId, String text, Long authorId) { //now return Comment
-
-        Comment comment = new Comment();
-        User author = usersRepository.findById(authorId);
-        comment.setUser(author);
-        Post post = postsRepository.findById(postId);
-        if (post == null) {
-            throw new EntityNotFoundException();
-        }
-        post.addComment(comment);
-        postsRepository.save(post);
-        return comment;
-    }
-
     public Post addPost(Post post) {
         post = postsRepository.save(post);
         return post;

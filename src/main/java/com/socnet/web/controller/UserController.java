@@ -1,6 +1,8 @@
 package com.socnet.web.controller;
 
+import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
+import com.socnet.service.PostService;
 import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,11 +15,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PostService postService;
 
     @GetMapping("/")
     public String showRootPage() {
@@ -40,8 +48,15 @@ public class UserController {
     
     @GetMapping("/home/{username}")
     public String showUserHomePage(@PathVariable String username, Model model){
-        model.addAttribute("user",userService.findUserByUsername(username));
-    	
+        User user = userService.findUserByUsername(username);
+        model.addAttribute("user",user);
+        Set<User> friends = userService.getUserFriends(user.getUsername());
+        User currentUser = userService.getCurrentUser();
+        for (Iterator<User> it = friends.iterator(); it.hasNext();) {
+            User us = it.next();
+            if (us.getId()==currentUser.getId())
+                model.addAttribute("friend", true);
+        }
     	return "user-page";
     }
 

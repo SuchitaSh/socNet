@@ -17,7 +17,12 @@
     <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
     <link rel="stylesheet" type="text/css" href="${navbarCss}">
 
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
+
+
 
 </head>
 <body>
@@ -25,7 +30,6 @@
 <c:import url = "/resources/html/navbar.html"/>
 
 <div class="container">
-    <input type="hidden" id="user-id" value="${user.id}"/>
     <div class="row profile">
 
         <div class="col-md-3">
@@ -47,8 +51,8 @@
                 <!-- END SIDEBAR USER TITLE -->
                 <!-- SIDEBAR BUTTONS -->
                 <div class="profile-userbuttons">
-                    <button type="button" class="btn btn-success btn-sm">Messages</button>
-                    <button type="button" class="btn btn-danger btn-sm">Followers</button>
+                    <button type="button" class="btn btn-success btn-sm">Follow</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Message</button>
                 </div>
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->
@@ -59,7 +63,7 @@
                                 <i class="glyphicon glyphicon-home"></i>
                                 Overview </a>
                         </li>
-                       
+
                     </ul>
                 </div>
                 <!-- END MENU -->
@@ -68,6 +72,25 @@
 
         <div class="col-md-9">
             <div class="profile-content">
+                <div class="post-form">
+                    <form method="post" action="addPost" id="postForm">
+                        <input id="title" type="text" name="title" placeholder="Enter title of your post">
+                        <br>
+                        <textarea id="text"  name="text" rows="5" cols="100"></textarea>
+                        <input id="create-button" type="submit" value="Post">
+                    </form>
+                </div>
+
+                <div class="wall-posts">
+                    <c:forEach items="${posts}" var="post">
+                        <h2>${post.title}</h2>
+                        <br>
+                        <p>${post.text}</p>
+                        <br>
+                        <p>${post.postingDate}</p>
+                    </c:forEach>
+                </div>
+
                 <hr/>
 
                 <div class="row">
@@ -75,24 +98,6 @@
                         <h1>Posts</h1>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="widget-area no-padding blank">
-
-                            <div class="status-upload">
-                                <form id="post-form">
-                                    <input type="text" id="form-post-title" placeholder="Title"/>
-                                    <textarea id="form-post-text" placeholder="What are you doing right now?" ></textarea>
-                                    <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Share</button>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <br/>
 
                 <div id="posts">
 
@@ -119,10 +124,9 @@
 
         <div class="col-sm-11">
             <div class="panel panel-default">
-                <div class="panel-heading clearfix">
-                    <strong class="placeholder-title pull-left">John Doe</strong>
-                    <div class="pull-right placeholder-author"></div>
-                    <span class="text-muted placeholder-time pull-left"></span>
+                <div class="panel-heading">
+                    <strong class="placeholder-username">John Doe</strong>
+                    <span class="text-muted placeholder-time">posted 5 days ago</span>
                 </div>
 
                 <div class="panel-body placeholder-post">
@@ -148,5 +152,24 @@
 
 <script type="text/javascript" src="<c:url value='/resources/js/post.js' />"></script>
 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+               <textarea id="message" name="message" rows="5" cols="80"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="send" class="btn btn-primary">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

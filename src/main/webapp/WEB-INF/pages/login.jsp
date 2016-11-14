@@ -7,6 +7,7 @@
     <link href="<c:url value='/resources/css/login.css' />" rel="stylesheet"></link>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="<c:url value='/resources/js/login.js' />"></script>
+    <style>body {background-image: url("<c:url value="/resources/images/hero.jpg"></c:url>")</style>
 </head>
 
 <body>

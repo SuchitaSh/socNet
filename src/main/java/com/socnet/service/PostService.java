@@ -76,7 +76,7 @@ public class PostService {
     }
 
     /**
-     * @return Post just entity
+     * @return Post, just entity
      */
     public Post getPost(Long postId) {
         return postsRepository.findById(postId);

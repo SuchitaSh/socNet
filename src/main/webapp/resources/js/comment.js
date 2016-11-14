@@ -28,7 +28,6 @@ $(function() {
             $comment = templates['comment'].clone();
             $comment.find('.placeholder-comment').html(comment.text);
             $comments.prepend($comment);
-            // TODO: add all posts in one batch
         });
     }
 
@@ -39,17 +38,16 @@ $(function() {
          });
     }
 
-    function sendPost(post) {
-        addComments(post);
-        postJson('/socNet/api/users/' + userId + '/posts', post);
+    function sendComment(comment) {
+        addComments(comment);
+        postJson('/socNet/api/posts/' + postId + '/comments', comment);
     }
 
     function registerEventHandlers() {
 
         $commentsForm.submit(function(e) {
             e.preventDefault();
-            sendPost({
-                title: $formPostTitle.val(),
+            sendComment({
                 text: $formCommentText.val()
             });
             $commentsForm.find('*').val('');

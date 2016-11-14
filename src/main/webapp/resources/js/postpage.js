@@ -1,58 +1,58 @@
-$(function () {
+$(function() {
     // Cache
 
-    var $posts = $('#posts');
-    var $postForm = $('#post-form');
-    var $formPostTitle = $('#form-post-title');
-    var $formPostText = $('#form-post-text')
+    var $comments = $('#comments');
+    var $commentsForm = $('#comments-form');
+    // var $formPostTitle = $('#form-post-title');
+    var $formCommentText = $('#form-comment-text')
     var templates = getTemplates(true);
     var userId = $('#user-id').val();
+    var postId = $('#post-id').val();
 
 
 //     Logic
 
-    retrievePosts();
+    retrieveComments();
 
     registerEventHandlers();
 
     // Functions
 
-    function addPosts(posts) {
+    function addComments(comments) {
 
-        posts = makeArray(posts);
+        comments = makeArray(comments);
 
-        posts.forEach(function (post) {
-            post.user = post.user || {};
+        comments.forEach(function(comment) {
+            comment.user = comment.user || {};
 
-            $post = templates['post'].clone();
-            $post.find('.placeholder-title').html(post.title);
-            $post.find('.placeholder-post').html(post.text);
-            $posts.prepend($post);
+            $comment = templates['comment'].clone();
+            $comment.find('.placeholder-comment').html(comment.text);
+            $comments.prepend($comment);
             // TODO: add all posts in one batch
         });
     }
 
-    function retrievePosts() {
-        getJson('/socNet/api/users/' + userId + '/posts')
-            .success(function (posts) {
-                addPosts(posts);
-            });
+    function retrieveComments() {
+        getJson('/socNet/api/posts/' + postId + '/comments')
+         .success(function(comments) {
+            addComments(comments);
+         });
     }
 
     function sendPost(post) {
-        addPosts(post);
+        addComments(post);
         postJson('/socNet/api/users/' + userId + '/posts', post);
     }
 
     function registerEventHandlers() {
 
-        $postForm.submit(function (e) {
+        $commentsForm.submit(function(e) {
             e.preventDefault();
             sendPost({
                 title: $formPostTitle.val(),
-                text: $formPostText.val()
+                text: $formCommentText.val()
             });
-            $postForm.find('*').val('');
+            $commentsForm.find('*').val('');
         });
     }
 
@@ -80,7 +80,7 @@ function getTemplates(remove) {
     var templateSources = getTemplatesSources(remove);
 
     var templates = {};
-    Object.keys(templateSources).forEach(function (templateName) {
+        Object.keys(templateSources).forEach(function(templateName) {
         templates[templateName] = $(templateSources[templateName]);
     });
 
@@ -91,11 +91,11 @@ function getTemplatesSources(remove) {
     var templates = {};
     var templateScripts = [];
 
-    $('script').each(function (i, el) {
+    $('script').each(function(i, el) {
         var $el = $(el);
         var templateName = $el.data('template-name');
 
-        if (templateName === undefined) {
+        if(templateName === undefined) {
             return;
         }
 
@@ -103,19 +103,20 @@ function getTemplatesSources(remove) {
         templateScripts.push($el);
     })
 
-    if (remove === true) {
-        templateScripts.forEach(function (el) {
+    if(remove === true) {
+        templateScripts.forEach(function(el) {
             el.remove();
-        });
+        }) ;
     }
 
     return templates;
 }
 
 function makeArray(maybeArray) {
-    if (!(maybeArray instanceof Array)) {
+    if(!(maybeArray instanceof Array)) {
         return [maybeArray];
     }
 
     return maybeArray;
 }
+

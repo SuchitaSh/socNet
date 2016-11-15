@@ -32,7 +32,7 @@
             <div class="profile-sidebar">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src="/resources/usersImages/${user.id}.png" class="img-responsive" alt="">
+                    <img src="/socNet/resources/usersImages/${user.id}.png" class="img-responsive" alt="">
                 </div>
                 <!-- END SIDEBAR USERPIC -->
                 <!-- SIDEBAR USER TITLE -->

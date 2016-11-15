@@ -72,14 +72,6 @@
 
         <div class="col-md-9">
             <div class="profile-content">
-                <div class="post-form">
-                    <form method="post" action="addPost" id="postForm">
-                        <input id="title" type="text" name="title" placeholder="Enter title of your post" <c:if test="${!friend}">disabled</c:if> >
-                        <br>
-                        <textarea id="text"  name="text" rows="5" cols="100" <c:if test="${!friend}">disabled</c:if>></textarea>
-                        <input id="create-button" type="submit" value="Post" <c:if test="${!friend}">disabled</c:if>>
-                    </form>
-                </div>
                 <hr/>
 
                 <div class="row">
@@ -88,8 +80,24 @@
                     </div>
                 </div>
 
-                <div id="posts">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="widget-area no-padding blank">
 
+                            <div class="status-upload">
+                                <form id="post-form">
+                                    <input type="text" id="form-post-title" placeholder="Title" <c:if test="${!friend}">disabled</c:if> />
+                                    <textarea id="form-post-text" placeholder="What are you doing right now?" <c:if test="${!friend}">disabled</c:if> ></textarea>
+                                    <button <c:if test="${!friend}">disabled</c:if> type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Share</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <br/>
+                <div id="posts">
                 </div>
 
             </div>

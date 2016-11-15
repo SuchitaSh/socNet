@@ -19,7 +19,7 @@ function getFriends(){
 		for(user of data){
 		var friendUrl = "http://localhost:8080/socNet/home/" + user.username;
 		console.log(friendUrl);
-        var div = '<li class="list-group-item">' +
+        var div = '<li class="list-group-item clearfix">' +
                         '<div class="col-xs-12 col-sm-3">' +
                             '<img src="http://api.randomuser.me/portraits/men/49.jpg" ' +
                         'alt="' + user.firstName + ' ' + user.lastName + 

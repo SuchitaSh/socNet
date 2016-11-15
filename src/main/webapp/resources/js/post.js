@@ -25,7 +25,9 @@ $(function () {
             post.user = post.user || {};
 
             $post = templates['post'].clone();
-            $post.find('.placeholder-title').html(post.title);
+            var postLink = '<a href="posts/' + post.id + '">' + post.title + '</a>';
+
+            $post.find('.placeholder-title').html(postLink);
             $post.find('.placeholder-post').html(post.text);
             $posts.prepend($post);
             // TODO: add all posts in one batch

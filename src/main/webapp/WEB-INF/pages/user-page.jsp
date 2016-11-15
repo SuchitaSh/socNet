@@ -21,7 +21,11 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
-
+    <script type="text/javascript" src="<c:url value='/resources/js/stomp.js' />"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/user.js' />"></script>
+	<script src="//cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+	<script type="text/javascript" src="<c:url value='/resources/js/subscribe.js' />"></script>
+	
 
 
 </head>
@@ -50,9 +54,10 @@
                 </div>
                 <!-- END SIDEBAR USER TITLE -->
                 <!-- SIDEBAR BUTTONS -->
+           
                 <div class="profile-userbuttons">
-                    <button type="button" class="btn btn-success btn-sm">Follow</button>
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Message</button>
+                    <button id = "add-to-friends-button" type="button" class="btn btn-success btn-sm">Follow</button>
+                    <button id = "message-button" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Message</button>
                 </div>
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->

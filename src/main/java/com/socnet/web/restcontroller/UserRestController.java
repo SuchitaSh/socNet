@@ -23,6 +23,7 @@ public class UserRestController {
 		
 		user.setFollowings(null);
 		user.setPosts(null);
+		user.setNotifications(null);
 		
 		return user;
 	}
@@ -31,6 +32,7 @@ public class UserRestController {
 	public User getUser(){
 		User user = userService.getCurrentUser();
 		
+		user.setNotifications(null);
 		user.setFollowings(null);
 		user.setPosts(null);
 		

@@ -30,8 +30,8 @@
             <button id = "create-button">create</button>
             <p class="message">Already registered? <a href="#" onclick="toggle_visibility(); return false;" class="message">Sign In</a></p>
         </form>
-        <form class="login-form" action="login" method="post">
-            <input type="text" name="login" placeholder="username" autocomplete="off"/>
+        <form id = "login-form" class="login-form" action="login" method="post">
+            <input id = "login" type="text" name="login" placeholder="username" autocomplete="off"/>
             <input type="password" name="password" placeholder="password"/>
             <input class="submit" type="submit" value="Login">
             <p class="message">Not registered? <a href="#" onclick="toggle_visibility(); return false;" class="message">Create an account</a></p>

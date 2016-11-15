@@ -23,6 +23,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script type="text/javascript" src="<c:url value='/resources/js/friends.js' />"></script>
+   <script type="text/javascript" src="<c:url value='/resources/js/subscribe.js' />"></script>
   
 
 </head>
@@ -41,12 +42,20 @@
                 <ul class="list-group" id="contact-list">
                    </ul>
                                 </div>
+ 
             </div>
+ 
+ 
+ 
+ 
         </div>
     </div>
     
 <br>
 <br>
+
+
+
 
 
 </body>

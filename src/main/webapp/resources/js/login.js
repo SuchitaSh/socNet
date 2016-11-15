@@ -25,38 +25,11 @@ $(document).ready(function($) {
         var token = $('#csrfToken').val();
         var header = $('#csrfHeader').val();
 
-        $.post(url, data);
-        
-        /*
-         * if in spring aplication csrf enable
-         * send csrf parameter in header otherwise 405 error
-         */
-//        $.ajax({
-//            type 	 : "POST",
-//            url      : url,
-//            data 	 : JSON.stringify(data),
-//            dataType : 'json',
-//            beforeSend: function(xhr) {
-//                xhr.setRequestHeader("Accept", "application/json");
-//                xhr.setRequestHeader("Content-Type", "application/json");
-//                xhr.setRequestHeader(header, token);
-//            },
-//            success  : function(response) {
-//                var message = "registration sucess";
-//                //				$("#msg").html(data.message);
-//                console.log(resonse.data);
-//                alert(resonse.message);
-//                data = null;
-//                document.getElementById("registerForm").reset()
-//            },
-//            error 	 : function(e) {
-//                console.log("ERROR: ",e);
-//                alert("registration failed");
-////						$("#msg").html(e.message);
-//                data = null;
-//                document.getElementById("registerForm").reset()
-//            }
-//        });
-
+        $.post(url, data);    
     });
+	
+	$('#login-form').submit(function() {
+		localStorage.setItem("username", $("#login").val())
+		return true; 
+	});
 });

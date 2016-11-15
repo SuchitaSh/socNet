@@ -9,7 +9,7 @@ function getAllUsers(){
 		for(user of data){
 		console.log(user);
 		var userUrl = "http://localhost:8080/socNet/home/" + user.username;
-        var div = '<li class="list-group-item">' +
+        var div = '<li class="list-group-item clearfix">' +
                         '<div class="col-xs-12 col-sm-3">' +
                             '<img src="http://api.randomuser.me/portraits/men/49.jpg" ' +
                         'alt="' + user.firstName + ' ' + user.lastName + 

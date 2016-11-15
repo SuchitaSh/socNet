@@ -18,6 +18,10 @@
     <link rel="stylesheet" type="text/css" href="${navbarCss}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+ <script type="text/javascript" src="<c:url value='/resources/js/stomp.js' />"></script>
+    <script src="//cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+	 <script type="text/javascript" src="<c:url value='/resources/js/subscribe.js' />"></script>
+	
 
 </head>
 <body>
@@ -37,7 +41,7 @@
                 <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
                     <div class="profile-usertitle-name">
-                        <c:out value="${user.firstName} ${user.lastName}" />
+                       	<p id = "user-fullname"></p>
                     </div>
                     <div class="profile-usertitle-job">
                         Developer
@@ -46,8 +50,10 @@
                 <!-- END SIDEBAR USER TITLE -->
                 <!-- SIDEBAR BUTTONS -->
                 <div class="profile-userbuttons">
-                    <button type="button" class="btn btn-success btn-sm">Follow</button>
-                    <button type="button" class="btn btn-danger btn-sm">Message</button>
+                    <button id = "add-to-friends-button" type="button" class="btn btn-success btn-sm">
+                    	Add to friends
+                    </button>
+                    <button id = "message-button" type="button" class="btn btn-danger btn-sm">Message</button>
                 </div>
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->
@@ -146,6 +152,7 @@
 
 
 <script type="text/javascript" src="<c:url value='/resources/js/post.js' />"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/user.js' />"></script>
 
 </body>
 </html>

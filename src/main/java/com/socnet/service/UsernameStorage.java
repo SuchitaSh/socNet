@@ -1,5 +1,7 @@
 package com.socnet.service;
 
+import java.security.Principal;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -8,7 +10,7 @@ import org.springframework.web.context.annotation.SessionScope;
  */
 @Component
 @SessionScope
-public class UsernameStorage {
+public class UsernameStorage implements Principal{
     private String username;
 
     public String getUsername() {
@@ -17,5 +19,10 @@ public class UsernameStorage {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+    
+    @Override
+    public String getName() {
+    	return username;
     }
 }

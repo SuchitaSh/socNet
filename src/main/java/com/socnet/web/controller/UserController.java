@@ -1,22 +1,31 @@
 package com.socnet.web.controller;
 
+import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
+import com.socnet.service.PostService;
 import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PostService postService;
 
     @GetMapping("/")
     public String showRootPage() {
@@ -38,9 +47,17 @@ public class UserController {
     }
     
     @GetMapping("/home/{username}")
-    public String showUserHomePage(){
-    	
-    	return "home";
+    public String showUserHomePage(@PathVariable String username, Model model){
+        User user = userService.findUserByUsername(username);
+        model.addAttribute("user",user);
+        Set<User> friends = userService.getUserFriends(user.getUsername());
+        User currentUser = userService.getCurrentUser();
+        for (Iterator<User> it = friends.iterator(); it.hasNext();) {
+            User us = it.next();
+            if (us.getId()==currentUser.getId())
+                model.addAttribute("friend", true);
+        }
+    	return "user-page";
     }
 
     @GetMapping("/settings")

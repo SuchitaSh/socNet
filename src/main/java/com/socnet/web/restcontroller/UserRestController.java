@@ -26,7 +26,7 @@ public class UserRestController {
 		
 		return user;
 	}
-	
+
 	@GetMapping(path = "api/user/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public User getUser(){
 		User user = userService.getCurrentUser();

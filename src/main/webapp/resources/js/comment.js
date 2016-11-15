@@ -1,58 +1,55 @@
 $(function () {
     // Cache
 
-    var $posts = $('#posts');
-    var $postForm = $('#post-form');
-    var $formPostTitle = $('#form-post-title');
-    var $formPostText = $('#form-post-text')
+    var $comments = $('#comments');
+    var $commentsForm = $('#comments-form');
+    var $formCommentText = $('#form-comment-text')
     var templates = getTemplates(true);
     var userId = $('#user-id').val();
+    var postId = $('#post-id').val();
 
 
 //     Logic
 
-    retrievePosts();
+    retrieveComments();
 
     registerEventHandlers();
 
     // Functions
 
-    function addPosts(posts) {
+    function addComments(comments) {
 
-        posts = makeArray(posts);
+        comments = makeArray(comments);
 
-        posts.forEach(function (post) {
-            post.user = post.user || {};
+        comments.forEach(function (comment) {
+            comment.user = comment.user || {};
 
-            $post = templates['post'].clone();
-            $post.find('.placeholder-title').html(post.title);
-            $post.find('.placeholder-post').html(post.text);
-            $posts.prepend($post);
-            // TODO: add all posts in one batch
+            $comment = templates['comment'].clone();
+            $comment.find('.placeholder-comment').html(comment.text);
+            $comments.prepend($comment);
         });
     }
 
-    function retrievePosts() {
-        getJson('/socNet/api/users/' + userId + '/posts')
-            .success(function (posts) {
-                addPosts(posts);
+    function retrieveComments() {
+        getJson('/socNet/api/posts/' + postId + '/comments')
+            .success(function (comments) {
+                addComments(comments);
             });
     }
 
-    function sendPost(post) {
-        addPosts(post);
-        postJson('/socNet/api/users/' + userId + '/posts', post);
+    function sendComment(comment) {
+        addComments(comment);
+        postJson('/socNet/api/posts/' + postId + '/comments', comment);
     }
 
     function registerEventHandlers() {
 
-        $postForm.submit(function (e) {
+        $commentsForm.submit(function (e) {
             e.preventDefault();
-            sendPost({
-                title: $formPostTitle.val(),
-                text: $formPostText.val()
+            sendComment({
+                text: $formCommentText.val()
             });
-            $postForm.find('*').val('');
+            $commentsForm.find('*').val('');
         });
     }
 
@@ -63,7 +60,7 @@ function getJson(url, data) {
         method: 'GET',
         data: data,
         dataType: 'json',
-        contentType: 'application/json',
+        contentType: 'application/json'
     });
 }
 
@@ -72,7 +69,7 @@ function postJson(url, data) {
         method: 'POST',
         data: JSON.stringify(data),
         dataType: 'json',
-        contentType: 'application/json',
+        contentType: 'application/json'
     });
 }
 
@@ -101,7 +98,7 @@ function getTemplatesSources(remove) {
 
         templates[templateName] = $el.html();
         templateScripts.push($el);
-    })
+    });
 
     if (remove === true) {
         templateScripts.forEach(function (el) {
@@ -119,3 +116,4 @@ function makeArray(maybeArray) {
 
     return maybeArray;
 }
+

@@ -21,6 +21,8 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.socnet.web.Views;
 
 @Entity
 @Table(name = "posts")
@@ -28,20 +30,25 @@ public class Post {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView({Views.Summary.class})
 	private Long id;
 	
 	@Column(name = "title")
+	@JsonView({Views.Summary.class})
 	private String title;
 	
 	@Column(name = "text")
+	@JsonView({Views.Summary.class})
 	private String text;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "posting_date")
+	@JsonView({Views.Summary.class})
 	private Date postingDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
+	@JsonView({Views.WithParent.class})
 	private User user;
 	
 	@ManyToOne
@@ -51,6 +58,7 @@ public class Post {
 	
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
+	@JsonView({Views.WithChildren.class})
 	private Set<Comment> comments = new HashSet<>();
 	
 	public Post() {

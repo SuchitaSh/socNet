@@ -1,32 +1,29 @@
 package com.socnet.service;
 
+import com.socnet.dto.BasicPostDto;
 import com.socnet.persistence.entities.Notification;
 import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
 import com.socnet.persistence.repository.UsersRepository;
-
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 @Service
 public class UserService {
 
     private UsernameStorage principal;
     private UsersRepository usersRepository;
+	private ModelMapper modelMapper;
 
     @Autowired
-    public UserService(UsernameStorage principal, UsersRepository usersRepository) {
+    public UserService(UsernameStorage principal, UsersRepository usersRepository, ModelMapper modelMapper) {
         this.principal = principal;
         this.usersRepository = usersRepository;
+		this.modelMapper = modelMapper;
     }
 
     /*    method returns User object, and saves username in sessionScope "principal"
@@ -54,8 +51,9 @@ public class UserService {
     }
 
     @Transactional
-    public Post addPost(String text, String title) { //now return Post
-        Post post = new Post();
+    public BasicPostDto addPost(String text, String title) { //now return Post
+
+		Post post = new Post();
         post.setText(text);
         post.setPostingDate(new Date());
         post.setTitle(title);
@@ -63,7 +61,8 @@ public class UserService {
         post.setUser(user);
         user.addPost(post);
         usersRepository.save(user);
-        return post;
+
+        return modelMapper.map(user, BasicPostDto.class);
     }
    
    public boolean isUsernameAvailable(String username){

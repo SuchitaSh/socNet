@@ -1,31 +1,32 @@
 package com.socnet.service;
 
+import com.socnet.dto.BasicPostDto;
 import com.socnet.exception.EntityNotFoundException;
-import com.socnet.persistence.entities.Comment;
 import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
 import com.socnet.persistence.repository.PostsRepository;
 import com.socnet.persistence.repository.UsersRepository;
-
-import org.hibernate.Hibernate;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class PostService {
 
+    private ModelMapper modelMapper;
     private UsersRepository usersRepository;
     private PostsRepository postsRepository;
 
     @Autowired
-    public PostService(UsersRepository usersRepository, PostsRepository postsRepository) {
+    public PostService(UsersRepository usersRepository, PostsRepository postsRepository,
+                       ModelMapper modelMapper) {
         this.usersRepository = usersRepository;
         this.postsRepository = postsRepository;
+        this.modelMapper = modelMapper;
     }
 
     public Post addPost(Post post) {
@@ -38,27 +39,19 @@ public class PostService {
      * @return Post entities with all comments
      */
     @Transactional
-    public Set<Post> getAllPostsOfUser(Long userId) {
+    public Set<BasicPostDto> getAllPostsOfUser(Long userId) {
         User user = usersRepository.findById(userId);
+
         if (user == null) {
             throw new EntityNotFoundException();
         }
 
-        Set<Post> userPosts = postsRepository.findByUser(user);
+        Set<BasicPostDto> posts =  postsRepository.findByUser(user)
+                .stream()
+                .map(post -> modelMapper.map(post, BasicPostDto.class))
+                .collect(Collectors.toSet());
 
-        userPosts.stream()
-                .forEach(Hibernate::initialize);
-
-//        userPosts.stream()
-//                 .map(Post::getComments)
-//                 .forEach(Hibernate::initialize);
-
-        userPosts.stream()
-                .map(Post::getComments)
-                .flatMap(Set::stream)
-                .forEach(Hibernate::initialize);
-
-        return userPosts;
+        return posts;
     }
 
     /**

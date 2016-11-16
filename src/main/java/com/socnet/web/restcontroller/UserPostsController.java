@@ -1,19 +1,15 @@
 package com.socnet.web.restcontroller;
 
-import com.fasterxml.jackson.annotation.JsonView;
+import com.socnet.dto.BasicPostDto;
 import com.socnet.persistence.entities.Post;
-import com.socnet.persistence.entities.User;
 import com.socnet.service.PostService;
 import com.socnet.service.UserService;
-import com.socnet.web.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.Set;
 
 @RestController
@@ -31,16 +27,14 @@ public class UserPostsController {
     }
 
     @GetMapping
-    @JsonView(Views.WithChildren.class)
-    public ResponseEntity<Set<Post>> getAllPosts(@PathVariable long userId) {
-        Set<Post> userPosts = postService.getAllPostsOfUser(userId);
+    public ResponseEntity<Set<BasicPostDto>> getAllPosts(@PathVariable long userId) {
+        Set<BasicPostDto> userPosts = postService.getAllPostsOfUser(userId);
         return ResponseEntity.ok(userPosts);
     }
 
     @PostMapping
-    public ResponseEntity<Post> addPost(@PathVariable long userId, @RequestBody Post post) {
-        // TODO: not allowed exception
-        Post newPost = userService.addPost(post.getText(), post.getTitle());
+    public ResponseEntity<BasicPostDto> addPost(@PathVariable long userId, @RequestBody Post post) {
+        BasicPostDto newPost = userService.addPost(post.getText(), post.getTitle());
         return ResponseEntity.ok(newPost);
     }
 }

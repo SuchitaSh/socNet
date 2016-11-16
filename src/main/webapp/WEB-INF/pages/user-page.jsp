@@ -31,7 +31,7 @@
 </head>
 <body>
 
-<c:import url = "/resources/html/navbar.html"/>
+<c:import url = "/resources/html/navbar.jsp"/>
 <input type="hidden" id="user-id" value="${user.id}"/>
 <div class="container">
     <div class="row profile">

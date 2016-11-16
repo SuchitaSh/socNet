@@ -1,12 +1,16 @@
 package com.socnet.config;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.context.event.ApplicationEventMulticaster;
+import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -46,7 +50,16 @@ public class RootConfig extends WebMvcConfigurerAdapter {
 		messageSource.setUseCodeAsDefaultMessage(true);
 		return messageSource;
 	}
-
+	
+	 @Bean(name = "applicationEventMulticaster")
+	    public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
+	        SimpleApplicationEventMulticaster eventMulticaster 
+	          = new SimpleApplicationEventMulticaster();
+	         
+	        eventMulticaster.setTaskExecutor(new SimpleAsyncTaskExecutor());
+	        return eventMulticaster;
+	    }
+	
 	 @Override
 	    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
 	        configurer.setDefaultTimeout(1000000);

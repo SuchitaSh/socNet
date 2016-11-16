@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -24,6 +25,7 @@ import com.socnet.persistence.entities.User;
 import com.socnet.service.UserService;
 import com.socnet.service.UsernameStorage;
 import com.socnet.utils.NotificationType;
+import com.socnet.web.controller.events.FriendRequestEvent;
 
 
 @Controller
@@ -31,12 +33,21 @@ public class AddFriendController {
 
 	@Autowired
 	UserService userService;
-
+	
+	@GetMapping(path = "/api/addToFriends/{username}")
+	public void addToFriends(@PathVariable String username){
+		System.out.println("fuck");
+		userService.addNotificationToUser(username, NotificationType.FRIEND_REQUEST);
+		userService.addCurrentUserFollowing(username);
+		System.out.println("hell yeah");
+		
+		
+	}
+	
 	@MessageMapping("/notification.private.{username}")
 	@SendTo("/topic/notifications/{username}")
 	public String addToFriend(@DestinationVariable String username){	
-	
-		return "message";
+		return NotificationType.FRIEND_REQUEST;
 		
 	}
 	

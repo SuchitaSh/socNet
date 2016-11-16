@@ -5,8 +5,8 @@ import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
 import com.socnet.persistence.repository.UsersRepository;
 
-import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -127,7 +127,7 @@ public class UserService {
 		   allUsers.add(newUser);
 	   }
 	   
-	   return allUsers;
+	   return allUsers;	
    }
    
    public User findUserByUsername(String username){
@@ -138,24 +138,17 @@ public class UserService {
    //not working with websockets
    @Transactional
    public Notification addNotificationToUser(String username, String eventType){
-	   System.out.println("01");
 	   System.out.println(username);
-	   User receiver = usersRepository.findByUsername(username);
-	 
+	   User receiver = findUserByUsername(username);
 	   System.out.println(principal.getUsername() + "asdfasdfa");
 	   User author = usersRepository.findByUsername(principal.getUsername()); 
-	   System.out.println("02");
 	   
 	   Notification notification = new Notification();
 	   notification.setAuthor(author);
-	   System.out.println("02");
-	   notification.setReceiver(receiver);
-	   System.out.println("03");
+	   receiver.addNotification(notification);
 	   notification.setEventType(eventType);
 	   
-	   System.out.println("1");
 	   usersRepository.save(receiver);
-	   System.out.println("2");
 	   return notification;
 	   
    }
@@ -174,9 +167,7 @@ public class UserService {
 	   User following = usersRepository.findByUsername(username);
 	   currentUser.addFollowing(following);
 
-	   System.out.println("4");
 	   usersRepository.save(currentUser);
-	   System.out.println("5");
 
    }
    

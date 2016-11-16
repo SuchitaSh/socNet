@@ -59,7 +59,7 @@ public class UserController {
     @GetMapping("/settings")
     public String showSettingsPage(Model model) {
         model.addAttribute("user", userService.getCurrentUser());
-        return "user_settings";
+        return "user-settings";
     }
 
     @PostMapping("/change-information")

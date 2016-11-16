@@ -1,12 +1,10 @@
 package com.socnet.persistence.repository;
 
-import java.util.Set;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
+
+import java.util.List;
+import java.util.Set;
 
 public interface PostsRepository {
 
@@ -14,4 +12,5 @@ public interface PostsRepository {
 	Set<Post> findByUser(User user);
 	Set<Post> findByTitle(String title);
 	Post save(Post post);
+	List<Post> findByUserOrderByIdAsc(User user);
 }

@@ -1,7 +1,7 @@
 package com.socnet.web.restcontroller;
 
 import com.socnet.dto.BasicPostDto;
-import com.socnet.persistence.entities.Post;
+import com.socnet.dto.BasicUserDto;
 import com.socnet.service.PostService;
 import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/users/{userId:[0-9]+}/posts",
@@ -27,14 +27,15 @@ public class UserPostsController {
     }
 
     @GetMapping
-    public ResponseEntity<Set<BasicPostDto>> getAllPosts(@PathVariable long userId) {
-        Set<BasicPostDto> userPosts = postService.getAllPostsOfUser(userId);
+    public ResponseEntity<List<BasicPostDto>> getAllPosts(@PathVariable long userId) {
+        List<BasicPostDto> userPosts = postService.getAllPostsOfUser(userId);
         return ResponseEntity.ok(userPosts);
     }
 
     @PostMapping
-    public ResponseEntity<BasicPostDto> addPost(@PathVariable long userId, @RequestBody Post post) {
-        BasicPostDto newPost = userService.addPost(post.getText(), post.getTitle());
+    public ResponseEntity<BasicPostDto> addPost(@PathVariable long userId, @RequestBody BasicPostDto post) {
+        post.setUser(new BasicUserDto(userId));
+        BasicPostDto newPost = postService.addPost(post);
         return ResponseEntity.ok(newPost);
     }
 }

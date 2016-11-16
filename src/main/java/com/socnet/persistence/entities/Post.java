@@ -48,9 +48,13 @@ public class Post {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	@JsonBackReference
 	@JsonView({Views.WithParent.class})
 	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name = "author_id")
+	private User author;
+	
 	
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
@@ -103,6 +107,14 @@ public class Post {
 			user.addPost(this);
 		}
 		
+	}
+	
+	public User getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(User author) {
+		this.author = author;
 	}
 
 	public Set<Comment> getComments() {

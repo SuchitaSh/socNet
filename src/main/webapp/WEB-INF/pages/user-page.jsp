@@ -21,14 +21,18 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
-
+    <script type="text/javascript" src="<c:url value='/resources/js/stomp.js' />"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/user.js' />"></script>
+	<script src="//cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+	<script type="text/javascript" src="<c:url value='/resources/js/subscribe.js' />"></script>
+	
 
 
 </head>
 <body>
 
-<c:import url = "/resources/html/navbar.html"/>
-
+<c:import url = "/resources/html/navbar.jsp"/>
+<input type="hidden" id="user-id" value="${user.id}"/>
 <div class="container">
     <div class="row profile">
 
@@ -50,9 +54,10 @@
                 </div>
                 <!-- END SIDEBAR USER TITLE -->
                 <!-- SIDEBAR BUTTONS -->
+           
                 <div class="profile-userbuttons">
-                    <button type="button" class="btn btn-success btn-sm">Follow</button>
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Message</button>
+                    <button id = "add-to-friends-button" type="button" class="btn btn-success btn-sm">Follow</button>
+                    <button id = "message-button" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Message</button>
                 </div>
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->
@@ -72,25 +77,6 @@
 
         <div class="col-md-9">
             <div class="profile-content">
-                <div class="post-form">
-                    <form method="post" action="addPost" id="postForm">
-                        <input id="title" type="text" name="title" placeholder="Enter title of your post">
-                        <br>
-                        <textarea id="text"  name="text" rows="5" cols="100"></textarea>
-                        <input id="create-button" type="submit" value="Post">
-                    </form>
-                </div>
-
-                <div class="wall-posts">
-                    <c:forEach items="${posts}" var="post">
-                        <h2>${post.title}</h2>
-                        <br>
-                        <p>${post.text}</p>
-                        <br>
-                        <p>${post.postingDate}</p>
-                    </c:forEach>
-                </div>
-
                 <hr/>
 
                 <div class="row">
@@ -99,8 +85,24 @@
                     </div>
                 </div>
 
-                <div id="posts">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="widget-area no-padding blank">
 
+                            <div class="status-upload">
+                                <form id="post-form">
+                                    <input type="text" id="form-post-title" placeholder="Title" <c:if test="${!friend}">disabled</c:if> />
+                                    <textarea id="form-post-text" placeholder="What are you doing right now?" <c:if test="${!friend}">disabled</c:if> ></textarea>
+                                    <button <c:if test="${!friend}">disabled</c:if> type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Share</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <br/>
+                <div id="posts">
                 </div>
 
             </div>
@@ -128,7 +130,7 @@
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
             </div>
             <div class="modal-body">
-               <textarea id="message" name="message" rows="5" cols="80"></textarea>
+                <textarea id="message" name="message" rows="5" cols="80"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

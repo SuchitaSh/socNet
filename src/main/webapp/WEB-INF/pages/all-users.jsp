@@ -23,12 +23,12 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script type="text/javascript" src="<c:url value='/resources/js/all-users.js' />"></script>
-  
+    
 
 </head>
 <body>
 
-	<c:import url = "/resources/html/navbar.html"/>
+	<c:import url = "/resources/html/navbar.jsp"/>
 
 <div class="container">
 <div class="row">

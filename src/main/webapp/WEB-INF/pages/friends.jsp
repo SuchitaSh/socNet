@@ -28,7 +28,7 @@
 </head>
 <body>
 
-	<c:import url = "/resources/html/navbar.html"/>
+	<c:import url = "/resources/html/navbar.jsp"/>
 
 <div class="container">
 <div class="row">
@@ -41,12 +41,20 @@
                 <ul class="list-group" id="contact-list">
                    </ul>
                                 </div>
+ 
             </div>
+ 
+ 
+ 
+ 
         </div>
     </div>
     
 <br>
 <br>
+
+
+
 
 
 </body>

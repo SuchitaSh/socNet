@@ -22,7 +22,7 @@
 </head>
 <body>
 
-<c:import url="/resources/html/navbar.html"/>
+<c:import url = "/resources/html/navbar.jsp"/>
 
 <div class="container">
     <input type="hidden" id="user-id" value="${user.id}"/>

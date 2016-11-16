@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
 import com.socnet.persistence.repository.PostsRepository;
+import com.socnet.persistence.spring.data.repository.SpringDataPostsRepository;
 
 @Repository
 public class PostsRepositorySpringDataImpl implements PostsRepository {

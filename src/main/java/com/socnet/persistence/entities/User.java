@@ -47,7 +47,6 @@ public class User {
 	private Date dateOfBirth;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonManagedReference
 	private Set<Post> posts = new HashSet<>();
 	
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -55,6 +54,9 @@ public class User {
 				joinColumns = @JoinColumn(name = "first_user_id"),
 				inverseJoinColumns = @JoinColumn(name = "second_user_id"))
 	private Set<User> followings = new HashSet<>();
+
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Notification> notifications = new HashSet<>();
 	
 	public User() {
 	}
@@ -179,6 +181,37 @@ public class User {
 			followings.remove(user);
 			
 		}
+	
+	@JsonIgnore
+	public Set<Notification> getNotifications() {
+		return notifications;
+	}
+
+
+	public void setNotifications(Set<Notification> notifications) {
+		this.notifications = notifications;
+	}
+	
+	public void addNotification(Notification notification){
+		
+		if(notification == null){
+			throw new NullPointerException("Can't pass null notification");
+		}
+		
+		notifications.add(notification);
+		
+		if(notification.getReceiver() == null){
+			notification.setReceiver(this);
+		}
+	}
+	
+	public void removeNotification(Notification notification){
+		
+		notifications.remove(notification);
+		notification.setReceiver(null);
+		
+	}
+
 
 	@JsonIgnore
 	public Set<User> getFriends(){

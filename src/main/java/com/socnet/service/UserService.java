@@ -1,18 +1,21 @@
 package com.socnet.service;
 
+import com.socnet.persistence.entities.Notification;
 import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
 import com.socnet.persistence.repository.UsersRepository;
 
-import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class UserService {
@@ -124,12 +127,79 @@ public class UserService {
 		   allUsers.add(newUser);
 	   }
 	   
-	   return allUsers;
+	   return allUsers;	
    }
    
    public User findUserByUsername(String username){
 	   return usersRepository.findByUsername(username);
    }
+   
+    @Transactional
+   public Notification addNotificationToUser(String username, String eventType){
+	   User receiver = findUserByUsername(username);
+	   User author = usersRepository.findByUsername(principal.getUsername()); 
+	   
+	   Notification notification = new Notification();
+	   notification.setAuthor(author);
+	   receiver.addNotification(notification);
+	   notification.setEventType(eventType);
+	   
+	   usersRepository.save(receiver);
+	   return notification;
 	   
    }
    
+   @Transactional
+   public void removeNotificationFromUser(String username, Long notificationId){
+	   User user = usersRepository.findByUsername(username);
+	   user.getNotifications().removeIf(notification -> notification.getId() == notificationId);
+	   usersRepository.save(user);
+   }
+   
+   @Transactional
+   public void addCurrentUserFollowing(String username){
+	   User currentUser = usersRepository.findByUsername(username);
+	   User following = usersRepository.findByUsername(username);
+	   currentUser.addFollowing(following);
+
+	   usersRepository.save(currentUser);
+
+   }
+   
+   @Transactional
+   public Set<Notification> getUserNotifications(String username){
+		User user = usersRepository.findByUsername(username);
+		
+		Set<Notification> result = new TreeSet<>(new Comparator<Notification>() {
+			@Override
+			public int compare(Notification o1, Notification o2) {
+				return (int)(o1.getId() - o2.getId());
+			}
+		});
+
+		for(Notification n: user.getNotifications()){
+			result.add(n);
+		}
+		
+	   return result;
+}
+  
+	@Transactional
+   public Set<Notification> getCurrentUserNotifications(){
+		User user = getCurrentUser();
+		
+		Set<Notification> result = new TreeSet<>(new Comparator<Notification>() {
+			@Override
+			public int compare(Notification o1, Notification o2) {
+				return (int)(o1.getId() - o2.getId());
+			}
+		});
+
+		for(Notification n: user.getNotifications()){
+			result.add(n);
+		}
+		
+	   return result;
+}
+   
+}

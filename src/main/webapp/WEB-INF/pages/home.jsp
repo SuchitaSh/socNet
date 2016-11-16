@@ -18,11 +18,11 @@
     <link rel="stylesheet" type="text/css" href="${navbarCss}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-
+ 
 </head>
 <body>
 
-<c:import url = "/resources/html/navbar.html"/>
+<c:import url = "/resources/html/navbar.jsp"/>
 
 <div class="container">
     <input type="hidden" id="user-id" value="${user.id}"/>
@@ -32,20 +32,22 @@
             <div class="profile-sidebar">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src="/resources/usersImages/${user.id}.png" class="img-responsive" alt="">
+                    <img src="/socNet/resources/usersImages/${user.id}.png" class="img-responsive" alt="">
                 </div>
                 <!-- END SIDEBAR USERPIC -->
                 <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
                     <div class="profile-usertitle-name">
-                        <c:out value="${user.firstName} ${user.lastName}" />
+                       	<p id = "user-fullname"></p>
                     </div>
                 </div>
                 <!-- END SIDEBAR USER TITLE -->
                 <!-- SIDEBAR BUTTONS -->
                 <div class="profile-userbuttons">
-                    <button type="button" class="btn btn-success btn-sm">Messages</button>
-                    <button type="button" class="btn btn-danger btn-sm">Followers</button>
+           <button id = "add-to-friends-button" type="button" class="btn btn-success btn-sm">
+                    	Add to friends
+                    </button>
+                    <button id = "message-button" type="button" class="btn btn-danger btn-sm">Message</button>
                 </div>
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->
@@ -109,6 +111,7 @@
 <c:import url="/resources/html/comment.template.html"/>
 
 <script type="text/javascript" src="<c:url value='/resources/js/post.js' />"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/user.js' />"></script>
 
 </body>
 </html>

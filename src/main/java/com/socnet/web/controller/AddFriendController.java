@@ -25,8 +25,6 @@ import com.socnet.persistence.entities.User;
 import com.socnet.service.UserService;
 import com.socnet.service.UsernameStorage;
 import com.socnet.utils.NotificationType;
-import com.socnet.web.controller.events.FriendRequestEvent;
-
 
 @Controller
 public class AddFriendController {
@@ -36,10 +34,8 @@ public class AddFriendController {
 	
 	@GetMapping(path = "/api/addToFriends/{username}")
 	public void addToFriends(@PathVariable String username){
-		System.out.println("fuck");
 		userService.addNotificationToUser(username, NotificationType.FRIEND_REQUEST);
 		userService.addCurrentUserFollowing(username);
-		System.out.println("hell yeah");
 		
 		
 	}

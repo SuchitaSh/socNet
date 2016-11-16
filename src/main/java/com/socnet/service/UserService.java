@@ -134,13 +134,9 @@ public class UserService {
 	   return usersRepository.findByUsername(username);
    }
    
-   
-   //not working with websockets
-   @Transactional
+    @Transactional
    public Notification addNotificationToUser(String username, String eventType){
-	   System.out.println(username);
 	   User receiver = findUserByUsername(username);
-	   System.out.println(principal.getUsername() + "asdfasdfa");
 	   User author = usersRepository.findByUsername(principal.getUsername()); 
 	   
 	   Notification notification = new Notification();
@@ -162,7 +158,6 @@ public class UserService {
    
    @Transactional
    public void addCurrentUserFollowing(String username){
-	   System.out.println("3");
 	   User currentUser = usersRepository.findByUsername(username);
 	   User following = usersRepository.findByUsername(username);
 	   currentUser.addFollowing(following);

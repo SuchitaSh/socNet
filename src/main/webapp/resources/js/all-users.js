@@ -4,7 +4,6 @@
 function getAllUsers(){
 	
 	var url = "http://localhost:8080/socNet/api/users";
-	console.log(url);
 	$.get(url, function(data){
 		for(user of data){
 		console.log(user);

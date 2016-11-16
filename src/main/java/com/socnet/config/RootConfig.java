@@ -51,18 +51,6 @@ public class RootConfig extends WebMvcConfigurerAdapter {
 		return messageSource;
 	}
 	
-	 @Bean(name = "applicationEventMulticaster")
-	    public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
-	        SimpleApplicationEventMulticaster eventMulticaster 
-	          = new SimpleApplicationEventMulticaster();
-	         
-	        eventMulticaster.setTaskExecutor(new SimpleAsyncTaskExecutor());
-	        return eventMulticaster;
-	    }
-	
-	 @Override
-	    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
-	        configurer.setDefaultTimeout(1000000);
-	    }	
+
 	
 }

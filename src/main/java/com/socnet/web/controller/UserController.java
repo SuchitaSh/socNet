@@ -19,11 +19,12 @@ import java.util.Set;
 
 @Controller
 public class UserController {
-    @Autowired
     private UserService userService;
 
     @Autowired
-    private PostService postService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public String showRootPage() {

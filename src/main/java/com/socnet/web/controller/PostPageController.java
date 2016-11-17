@@ -35,7 +35,7 @@ public class PostPageController {
         }
         ModelAndView modelAndView = new ModelAndView("post");
         modelAndView.addObject("post", post);
-        modelAndView.addObject("author", post.getUser());
+        modelAndView.addObject("author", post.getAuthor());
         modelAndView.addObject("user", userService.getCurrentUser());
         return modelAndView;
     }

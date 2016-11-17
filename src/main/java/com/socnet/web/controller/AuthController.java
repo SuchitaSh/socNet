@@ -11,29 +11,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AuthController {
-    public static final String KEY_LOGIN_ERROR = "login-error";
+    public static final String KEY_LOGIN_ERROR = "login-error";  //can it be private? RL
     public static final String KEY_REGISTER_ERROR = "register-error";
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/login")
     public String loginPage() {
-        if(userService.getCurrentUser() != null) {
+        if (userService.getCurrentUser() != null) {
             return "redirect:/home";
         }
-
         return "login";
     }
 
-    
+
     @PostMapping("/login")
     public String doLogin(@RequestParam String login,
-                                @RequestParam String password,
-                                Model model) {
+                          @RequestParam String password,
+                          Model model) {
         User user = userService.login(login, password);
 
-        if(user == null) {
+        if (user == null) {
             model.addAttribute(KEY_LOGIN_ERROR, true); // TODO: i18n
             return "redirect:/login";
         }
@@ -42,12 +45,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String doRegister(@RequestParam String username,@RequestParam String password,
+    public String doRegister(@RequestParam String username, @RequestParam String password,
                              @RequestParam String email, @RequestParam String name,
                              @RequestParam String surname,
-                             Model model){
+                             Model model) {
 
-        if(! userService.isUsernameAvailable(username)){
+        if (!userService.isUsernameAvailable(username)) {
             model.addAttribute(KEY_REGISTER_ERROR, true);
             return "redirect:/login";
         }
@@ -70,5 +73,4 @@ public class AuthController {
 
         return "redirect:/login";
     }
-
 }

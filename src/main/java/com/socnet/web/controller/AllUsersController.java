@@ -6,12 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AllUsersController {
 
-	@GetMapping("/all-users")
-	public String allUsers(){
-		
-		return "all-users";
-	
-	}
-	
-	
+    @GetMapping("/all-users")
+    public String allUsers() {
+
+        return "all-users";
+    }
 }

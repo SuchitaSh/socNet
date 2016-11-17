@@ -14,22 +14,25 @@ import com.socnet.service.UserService;
 
 @RestController
 public class AllUsersRestController {
+    private UserService userService;
 
-	@Autowired
-	UserService userService;
-	
-	@GetMapping(path = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Set<User>> getCurrentUserFriends(){
-	
-		Set<User> allUsers = userService.getAllUsersInfo();
+    @Autowired
+    public AllUsersRestController(UserService userService) {
+        this.userService = userService;
+    }
 
-		
-		if(allUsers.isEmpty()){
-			return new ResponseEntity<Set<User>>(HttpStatus.NO_CONTENT);
-		}
-		
-		return ResponseEntity.ok(allUsers);
-	}
+    @GetMapping(path = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<User>> getCurrentUserFriends() {
 
-	
+        Set<User> allUsers = userService.getAllUsersInfo();
+
+
+        if (allUsers.isEmpty()) {
+            return new ResponseEntity<Set<User>>(HttpStatus.NO_CONTENT);
+        }
+
+        return ResponseEntity.ok(allUsers);
+    }
+
+
 }

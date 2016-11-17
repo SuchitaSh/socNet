@@ -26,6 +26,9 @@
 
 <div class="container">
     <input type="hidden" id="user-id" value="${user.id}"/>
+    <input type="hidden" id="user-first-name" value="${user.firstName}"/>
+    <input type="hidden" id="user-last-name" value="${user.lastName}"/>
+
     <div class="row profile">
 
         <div class="col-md-3">

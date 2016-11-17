@@ -1,6 +1,5 @@
 package com.socnet.web.controller;
 
-import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
 import com.socnet.service.PostService;
 import com.socnet.service.UserService;
@@ -16,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -34,7 +32,14 @@ public class UserController {
 
     @GetMapping("/home")
     public String showHomePage(Model model) {
-         return "home";
+        User user = userService.getCurrentUser();
+
+        if(user == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute(user);
+        return "home";
     }
     
     @GetMapping("/home/{username}")
@@ -54,7 +59,7 @@ public class UserController {
     @GetMapping("/settings")
     public String showSettingsPage(Model model) {
         model.addAttribute("user", userService.getCurrentUser());
-        return "user_settings";
+        return "user-settings";
     }
 
     @PostMapping("/change-information")

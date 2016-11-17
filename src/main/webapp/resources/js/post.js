@@ -4,12 +4,15 @@ $(function () {
     var $posts = $('#posts');
     var $postForm = $('#post-form');
     var $formPostTitle = $('#form-post-title');
-    var $formPostText = $('#form-post-text')
+    var $formPostText = $('#form-post-text');
+
+    var firstName = $('#user-first-name').val();
+    var lastName = $('#user-last-name').val();
     var templates = getTemplates(true);
     var userId = $('#user-id').val();
 
 
-//     Logic
+    //     Logic
 
     retrievePosts();
 
@@ -23,12 +26,15 @@ $(function () {
 
         posts.forEach(function (post) {
             post.user = post.user || {};
+            post.author.firstName = post.author.firstName || firstName;
+            post.author.lastName = post.author.lastName || lastName;
 
             $post = templates['post'].clone();
             var postLink = '<a href="posts/' + post.id + '">' + post.title + '</a>';
 
             $post.find('.placeholder-title').html(postLink);
             $post.find('.placeholder-post').html(post.text);
+            $post.find('.placeholder-author').html(post.author.firstName + " " + post.author.lastName);
             $posts.prepend($post);
             // TODO: add all posts in one batch
         });
@@ -43,7 +49,8 @@ $(function () {
 
     function sendPost(post) {
         addPosts(post);
-        postJson('/socNet/api/users/' + userId + '/posts', post);
+        postJson('/socNet/api/users/' + userId + '/posts', post).
+        success(console.log);
     }
 
     function registerEventHandlers() {
@@ -52,7 +59,10 @@ $(function () {
             e.preventDefault();
             sendPost({
                 title: $formPostTitle.val(),
-                text: $formPostText.val()
+                text: $formPostText.val(),
+                author: {
+                    id: userId,
+                }
             });
             $postForm.find('*').val('');
         });

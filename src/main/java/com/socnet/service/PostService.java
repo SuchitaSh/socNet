@@ -1,36 +1,62 @@
 package com.socnet.service;
 
+import com.socnet.dto.BasicPostDto;
+import com.socnet.exception.AccessDeniedException;
 import com.socnet.exception.EntityNotFoundException;
-import com.socnet.persistence.entities.Comment;
 import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
 import com.socnet.persistence.repository.PostsRepository;
 import com.socnet.persistence.repository.UsersRepository;
-
-import org.hibernate.Hibernate;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class PostService {
 
+    private ModelMapper modelMapper;
     private UsersRepository usersRepository;
     private PostsRepository postsRepository;
+    private UserService userService;
 
     @Autowired
-    public PostService(UsersRepository usersRepository, PostsRepository postsRepository) {
+    public PostService(UsersRepository usersRepository, PostsRepository postsRepository,
+                       UserService userService, ModelMapper modelMapper) {
         this.usersRepository = usersRepository;
         this.postsRepository = postsRepository;
+        this.modelMapper = modelMapper;
+        this.userService = userService;
     }
 
-    public Post addPost(Post post) {
+    @Transactional
+    public BasicPostDto addPost(BasicPostDto postDto) throws AccessDeniedException {
+        User user = userService.getCurrentUser();
+
+        // TODO: move permission checking to another place(e.g. Filter)
+        if(user == null) {
+            throw new AccessDeniedException();
+        }
+
+        Long currentUserId = user.getId();
+
+        if(currentUserId == null) {
+            throw new AccessDeniedException();
+        }
+
+        // TODO: uncomment when there will be a correct impl of isFriendOf
+//        if(!currentUserId.equals(postDto.getId()) && userService.isFriendOf()) {
+//            throw new AccessDeniedException();
+//        }
+
+        Post post = modelMapper.map(postDto, Post.class);
+        post.setPostingDate(new Date());
         post = postsRepository.save(post);
-        return post;
+        return modelMapper.map(post, BasicPostDto.class);
     }
 
 
@@ -38,27 +64,19 @@ public class PostService {
      * @return Post entities with all comments
      */
     @Transactional
-    public Set<Post> getAllPostsOfUser(Long userId) {
+    public List<BasicPostDto> getAllPostsOfUser(Long userId) {
         User user = usersRepository.findById(userId);
+
         if (user == null) {
             throw new EntityNotFoundException();
         }
 
-        Set<Post> userPosts = postsRepository.findByUser(user);
+        List<BasicPostDto> posts =  postsRepository.findByUserOrderByIdAsc(user)
+                .stream()
+                .map(post -> modelMapper.map(post, BasicPostDto.class))
+                .collect(Collectors.toList());
 
-        userPosts.stream()
-                .forEach(Hibernate::initialize);
-
-//        userPosts.stream()
-//                 .map(Post::getComments)
-//                 .forEach(Hibernate::initialize);
-
-        userPosts.stream()
-                .map(Post::getComments)
-                .flatMap(Set::stream)
-                .forEach(Hibernate::initialize);
-
-        return userPosts;
+        return posts;
     }
 
     /**

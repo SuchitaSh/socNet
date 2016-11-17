@@ -12,30 +12,33 @@ import com.socnet.service.UserService;
 
 @RestController
 public class UserRestController {
+    private UserService userService;
 
-	@Autowired
-	UserService userService;
-	
-	@GetMapping(path = "api/user/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public User getUser(@PathVariable String username){
-		System.out.println(username);
-		User user = userService.findUserByUsername(username);
-		
-		user.setFollowings(null);
-		user.setPosts(null);
-		user.setNotifications(null);
-		
-		return user;
-	}
+    @Autowired
+    public UserRestController(UserService userService) {
+        this.userService = userService;
+    }
 
-	@GetMapping(path = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
-	public User getUser(){
-		User user = userService.getCurrentUser();
-		
-		user.setNotifications(null);
-		user.setFollowings(null);
-		user.setPosts(null);
-		
-		return user;
-	}
+    @GetMapping(path = "api/user/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User getUser(@PathVariable String username) {
+        System.out.println(username);
+        User user = userService.findUserByUsername(username);
+
+        user.setFollowings(null);
+        user.setPosts(null);
+        user.setNotifications(null);
+
+        return user;
+    }
+
+    @GetMapping(path = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User getUser() {
+        User user = userService.getCurrentUser();
+
+        user.setNotifications(null);
+        user.setFollowings(null);
+        user.setPosts(null);
+
+        return user;
+    }
 }

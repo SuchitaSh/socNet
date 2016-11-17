@@ -124,6 +124,12 @@ body {
 .post .panel {
 	position:relative;
 }
+
+.post a{
+    display: block;
+    height: 100%; /* Высота на весь слой */
+}
+
 .post .panel>.panel-heading:after,.post .panel>.panel-heading:before{
 	position:absolute;
 	top:11px;left:-16px;

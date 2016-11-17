@@ -25,23 +25,6 @@ public class UserService {
         this.modelMapper = modelMapper;
     }
 
-    /*    method returns User object, and saves username in sessionScope "principal"
-    returns null if user does not found or password does not match.*/
-
-    public User login(String login, String password) {
-        User user = usersRepository.findByUsername(login);
-        if (user != null && user.getPassword().equals(password)) {
-            principal.setUsername(user.getUsername());
-        } else {
-            user = null;
-        }
-        return user;
-    }
-
-    public void logout() {
-        principal.setUsername(null);
-    }
-
     public User getCurrentUser() {
         if (principal.getUsername() == null) {
             return null;

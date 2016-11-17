@@ -1,6 +1,7 @@
 package com.socnet.web.controller;
 
 import com.socnet.persistence.entities.User;
+import com.socnet.service.AuthService;
 import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,16 +16,20 @@ public class AuthController {
     public static final String KEY_REGISTER_ERROR = "register-error";
 
     private UserService userService;
+    private AuthService authService;
 
     @Autowired
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, AuthService authService) {
         this.userService = userService;
+        this.authService = authService;
     }
 
     @GetMapping("/login")
     public String loginPage() {
-        if (userService.getCurrentUser() != null) {
-            return "redirect:/home";
+        if (userService.getCurrentUser() != null) {     //Do we need this if?  RL
+
+            return "redirect:/home";                    // Is it criminal to go to login page
+                                                        // when you already logged in? May be you want to change account
         }
         return "login";
     }
@@ -34,7 +39,7 @@ public class AuthController {
     public String doLogin(@RequestParam String login,
                           @RequestParam String password,
                           Model model) {
-        User user = userService.login(login, password);
+        User user = authService.login(login, password);
 
         if (user == null) {
             model.addAttribute(KEY_LOGIN_ERROR, true); // TODO: i18n
@@ -69,7 +74,7 @@ public class AuthController {
 
     @GetMapping("/logout")
     public String doLogout() {
-        userService.logout();
+        authService.logout();
 
         return "redirect:/login";
     }

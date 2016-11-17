@@ -32,7 +32,6 @@ public class PostsController {
         return ResponseEntity.ok(commentsOfPost);
     }
 
-
     @PostMapping
     public ResponseEntity<Comment> addComment(@PathVariable long postId, @RequestBody Comment comment) {
         System.out.println(comment.getText());

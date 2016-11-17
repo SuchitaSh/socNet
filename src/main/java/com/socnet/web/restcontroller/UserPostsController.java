@@ -18,12 +18,10 @@ import java.util.List;
         consumes = MediaType.APPLICATION_JSON_VALUE)
 public class UserPostsController {
     private PostService postService;
-    private UserService userService;
 
     @Autowired
-    public UserPostsController(PostService postService, UserService userService) {
+    public UserPostsController(PostService postService) {
         this.postService = postService;
-        this.userService = userService;
     }
 
     @GetMapping

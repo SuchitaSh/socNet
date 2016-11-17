@@ -34,11 +34,6 @@ public class UserController {
     @GetMapping("/home")
     public String showHomePage(Model model) {
         User user = userService.getCurrentUser();
-
-        if(user == null) {
-            return "redirect:/login";
-        }
-
         model.addAttribute(user);
         return "home";
     }

@@ -34,7 +34,6 @@ public class PostsController {
 
     @PostMapping
     public ResponseEntity<Comment> addComment(@PathVariable long postId, @RequestBody Comment comment) {
-        System.out.println(comment.getText());
         Comment newComment = commentService.addCommentToPost(postId, comment.getText());
         return ResponseEntity.ok(newComment);
     }

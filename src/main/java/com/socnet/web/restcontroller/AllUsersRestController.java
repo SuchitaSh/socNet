@@ -2,6 +2,7 @@ package com.socnet.web.restcontroller;
 
 import java.util.Set;
 
+import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

@@ -3,6 +3,7 @@ package com.socnet.web.controller;
 import com.socnet.exception.EntityNotFoundException;
 import com.socnet.persistence.entities.Post;
 import com.socnet.service.PostService;
+import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

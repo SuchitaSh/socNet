@@ -1,5 +1,6 @@
 package com.socnet.web.restcontroller;
 
+import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -140,7 +140,6 @@ public class UserService {
 		User currentUser = getCurrentUser();
 		User following = usersRepository.findByUsername(username);
 		currentUser.addFollowing(following);
-
 		usersRepository.save(currentUser);
 
 	}
@@ -189,6 +188,16 @@ public class UserService {
 
 	@Transactional
 	public Set<User> getFollowersOfUser(String username) {
-		return usersRepository.getFollowingsByUsername(username);
+		User user = usersRepository.findByUsername(username);
+		Set<User> followers = new HashSet<>();
+		User newUser = new User();
+		Set<Notification> notifications = user.getNotifications();
+		for (Notification n: notifications) {
+			newUser = n.getAuthor();
+			followers.add(newUser);
+		}
+		Set<User> friends = getUserFriends(username);
+		followers.removeAll(friends);
+		return followers;
 	}
 }

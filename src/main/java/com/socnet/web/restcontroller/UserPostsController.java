@@ -3,7 +3,6 @@ package com.socnet.web.restcontroller;
 import com.socnet.dto.BasicPostDto;
 import com.socnet.dto.BasicUserDto;
 import com.socnet.service.PostService;
-import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

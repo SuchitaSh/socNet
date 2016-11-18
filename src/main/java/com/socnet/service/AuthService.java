@@ -22,9 +22,6 @@ public class AuthService {
         this.usersRepository = usersRepository;
     }
 
-
-
-
     /*    method returns User object, and saves username in sessionScope "principal"
     returns null if user does not found or password does not match.*/
 
@@ -43,6 +40,6 @@ public class AuthService {
     }
 
     public boolean isCurrentUserLoggedIn() {
-        return principal.getUsername() == null ? false : true;
+        return principal.getUsername() != null;
     }
 }

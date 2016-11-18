@@ -180,4 +180,10 @@ public class UserService {
 
         return result;
     }
+
+    @Transactional
+    public boolean isCurrentUserFriendOf(User maybeFriend) {
+        User currentUser = getCurrentUser();
+        return currentUser.getFriends().contains(maybeFriend);
+    }
 }

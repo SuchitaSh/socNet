@@ -22,8 +22,8 @@ public class LoginRequiredInterceptor extends HandlerInterceptorAdapter {
         if (authService.isCurrentUserLoggedIn()) {
             return true;
         }
-        System.out.println("redirect unauthorised user");   //todo remove after testing
-        response.sendRedirect("/socNet/login");             //todo remove "socNet"
+        System.out.println("INTERCEPTOR: redirect unauthorized user");   //todo remove after testing
+        response.sendRedirect("/socNet/login");                         //todo remove "socNet"
         return false;
     }
 }

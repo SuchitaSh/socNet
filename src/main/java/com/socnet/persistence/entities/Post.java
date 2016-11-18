@@ -1,8 +1,6 @@
 package com.socnet.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.socnet.web.Views;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,36 +13,29 @@ public class Post {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView({Views.Summary.class})
 	private Long id;
 	
 	@Column(name = "title", nullable = false)
-	@JsonView({Views.Summary.class})
 	private String title;
 	
 	@Column(name = "text", nullable = false)
-	@JsonView({Views.Summary.class})
 	private String text;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "posting_date", nullable = false)
-	@JsonView({Views.Summary.class})
 	private Date postingDate;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id")
-	@JsonView({Views.WithParent.class})
 	private User user;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "author_id")
-	@JsonView({Views.Summary.class})
 	private User author;
 	
 	
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
-	@JsonView({Views.WithChildren.class})
 	private Set<Comment> comments = new HashSet<>();
 	
 	public Post() {

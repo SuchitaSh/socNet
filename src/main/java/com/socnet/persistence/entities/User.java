@@ -1,8 +1,6 @@
 package com.socnet.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.socnet.web.Views;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,32 +13,25 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView({Views.Summary.class})
 	private Long id;
 
 	@Column(name = "username", unique = true, nullable = false)
-	@JsonView({Views.Summary.class})
 	private String username;
 	
 	@Column(name = "password", nullable = false)
-	@JsonView({Views.Summary.class})
 	private String password;
 	
 	@Column(name = "first_name", nullable = false)
-	@JsonView({Views.Summary.class})
 	private String firstName;
 	
 	@Column(name = "last_name", nullable = false)
-	@JsonView({Views.Summary.class})
 	private String lastName;
 	
 	@Column(name = "email", nullable = false)
-	@JsonView({Views.Summary.class})
 	private String email;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_birth")
-	@JsonView({Views.Summary.class})
 	private Date dateOfBirth;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

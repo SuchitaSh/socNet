@@ -8,6 +8,7 @@ $(function () {
 
     var firstName = $('#user-first-name').val();
     var lastName = $('#user-last-name').val();
+    var username = $('#user-username').val();
     var templates = getTemplates(true);
     var userId = $('#user-id').val();
 
@@ -28,13 +29,17 @@ $(function () {
             post.user = post.user || {};
             post.author.firstName = post.author.firstName || firstName;
             post.author.lastName = post.author.lastName || lastName;
+            post.author.username = post.author.username || username;
 
             $post = templates['post'].clone();  //todo remove socNet
             var postLink = '<a href="/socNet/posts/' + post.id + '">' + post.title + '</a>';
+            var authorLink = '<a href="/socNet/home/' + post.author.username + '">' +
+                             post.author.firstName + " " + post.author.lastName +
+                             '</a>'
 
             $post.find('.placeholder-title').html(postLink);
             $post.find('.placeholder-post').html(post.text);
-            $post.find('.placeholder-author').html(post.author.firstName + " " + post.author.lastName);
+            $post.find('.placeholder-author').html(authorLink);
             $posts.prepend($post);
             // TODO: add all posts in one batch
         });

@@ -6,6 +6,16 @@ body {
     overflow: hidden;
 }
 
+.relative-container {
+    position: relative;
+}
+
+.comment-author {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
 /* Profile container */
 .profile {
     margin: 1px 0;

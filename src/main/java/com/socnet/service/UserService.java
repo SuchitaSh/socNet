@@ -157,7 +157,7 @@ public class UserService {
    
    @Transactional
    public void addCurrentUserFollowing(String username){
-	   User currentUser = usersRepository.findByUsername(username);
+	   User currentUser = getCurrentUser();
 	   User following = usersRepository.findByUsername(username);
 	   currentUser.addFollowing(following);
 
@@ -200,5 +200,18 @@ public class UserService {
 		
 	   return result;
 }
+	@Transactional
+	public Set<User> getCurrentUserFollowers(){
+		User user = getCurrentUser();
+		Set<User> u = usersRepository.getFollowingsByUsername(user.getUsername());
+		return usersRepository.getFollowingsByUsername(user.getUsername());
+	}
+
+	@Transactional
+	public Set<User> getUserFollowers(String userName){
+		User user = usersRepository.findByUsername(userName);
+		return usersRepository.getFollowingsByUsername(user.getUsername());
+	}
+
    
 }

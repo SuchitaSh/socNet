@@ -47,9 +47,12 @@
                 <!-- END SIDEBAR USER TITLE -->
                 <!-- SIDEBAR BUTTONS -->
                 <div class="profile-userbuttons">
-           <button id = "add-to-friends-button" type="button" class="btn btn-success btn-sm">
+          <%-- <button id = "add-to-friends-button" type="button" class="btn btn-success btn-sm">
                     	Add to friends
-                    </button>
+                    </button>--%>
+                    <a href="http://localhost:8080/socNet/followers" id = "" type="button" class="btn btn-success btn-sm">
+                    	Followers
+                    </a>
                     <button id = "message-button" type="button" class="btn btn-danger btn-sm">Message</button>
                 </div>
                 <!-- END SIDEBAR BUTTONS -->

@@ -24,7 +24,7 @@ public class FollowersRestController {
     @GetMapping(path = "/api/followers", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<User>> getCurrentUserFriends(){
 
-        Set<User> followers = userService.getCurrentUserFollowers();
+        Set<User> followers = userService.getFollowersOfUser(userService.getCurrentUser().getUsername());
 
         if(followers.isEmpty()){
             return new ResponseEntity<Set<User>>(HttpStatus.NO_CONTENT);
@@ -35,7 +35,7 @@ public class FollowersRestController {
 
     @GetMapping(path = "/api/followers/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<User>> getUserFriends(@PathVariable String username){
-        Set<User> followers = userService.getUserFollowers(username);
+        Set<User> followers = userService.getFollowersOfUser(username);
 
         if(followers.isEmpty()){
             return new ResponseEntity<Set<User>>(HttpStatus.NO_CONTENT);

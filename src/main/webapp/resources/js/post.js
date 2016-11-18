@@ -29,8 +29,8 @@ $(function () {
             post.author.firstName = post.author.firstName || firstName;
             post.author.lastName = post.author.lastName || lastName;
 
-            $post = templates['post'].clone();
-            var postLink = '<a href="posts/' + post.id + '">' + post.title + '</a>';
+            $post = templates['post'].clone();  //todo remove socNet
+            var postLink = '<a href="/socNet/posts/' + post.id + '">' + post.title + '</a>';
 
             $post.find('.placeholder-title').html(postLink);
             $post.find('.placeholder-post').html(post.text);

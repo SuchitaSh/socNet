@@ -28,23 +28,22 @@ import com.socnet.utils.NotificationType;
 
 @Controller
 public class AddFriendController {
+    private UserService userService;
 
-	@Autowired
-	UserService userService;
-	
-	@GetMapping(path = "/api/addToFriends/{username}")
-	public void addToFriends(@PathVariable String username){
-		userService.addNotificationToUser(username, NotificationType.FRIEND_REQUEST);
-		userService.addCurrentUserFollowing(username);
-		
-		
-	}
-	
-	@MessageMapping("/notification.private.{username}")
-	@SendTo("/topic/notifications/{username}")
-	public String addToFriend(@DestinationVariable String username){	
-		return NotificationType.FRIEND_REQUEST;
-		
-	}
-	
+    @Autowired
+    public AddFriendController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping(path = "/api/addToFriends/{username}")
+    public void addToFriends(@PathVariable String username) {
+        userService.addNotificationToUser(username, NotificationType.FRIEND_REQUEST);
+        userService.addCurrentUserFollowing(username);
+    }
+
+    @MessageMapping("/notification.private.{username}")
+    @SendTo("/topic/notifications/{username}")
+    public String addToFriend(@DestinationVariable String username) {
+        return NotificationType.FRIEND_REQUEST;
+    }
 }

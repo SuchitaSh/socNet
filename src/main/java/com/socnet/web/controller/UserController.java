@@ -19,11 +19,12 @@ import java.util.Set;
 
 @Controller
 public class UserController {
-    @Autowired
     private UserService userService;
 
     @Autowired
-    private PostService postService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public String showRootPage() {
@@ -33,11 +34,6 @@ public class UserController {
     @GetMapping("/home")
     public String showHomePage(Model model) {
         User user = userService.getCurrentUser();
-
-        if(user == null) {
-            return "redirect:/login";
-        }
-
         model.addAttribute(user);
         return "home";
     }

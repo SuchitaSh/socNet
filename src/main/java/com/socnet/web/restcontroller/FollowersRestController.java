@@ -43,5 +43,4 @@ public class FollowersRestController {
 
         return ResponseEntity.ok(followers);
     }
-
 }

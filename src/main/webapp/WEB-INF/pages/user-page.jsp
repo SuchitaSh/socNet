@@ -56,7 +56,10 @@
                 <!-- SIDEBAR BUTTONS -->
            
                 <div class="profile-userbuttons">
-                    <button id = "add-to-friends-button" type="button" class="btn btn-success btn-sm">Follow</button>
+                    <c:if test="${!friend}">
+                    <c:if test="${follower}"><button id = "add-to-friends-button" type="button" class="btn btn-success btn-sm">Add to friend</button></c:if>
+                    <c:if test="${!follower}"><button id = "add-to-friends-button" type="button" class="btn btn-success btn-sm">Follow</button></c:if></c:if>
+                    <c:if test="${friend}"><p>${user.username} is your friend</p></c:if>
                     <button id = "message-button" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Message</button>
                 </div>
                 <!-- END SIDEBAR BUTTONS -->

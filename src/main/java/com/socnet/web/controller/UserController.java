@@ -39,6 +39,9 @@ public class UserController {
     public String showUserHomePage(@PathVariable String username, Model model){
         User someone = userService.findUserByUsername(username);
         model.addAttribute("user",someone);
+        if (userService.isCurrentUserFollowerOf(userService.findUserByUsername(username))) {
+            model.addAttribute("follower", true);
+        }
             if (userService.isCurrentUserFriendOf(someone)){
                 model.addAttribute("friend", true);
         }

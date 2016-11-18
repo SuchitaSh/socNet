@@ -187,6 +187,12 @@ public class UserService {
 	}
 
 	@Transactional
+	public boolean isCurrentUserFollowerOf(User maybeFollower) {
+		User currentUser = getCurrentUser();
+		return getFollowersOfUser(currentUser.getUsername()).contains(maybeFollower);
+	}
+
+	@Transactional
 	public Set<User> getFollowersOfUser(String username) {
 		User user = usersRepository.findByUsername(username);
 		Set<User> followers = new HashSet<>();

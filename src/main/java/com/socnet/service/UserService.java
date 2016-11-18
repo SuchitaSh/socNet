@@ -186,9 +186,4 @@ public class UserService {
         User currentUser = getCurrentUser();
         return currentUser.getFriends().contains(maybeFriend);
     }
-
-    @Transactional
-    public Set<User> getFollowersOfUser(String username) {
-        return usersRepository.getFollowingsByUsername(username);
-    }
 }

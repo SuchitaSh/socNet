@@ -18,25 +18,25 @@ public class Post {
 	@JsonView({Views.Summary.class})
 	private Long id;
 	
-	@Column(name = "title")
+	@Column(name = "title", nullable = false)
 	@JsonView({Views.Summary.class})
 	private String title;
 	
-	@Column(name = "text")
+	@Column(name = "text", nullable = false)
 	@JsonView({Views.Summary.class})
 	private String text;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "posting_date")
+	@Column(name = "posting_date", nullable = false)
 	@JsonView({Views.Summary.class})
 	private Date postingDate;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id")
 	@JsonView({Views.WithParent.class})
 	private User user;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "author_id")
 	@JsonView({Views.Summary.class})
 	private User author;

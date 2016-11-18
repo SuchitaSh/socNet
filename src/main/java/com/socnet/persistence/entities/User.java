@@ -1,13 +1,10 @@
 package com.socnet.persistence.entities;
 
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.socnet.web.Views;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,23 +18,23 @@ public class User {
 	@JsonView({Views.Summary.class})
 	private Long id;
 
-	@Column(name = "username", unique = true)
+	@Column(name = "username", unique = true, nullable = false)
 	@JsonView({Views.Summary.class})
 	private String username;
 	
-	@Column(name = "password")
+	@Column(name = "password", nullable = false)
 	@JsonView({Views.Summary.class})
 	private String password;
 	
-	@Column(name = "first_name")
+	@Column(name = "first_name", nullable = false)
 	@JsonView({Views.Summary.class})
 	private String firstName;
 	
-	@Column(name = "last_name")
+	@Column(name = "last_name", nullable = false)
 	@JsonView({Views.Summary.class})
 	private String lastName;
 	
-	@Column(name = "email")
+	@Column(name = "email", nullable = false)
 	@JsonView({Views.Summary.class})
 	private String email;
 

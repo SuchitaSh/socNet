@@ -15,16 +15,16 @@ public class Comment {
 	@JsonView({Views.Summary.class})
 	private Long id;
 	
-	@Column(name = "comment_text")
+	@Column(name = "comment_text", nullable = false)
 	@JsonView({Views.Summary.class})
 	private String text;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id")
 	@JsonView({Views.WithChildren.class})
 	private User user;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "post_id")
 	@JsonBackReference
 	@JsonView({Views.WithParent.class})

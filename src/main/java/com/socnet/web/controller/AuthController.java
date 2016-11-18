@@ -2,7 +2,6 @@ package com.socnet.web.controller;
 
 import com.socnet.persistence.entities.User;
 import com.socnet.service.AuthService;
-import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

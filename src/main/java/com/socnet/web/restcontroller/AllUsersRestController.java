@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.socnet.persistence.entities.User;
-import com.socnet.service.UserService;
 
 @RestController
 public class AllUsersRestController {

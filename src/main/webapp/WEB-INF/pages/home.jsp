@@ -8,7 +8,7 @@
     <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapMinCss" />
     <spring:url value="/resources/css/bootstrap-theme.min.css" var="bootstrapThemeMinCss" />
     <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />
-    <spring:url value="resources/css/navbar.css" var = "navbarCss"/>
+    <spring:url value="/resources/css/navbar.css" var = "navbarCss"/>
     <spring:url value="/resources/html/navbar.html" var = "navbarHtml"/>
 
     <link rel="stylesheet" type="text/css" href="${styleCss}">

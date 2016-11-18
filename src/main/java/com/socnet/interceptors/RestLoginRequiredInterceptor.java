@@ -22,7 +22,7 @@ public class RestLoginRequiredInterceptor extends HandlerInterceptorAdapter {
         if (authService.isCurrentUserLoggedIn()) {
             return true;
         }
-        System.out.println("unauthorised rest request - sent HTTP-401 response");   //todo remove after testing
+        System.out.println("REST INTERCEPTOR: unauthorized rest request - sent HTTP-401 response");   //todo remove after testing
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         return false;
     }

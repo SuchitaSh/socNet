@@ -195,15 +195,15 @@ public class UserService {
 	@Transactional
 	public Set<User> getFollowersOfUser(String username) {
 		User user = usersRepository.findByUsername(username);
-		Set<User> followers = new HashSet<>();
+		Set<User> follower = new HashSet<>();
 		User newUser = new User();
 		Set<Notification> notifications = user.getNotifications();
 		for (Notification n: notifications) {
 			newUser = n.getAuthor();
-			followers.add(newUser);
+			follower.add(newUser);
 		}
 		Set<User> friends = getUserFriends(username);
-		followers.removeAll(friends);
-		return followers;
+		follower.removeAll(friends);
+		return follower;
 	}
 }

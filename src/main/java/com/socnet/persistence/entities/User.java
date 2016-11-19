@@ -43,6 +43,10 @@ public class User {
 				inverseJoinColumns = @JoinColumn(name = "second_user_id"))
 	private Set<User> followings = new HashSet<>();
 
+	@ManyToMany(mappedBy = "followings")
+	private Set<User> followers = new HashSet<>();
+	
+	
 	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Notification> notifications = new HashSet<>();
 	
@@ -154,22 +158,48 @@ public class User {
 	public void setFollowings(Set<User> followings) {
 		this.followings = followings;
 	}
-
+	
 	public void addFollowing(User user){
 		if(user == null){
-			throw new NullPointerException("Can't add null user");
+			throw new NullPointerException("Can't add null user as following");
 		}
 		
 		followings.add(user);
+		if(! user.getFollowers().contains(this)){
+			user.addFollower(this);
+		}
 		
 	}
-	
 	public void removeFollowing(User user){
 		
 			followings.remove(user);
 			
 		}
 	
+	public Set<User> getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(Set<User> followers) {
+		this.followers = followers;
+	}
+	
+	public void addFollower(User follower){
+		if(follower == null){
+			throw new NullPointerException("Cant't add null user as follower");
+		}
+		
+		this.followers.add(follower);
+		if(! follower.followings.contains(this)){
+			follower.addFollowing(this);
+		}
+	}
+	
+	public void removeFollower(User follower){
+		this.followers.remove(follower);
+	} 
+
+
 	@JsonIgnore
 	public Set<Notification> getNotifications() {
 		return notifications;

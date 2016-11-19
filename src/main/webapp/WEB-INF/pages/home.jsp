@@ -37,7 +37,7 @@
             <div class="profile-sidebar">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src="/socNet/resources/usersImages/${user.id}.png" class="img-responsive" alt="">
+                    <img src="/resources/usersImages/${user.id}.png" class="img-responsive" alt="">
                 </div>
                 <!-- END SIDEBAR USERPIC -->
                 <!-- SIDEBAR USER TITLE -->
@@ -52,7 +52,7 @@
           <%-- <button id = "add-to-friends-button" type="button" class="btn btn-success btn-sm">
                     	Add to friends
                     </button>--%>
-                    <a href="http://localhost:8080/socNet/followers" id = "" type="button" class="btn btn-success btn-sm">
+                    <a href="/followers" id = "" type="button" class="btn btn-success btn-sm">
                     	Followers
                     </a>
                     <button id = "message-button" type="button" class="btn btn-danger btn-sm">Message</button>

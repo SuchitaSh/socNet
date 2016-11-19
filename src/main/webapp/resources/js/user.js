@@ -10,7 +10,7 @@ function getUserInfo(){
         if(user == "/home")
             user = "";
 	
-	var url = "http://localhost:8080/socNet/api/user" + user;
+	var url = "/api/user" + user;
 	
 	
 	$.get(url, function(data){
@@ -29,12 +29,12 @@ function addToFriends(){
         if(user == "/home")
             user = "";
 	
-	var getUrl = "http://localhost:8080/socNet/api/addToFriends" + user;
+	var getUrl = "/api/addToFriends" + user;
 	$.get(getUrl);
 
 	var stompClient = null;
 	
-	var socket = new SockJS('/socNet/socnetws');
+	var socket = new SockJS('/socnetws');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
     	var destination = "/app/notification.private." + user.substring(1, user.length);

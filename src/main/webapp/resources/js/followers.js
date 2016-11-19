@@ -10,12 +10,12 @@ function getFriends(){
     if(follower == "/followers")
         follower = "";
 
-    var url = "http://localhost:8080/socNet/api/followers" + follower;
+    var url = "/api/followers" + follower;
     $.get(url, function(data){
         console.log(JSON.stringify(data));
 
         for(user of data){
-            var followerUrl = "http://localhost:8080/socNet/home/" + user.username;
+            var followerUrl = "/home/" + user.username;
             var div = '<li class="list-group-item clearfix">' +
                 '<div class="col-xs-12 col-sm-3">' +
                 '<img src="http://api.randomuser.me/portraits/men/49.jpg" ' +

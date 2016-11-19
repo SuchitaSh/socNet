@@ -6,9 +6,9 @@ function connect(){
 		
 	var stompClient = null;
 
-		friendsUrl = "http://localhost:8080/socNet/friends";
+		friendsUrl = "/friends";
 	
-	    var socket = new SockJS('/socNet/socnetws');
+	    var socket = new SockJS('/socnetws');
 	    stompClient = Stomp.over(socket);
 	    stompClient.connect({}, function (frame) {
 	        stompClient.subscribe('/topic/notifications/' + localStorage.getItem("username"), function (notification) {

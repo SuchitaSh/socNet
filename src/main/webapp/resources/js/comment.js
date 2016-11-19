@@ -27,7 +27,7 @@ $(function () {
         comments.forEach(function (comment) {
             comment.user = comment.user || {};
 
-            var authorLink = link("/socNet/home/" + comment.user.username,
+            var authorLink = link("/home/" + comment.user.username,
                                   comment.user.firstName + " " + comment.user.lastName);
 
             $comment = templates['comment'].clone();
@@ -39,7 +39,7 @@ $(function () {
     }
 
     function retrieveComments() {
-        getJson('/socNet/api/posts/' + postId + '/comments')
+        getJson('/api/posts/' + postId + '/comments')
             .success(function (comments) {
                 addComments(comments);
             });
@@ -47,7 +47,7 @@ $(function () {
 
     function sendComment(comment) {
         addComments(comment);
-        postJson('/socNet/api/posts/' + postId + '/comments', comment);
+        postJson('/api/posts/' + postId + '/comments', comment);
     }
 
     function registerEventHandlers() {

@@ -23,7 +23,7 @@ public class LoginRequiredInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
         System.out.println("INTERCEPTOR: redirect unauthorized user");   //todo remove after testing
-        response.sendRedirect("/socNet/login");                         //todo remove "socNet"
+        response.sendRedirect("/login");
         return false;
     }
 }

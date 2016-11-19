@@ -37,6 +37,7 @@ public class FollowersRestController {
     public ResponseEntity<Set<User>> getUserFriends(@PathVariable String username){
         Set<User> followers = userService.getFollowersOfUser(username);
 
+
         if(followers.isEmpty()){
             return new ResponseEntity<Set<User>>(HttpStatus.NO_CONTENT);
         }

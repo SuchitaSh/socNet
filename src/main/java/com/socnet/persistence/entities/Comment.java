@@ -1,8 +1,6 @@
 package com.socnet.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.socnet.web.Views;
 
 import javax.persistence.*;
 
@@ -12,22 +10,18 @@ public class Comment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView({Views.Summary.class})
 	private Long id;
 	
-	@Column(name = "comment_text")
-	@JsonView({Views.Summary.class})
+	@Column(name = "comment_text", nullable = false)
 	private String text;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id")
-	@JsonView({Views.WithChildren.class})
 	private User user;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "post_id")
 	@JsonBackReference
-	@JsonView({Views.WithParent.class})
 	private Post post;
 	
 	public Comment() {

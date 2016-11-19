@@ -22,11 +22,16 @@
 </head>
 <body>
 
+<!-- Model values used by Javascript -->
+<input type="hidden" id="post-id" value="${post.id}"/>
+<input type="hidden" id="user-id" value="${user.id}"/>
+<input type="hidden" id="user-first-name" value="${user.firstName}"/>
+<input type="hidden" id="user-last-name" value="${user.lastName}"/>
+<input type="hidden" id="user-username" value="${user.username}"/>
+
 <c:import url = "/resources/html/navbar.jsp"/>
 
 <div class="container">
-    <input type="hidden" id="user-id" value="${user.id}"/>
-    <input type="hidden" id="post-id" value="${post.id}"/>
     <div class="row profile">
 
         <div class="col-md-3">

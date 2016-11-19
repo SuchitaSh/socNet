@@ -7,6 +7,9 @@ $(function () {
     var templates = getTemplates(true);
     var userId = $('#user-id').val();
     var postId = $('#post-id').val();
+    var firstName = $('#user-first-name').val();
+    var lastName = $('#user-last-name').val();
+    var username = $('#user-username').val();
 
 
 //     Logic
@@ -24,8 +27,13 @@ $(function () {
         comments.forEach(function (comment) {
             comment.user = comment.user || {};
 
+            var authorLink = link("/socNet/home/" + comment.user.username,
+                                  comment.user.firstName + " " + comment.user.lastName);
+
             $comment = templates['comment'].clone();
             $comment.find('.placeholder-comment').html(comment.text);
+            $comment.find('.placeholder-author').html(authorLink);
+
             $comments.prepend($comment);
         });
     }
@@ -47,7 +55,12 @@ $(function () {
         $commentsForm.submit(function (e) {
             e.preventDefault();
             sendComment({
-                text: $formCommentText.val()
+                text: $formCommentText.val(),
+                user: {
+                    username: username,
+                    firstName: firstName,
+                    lastName: lastName
+                }
             });
             $commentsForm.find('*').val('');
         });
@@ -115,5 +128,11 @@ function makeArray(maybeArray) {
     }
 
     return maybeArray;
+}
+
+function link(href, text) {
+    return '<a href="' + href + '">' +
+               text +
+           '</a>';
 }
 

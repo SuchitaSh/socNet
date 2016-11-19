@@ -1,13 +1,8 @@
 package com.socnet.persistence.entities;
 
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.socnet.web.Views;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,32 +13,25 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView({Views.Summary.class})
 	private Long id;
 
-	@Column(name = "username", unique = true)
-	@JsonView({Views.Summary.class})
+	@Column(name = "username", unique = true, nullable = false)
 	private String username;
 	
-	@Column(name = "password")
-	@JsonView({Views.Summary.class})
+	@Column(name = "password", nullable = false)
 	private String password;
 	
-	@Column(name = "first_name")
-	@JsonView({Views.Summary.class})
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
 	
-	@Column(name = "last_name")
-	@JsonView({Views.Summary.class})
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
 	
-	@Column(name = "email")
-	@JsonView({Views.Summary.class})
+	@Column(name = "email", nullable = false)
 	private String email;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_birth")
-	@JsonView({Views.Summary.class})
 	private Date dateOfBirth;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

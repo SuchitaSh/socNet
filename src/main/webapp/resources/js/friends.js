@@ -10,12 +10,12 @@ function getFriends(){
         if(friend == "/friends")
             friend = "";
 
-	var url = "http://localhost:8080/socNet/api/friends" + friend;
+	var url = "/api/friends" + friend;
 	$.get(url, function(data){
 		console.log(JSON.stringify(data));
 		
 		for(user of data){
-		var friendUrl = "http://localhost:8080/socNet/home/" + user.username;
+		var friendUrl = "/home/" + user.username;
 	    var div = '<li class="list-group-item clearfix">' +
                         '<div class="col-xs-12 col-sm-3">' +
                             '<img src="http://api.randomuser.me/portraits/men/49.jpg" ' +

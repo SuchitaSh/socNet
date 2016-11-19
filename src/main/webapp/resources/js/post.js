@@ -32,8 +32,8 @@ $(function () {
             post.author.username = post.author.username || username;
 
             $post = templates['post'].clone();  //todo remove socNet
-            var postLink = '<a href="/socNet/posts/' + post.id + '">' + post.title + '</a>';
-            var authorLink = '<a href="/socNet/home/' + post.author.username + '">' +
+            var postLink = '<a href="/posts/' + post.id + '">' + post.title + '</a>';
+            var authorLink = '<a href="/home/' + post.author.username + '">' +
                              post.author.firstName + " " + post.author.lastName +
                              '</a>'
 
@@ -46,7 +46,7 @@ $(function () {
     }
 
     function retrievePosts() {
-        getJson('/socNet/api/users/' + userId + '/posts')
+        getJson('/api/users/' + userId + '/posts')
             .success(function (posts) {
                 addPosts(posts);
             });
@@ -54,7 +54,7 @@ $(function () {
 
     function sendPost(post) {
         addPosts(post);
-        postJson('/socNet/api/users/' + userId + '/posts', post).
+        postJson('/api/users/' + userId + '/posts', post).
         success(console.log);
     }
 

@@ -77,18 +77,4 @@ public class RootConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(restLoginRequiredInterceptor())
                 .addPathPatterns("/api/**");
     }
-
-
-
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(rememberMeInterceptor);
-//        registry.addInterceptor(initWebContentInterceptor());
-//        registry.addInterceptor(loginRequired).excludePathPatterns("/api/account-exist/**")
-//                .excludePathPatterns("/api/account-forget/**").addPathPatterns("/api/**").addPathPatterns("/plugins/**")
-//                .addPathPatterns("/teams").addPathPatterns("/teams/**").addPathPatterns("/account")
-//                .addPathPatterns("/account/profile").addPathPatterns("/account/password").addPathPatterns("/account/sshkey");
-//    }
-
-
 }

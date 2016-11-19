@@ -12,7 +12,7 @@ function toggle_visibility() {
 $(document).ready(function($) {
 	$("#create-button").click(function(event) {
 				
-		var url = "http://localhost:8080/socNet/register"
+		var url = "/register"
 			
 		var data = {}
         data["username"]   = $("#username").val(),

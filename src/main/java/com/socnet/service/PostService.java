@@ -35,28 +35,37 @@ public class PostService {
 
     @Transactional
     public BasicPostDto addPost(BasicPostDto postDto) throws AccessDeniedException {
-        User user = userService.getCurrentUser();
-
-        // TODO: move permission checking to another place(e.g. Filter)
-        if(user == null) {
+        if(!hasPostingPermission(postDto)) {
             throw new AccessDeniedException();
         }
 
-        Long currentUserId = user.getId();
-
-        if(currentUserId == null) {
-            throw new AccessDeniedException();
-        }
-
-        // TODO: uncomment when there will be a correct impl of isFriendOf
-//        if(!currentUserId.equals(postDto.getId()) && userService.isFriendOf()) {
-//            throw new AccessDeniedException();
-//        }
-
+        System.out.println("Author: " + postDto.getAuthor().getId());
         Post post = modelMapper.map(postDto, Post.class);
         post.setPostingDate(new Date());
+        System.out.println("Author map: " + post.getAuthor().getId());
         post = postsRepository.save(post);
+        System.out.println("Author after: " + post.getAuthor().getId());
         return modelMapper.map(post, BasicPostDto.class);
+    }
+
+    private boolean hasPostingPermission(BasicPostDto postDto) {
+        User currentUser = userService.getCurrentUser();
+
+        Long currentUseId = currentUser.getId();
+        Long authorUserId = postDto.getAuthor().getId();
+        Long targetUserId = postDto.getUser().getId();
+
+        User authorUser = new User();
+        authorUser.setId(postDto.getAuthor().getId());
+
+        User targetUser = new User();
+        targetUser.setId(targetUserId);
+
+
+        boolean selfPost = targetUserId.equals(authorUserId) && targetUserId.equals(currentUseId);
+        boolean friendPost = userService.isCurrentUserFriendOf(targetUser);
+
+        return selfPost || friendPost;
     }
 
 

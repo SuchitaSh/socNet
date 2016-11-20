@@ -42,8 +42,9 @@ public class AuthController {
         User user = authService.login(login, password);
 
         if (user == null) {
+            model.addAttribute("wronglogin", true);
             model.addAttribute(KEY_LOGIN_ERROR, true); // TODO: i18n
-            return "redirect:/login";
+            return "login";
         }
 
         return "redirect:/home";
@@ -56,8 +57,9 @@ public class AuthController {
                              Model model) {
 
         if (!userService.isUsernameAvailable(username)) {
+            model.addAttribute("wrongusername", true);
             model.addAttribute(KEY_REGISTER_ERROR, true);
-            return "redirect:/login";
+            return "login";
         }
 
         User user = new User();

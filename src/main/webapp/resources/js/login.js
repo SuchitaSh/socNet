@@ -11,9 +11,9 @@ function toggle_visibility() {
  */
 $(document).ready(function($) {
 	$("#create-button").click(function(event) {
-				
+
 		var url = "/register"
-			
+
 		var data = {}
         data["username"]   = $("#username").val(),
             data["password"]   = $("#password").val(),
@@ -25,11 +25,11 @@ $(document).ready(function($) {
         var token = $('#csrfToken').val();
         var header = $('#csrfHeader').val();
 
-        $.post(url, data);    
+        $.post(url, data);
     });
-	
+
 	$('#login-form').submit(function() {
 		localStorage.setItem("username", $("#login").val())
-		return true; 
+		return true;
 	});
 });

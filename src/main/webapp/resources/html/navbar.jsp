@@ -16,6 +16,7 @@
       <li><a href="/home">Home</a></li>
       <li><a href="/friends">Friends</a></li>
       <li><a href="/all-users">All Users</a></li>
+      <li><a href="/dialogs">Messages</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
      	<li><a href="/settings">Settings</a></li>

@@ -23,7 +23,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="<c:url value='/resources/js/friends.js' />"></script>
-    <script type="text/javascript" src="<c:url value='/resources/js/followers.js' />"></script>
 
 
 </head>
@@ -36,10 +35,25 @@
         <div class="col-xs-12 col-sm-offset-3 col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-heading c-list">
-                    <span class="title">Followers</span>
+                    <span class="title">Contacts</span>
                 </div>
 
                 <ul class="list-group" id="contact-list">
+                    <c:forEach var="user" items="${users}">
+                    <li class="list-group-item clearfix">
+                        <div class="col-xs-12 col-sm-3">
+                            <img src="http://api.randomuser.me/portraits/men/49.jpg" class= "img-responsive img-circle" />
+                            </div>
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="profile-usertitle-name">
+                                <a href = "/home/${user.username}">  ${user.firstName}
+                                     ${user.lastName} </a>
+                                </div>
+                            <a>Write message</a>
+                            </div>
+                        <div class="clearfix"></div>
+                        </li>
+                    </c:forEach>
                 </ul>
             </div>
 

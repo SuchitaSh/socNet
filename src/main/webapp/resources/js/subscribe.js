@@ -6,7 +6,7 @@ function connect(){
 		
 	var stompClient = null;
 
-		friendsUrl = "/friends";
+		friendsUrl = "/followers";
 	
 	    var socket = new SockJS('/socnetws');
 	    stompClient = Stomp.over(socket);

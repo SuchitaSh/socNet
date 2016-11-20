@@ -26,8 +26,6 @@
 	<script src="//cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/subscribe.js' />"></script>
 	
-
-
 </head>
 <body>
 

@@ -1,8 +1,12 @@
 package com.socnet.persistence.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,37 +19,37 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "username", unique = true, nullable = false)
+	@Column(name = "username", unique = true)
 	private String username;
-	
-	@Column(name = "password", nullable = false)
+
+	@Column(name = "password")
 	private String password;
-	
-	@Column(name = "first_name", nullable = false)
+
+	@Column(name = "first_name")
 	private String firstName;
-	
-	@Column(name = "last_name", nullable = false)
+
+	@Column(name = "last_name")
 	private String lastName;
-	
-	@Column(name = "email", nullable = false)
+
+	@Column(name = "email")
 	private String email;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_of_birth")
 	private Date dateOfBirth;
-	
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Post> posts = new HashSet<>();
-	
+
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "friends",
-				joinColumns = @JoinColumn(name = "first_user_id"),
-				inverseJoinColumns = @JoinColumn(name = "second_user_id"))
+			joinColumns = @JoinColumn(name = "first_user_id"),
+			inverseJoinColumns = @JoinColumn(name = "second_user_id"))
 	private Set<User> followings = new HashSet<>();
 
 	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Notification> notifications = new HashSet<>();
-	
+
 	public User() {
 	}
 
@@ -99,7 +103,7 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -108,7 +112,7 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -127,7 +131,7 @@ public class User {
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
 	}
-	
+
 	public void addPost(Post post){
 		if(post == null){
 			throw new NullPointerException("Can't add null post");
@@ -135,14 +139,14 @@ public class User {
 		posts.add(post);
 		if(post.getUser() == null)
 			post.setUser(this);
-		
+
 	}
-	
+
 	public void removePost(Post post){
-		
+
 		posts.remove(post);
 		post.setUser(null);
-		
+
 	}
 
 	@JsonIgnore
@@ -159,17 +163,17 @@ public class User {
 		if(user == null){
 			throw new NullPointerException("Can't add null user");
 		}
-		
+
 		followings.add(user);
-		
+
 	}
-	
+
 	public void removeFollowing(User user){
-		
-			followings.remove(user);
-			
-		}
-	
+
+		followings.remove(user);
+
+	}
+
 	@JsonIgnore
 	public Set<Notification> getNotifications() {
 		return notifications;
@@ -179,38 +183,38 @@ public class User {
 	public void setNotifications(Set<Notification> notifications) {
 		this.notifications = notifications;
 	}
-	
+
 	public void addNotification(Notification notification){
-		
+
 		if(notification == null){
 			throw new NullPointerException("Can't pass null notification");
 		}
-		
+
 		notifications.add(notification);
-		
+
 		if(notification.getReceiver() == null){
 			notification.setReceiver(this);
 		}
 	}
-	
+
 	public void removeNotification(Notification notification){
-		
+
 		notifications.remove(notification);
 		notification.setReceiver(null);
-		
+
 	}
 
 
 	@JsonIgnore
 	public Set<User> getFriends(){
 		Set<User> result = new HashSet<>();
-			
+
 		for(User user : getFollowings()){
 			if( user.getFollowings().contains(this)) {
 				result.add(user);
 			}
 		}
-		
+
 		return result;
 	}
 

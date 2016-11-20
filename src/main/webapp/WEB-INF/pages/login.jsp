@@ -22,15 +22,18 @@
 				</span>
         </font>
         <form class="register-form" action="register" method="POST" id="registerForm">
-            <input type="text" placeholder="name" name="username" id="username" autocomplete="off"/>
-            <input type="password" placeholder="password" name="password" id="password"/>
-            <input type="email" placeholder="email address" name="email" id="email" autocomplete="off"/>
-            <input type="text" placeholder="Your Name" name="name" id="name"/>
-            <input type="text" placeholder="Your Surname" name="surname" id="surname">
+
+            <input type="text" placeholder="name" name="username" id="username" autocomplete="off" required/>
+            <input type="password" placeholder="password" name="password" id="password" required/>
+            <input type="email" placeholder="email address" name="email" id="email" autocomplete="off" required/>
+            <input type="text" placeholder="Your Name" name="name" id="name" required/>
+            <input type="text" placeholder="Your Surname" name="surname" id="surname" required/>
             <button id = "create-button">create</button>
             <p class="message">Already registered? <a href="#" onclick="toggle_visibility(); return false;" class="message">Sign In</a></p>
         </form>
         <form id = "login-form" class="login-form" action="login" method="post">
+            <c:if test="${wrongusername}"><p>There is user with that login. Try another</p></c:if>
+            <c:if test="${wronglogin}"><p>Login or password are incorrect. Try again</p></c:if>
             <input id = "login" type="text" name="login" placeholder="username" autocomplete="off"/>
             <input type="password" name="password" placeholder="password"/>
             <input class="submit" type="submit" value="Login">

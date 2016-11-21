@@ -21,9 +21,7 @@ public class MessageService {
 
     public void addMessage(Message message) {
         String key = makeKey(message.getSender(), message.getDestination());
-        System.out.println(key + " key");
         messageRepository.addMessage(key, message);
-        System.out.println(2);
     }
 
     public List<Message> getAllMessages(String participantOneUserName, String participantTwoUserName) {

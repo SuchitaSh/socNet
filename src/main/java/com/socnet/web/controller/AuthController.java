@@ -56,7 +56,7 @@ public class AuthController {
                              @RequestParam String surname,
                              Model model) {
 
-        if (!userService.isUsernameAvailable(username)) {
+        if (!authService.isUsernameAvailable(username)) {
             model.addAttribute("wrongusername", true);
             model.addAttribute(KEY_REGISTER_ERROR, true);
             return "login";

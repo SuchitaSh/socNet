@@ -44,6 +44,8 @@ public class UserController {
 
         model.addAttribute("user", someone);
         model.addAttribute("currentUser", userService.getCurrentUser());
+        if (someone.equals(userService.getCurrentUser()))
+            return "redirect:/home";
 
         if (userService.isCurrentUserFollowerOf(userService.findUserByUsername(username))) {
             model.addAttribute("follower", true);

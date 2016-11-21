@@ -21,24 +21,20 @@ public class MessageService {
 
     public void addMessage(Message message) {
         String key = makeKey(message.getSender(), message.getDestination());
-        messageRepository.addMessage(key, message.getMessage());
+        System.out.println(key + " key");
+        messageRepository.addMessage(key, message);
+        System.out.println(2);
     }
 
     public List<Message> getAllMessages(String participantOneUserName, String participantTwoUserName) {
         String key = makeKey(participantOneUserName, participantTwoUserName);
-        List<Message> messages = new ArrayList<>();
-        Message m = new Message();
-        m.setDestination(participantOneUserName);
-        m.setSender(participantTwoUserName);
-        m.setMessage("stub");
-        messages.add(m);
-        return messages;
-    }
+        return messageRepository.getAllMessages(key);
+        }
 
-//    public List<String> getLastMessages(String senderUsername, String receiverUserName, int quantity) {
-//        String key = makeKey(senderUsername, receiverUserName);
-//        return messageRepository.getLastMessages(key, quantity);
-//    }
+    public List<Message> getLastMessages(String senderUsername, String receiverUserName, int quantity) {
+        String key = makeKey(senderUsername, receiverUserName);
+        return messageRepository.getLastMessages(key, quantity);
+    }
 
     private String makeKey(String senderUsername, String receiverUserName) {
         if (senderUsername.compareTo(receiverUserName) < 0) {

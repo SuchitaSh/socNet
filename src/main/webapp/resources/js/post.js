@@ -6,14 +6,14 @@ $(function () {
     var $formPostTitle = $('#form-post-title');
     var $formPostText = $('#form-post-text');
 
-    var firstName = $('#user-first-name').val();
-    var lastName = $('#user-last-name').val();
-    var username = $('#user-username').val();
-    var templates = getTemplates(true);
     var userId = $('#user-id').val();
+    var currentUserId = $('#current-user-id').val();
+    var firstName = $('#current-user-first-name').val();
+    var lastName = $('#current-user-last-name').val();
+    var username = $('#current-user-username').val();
+    var templates = getTemplates(true);
 
-
-    //     Logic
+    // Logic
 
     retrievePosts();
 
@@ -26,7 +26,6 @@ $(function () {
         posts = makeArray(posts);
 
         posts.forEach(function (post) {
-            post.user = post.user || {};
             post.author.firstName = post.author.firstName || firstName;
             post.author.lastName = post.author.lastName || lastName;
             post.author.username = post.author.username || username;
@@ -34,7 +33,7 @@ $(function () {
             $post = templates['post'].clone();  //todo remove socNet
             var postLink = '<a href="/posts/' + post.id + '">' + post.title + '</a>';
             var authorLink = '<a href="/home/' + post.author.username + '">' +
-                             post.author.firstName + " " + post.author.lastName +
+                                 post.author.firstName + " " + post.author.lastName +
                              '</a>'
 
             $post.find('.placeholder-title').html(postLink);
@@ -66,7 +65,7 @@ $(function () {
                 title: $formPostTitle.val(),
                 text: $formPostText.val(),
                 author: {
-                    id: userId,
+                    id: currentUserId,
                 }
             });
             $postForm.find('*').val('');

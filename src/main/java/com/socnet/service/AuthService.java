@@ -15,11 +15,15 @@ public class AuthService {
 
     private UsernameStorage principal;
     private UsersRepository usersRepository;
+    private OnlineUsersStorage onlineUsersStorage;
+
 
     @Autowired
-    public AuthService(UsernameStorage principal, UsersRepository usersRepository) {
+    public AuthService(UsernameStorage principal, UsersRepository usersRepository,
+    				 OnlineUsersStorage onlineUsersStorage) {
         this.principal = principal;
         this.usersRepository = usersRepository;
+        this.onlineUsersStorage = onlineUsersStorage;
     }
 
     /*    method returns User object, and saves username in sessionScope "principal"
@@ -28,6 +32,7 @@ public class AuthService {
         User user = usersRepository.findByUsername(login);
         if (user != null && user.getPassword().equals(password)) {
             principal.setUsername(user.getUsername());
+            onlineUsersStorage.setUserOnline(user.getUsername());
         } else {
             user = null;
         }
@@ -35,6 +40,7 @@ public class AuthService {
     }
 
     public void logout() {
+        onlineUsersStorage.setUserOffline(principal.getUsername());
         principal.setUsername(null);
     }
 

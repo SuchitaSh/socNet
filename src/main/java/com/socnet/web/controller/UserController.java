@@ -31,20 +31,28 @@ public class UserController {
     @GetMapping("/home")
     public String showHomePage(Model model) {
         User user = userService.getCurrentUser();
+
         model.addAttribute(user);
+        model.addAttribute("currentUser", userService.getCurrentUser());
+
         return "home";
     }
     
     @GetMapping("/home/{username}")
     public String showUserHomePage(@PathVariable String username, Model model){
         User someone = userService.findUserByUsername(username);
-        model.addAttribute("user",someone);
+
+        model.addAttribute("user", someone);
+        model.addAttribute("currentUser", userService.getCurrentUser());
+
         if (userService.isCurrentUserFollowerOf(userService.findUserByUsername(username))) {
             model.addAttribute("follower", true);
         }
-            if (userService.isCurrentUserFriendOf(someone)){
-                model.addAttribute("friend", true);
+
+        if (userService.isCurrentUserFriendOf(someone)) {
+            model.addAttribute("friend", true);
         }
+
     	return "user-page";
     }
 

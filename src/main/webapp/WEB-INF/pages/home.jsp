@@ -24,12 +24,14 @@
 
 <c:import url = "/resources/html/navbar.jsp"/>
 
+<input type="hidden" id="user-id" value="${user.id}"/>
+<input type="hidden" id="current-user-id" value="${currentUser.id}"/>
+<input type="hidden" id="current-user-first-name" value="${currentUser.firstName}"/>
+<input type="hidden" id="current-user-last-name" value="${currentUser.lastName}"/>
+<input type="hidden" id="current-user-username" value="${currentUser.username}"/>
+
 <div class="container">
     <!-- Model values used by Javascript -->
-    <input type="hidden" id="user-id" value="${user.id}"/>
-    <input type="hidden" id="user-first-name" value="${user.firstName}"/>
-    <input type="hidden" id="user-last-name" value="${user.lastName}"/>
-    <input type="hidden" id="user-username" value="${user.username}"/>
 
     <div class="row profile">
 

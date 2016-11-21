@@ -17,12 +17,15 @@ public class UserService {
 	private UsernameStorage principal;
 	private UsersRepository usersRepository;
 	private ModelMapper modelMapper;
+	private OnlineUsersStorage onlineUsersStorage;
 
 	@Autowired
-	public UserService(UsernameStorage principal, UsersRepository usersRepository, ModelMapper modelMapper) {
+	public UserService(UsernameStorage principal, UsersRepository usersRepository, ModelMapper modelMapper,
+					   OnlineUsersStorage onlineUsersStorage) {
 		this.principal = principal;
 		this.usersRepository = usersRepository;
 		this.modelMapper = modelMapper;
+		this.onlineUsersStorage = onlineUsersStorage;
 	}
 
 	public User getCurrentUser() {
@@ -205,5 +208,9 @@ public class UserService {
 		Set<User> friends = getUserFriends(username);
 		follower.removeAll(friends);
 		return follower;
+	}
+	
+	public boolean isUserOnline(String username){
+		return onlineUsersStorage.isOnline(username);
 	}
 }

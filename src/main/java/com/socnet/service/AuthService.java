@@ -20,11 +20,17 @@ public class AuthService {
 
     @Autowired
     public AuthService(UsernameStorage principal, UsersRepository usersRepository,
-    				 OnlineUsersStorage onlineUsersStorage) {
+                       OnlineUsersStorage onlineUsersStorage) {
         this.principal = principal;
         this.usersRepository = usersRepository;
         this.onlineUsersStorage = onlineUsersStorage;
     }
+
+
+    public boolean isUsernameAvailable(String username) {
+        return usersRepository.findByUsername(username) == null;
+    }
+
 
     /*    method returns User object, and saves username in sessionScope "principal"
     returns null if user does not found or password does not match.*/

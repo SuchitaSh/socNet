@@ -20,14 +20,15 @@ public class UserService {
     private OnlineUsersStorage onlineUsersStorage;
 
     @Autowired
-    public UserService(UsernameStorage principal, UsersRepository usersRepository, ModelMapper modelMapper,
-                       OnlineUsersStorage onlineUsersStorage) {
+    public UserService(UsernameStorage principal, UsersRepository usersRepository,
+                       ModelMapper modelMapper, OnlineUsersStorage onlineUsersStorage) {
         this.principal = principal;
         this.usersRepository = usersRepository;
         this.modelMapper = modelMapper;
         this.onlineUsersStorage = onlineUsersStorage;
     }
 
+    @Transactional
     public User getCurrentUser() {
         if (principal.getUsername() == null) {
             return null;
@@ -35,11 +36,12 @@ public class UserService {
         return usersRepository.findByUsername(principal.getUsername());
     }
 
-    public boolean isUsernameAvailable(String username) {
-
-        return usersRepository.findByUsername(username) == null;
+    @Transactional
+    public User findUserByUsername(String username) {
+        return usersRepository.findByUsername(username);
     }
 
+    @Transactional
     public void save(User user) {
         usersRepository.save(user);
     }
@@ -64,7 +66,6 @@ public class UserService {
 //        return friends;
 //    }
 
-
     @Transactional
     public UserWithFriendsDto getCurrentUserWithFriends() {
         User user = usersRepository.findByUsername(principal.getUsername());
@@ -72,23 +73,32 @@ public class UserService {
     }
 
 
+//    //replaced by getUserWithFriends  RL
+//    public Set<User> getUserFriends(String username) {
+//
+//        User user = usersRepository.findByUsername(username);
+//        Set<User> friends = new HashSet<>();
+//        User newUser;
+//        for (User u : user.getFriends()) {
+//            newUser = new User();
+//            newUser.setId(u.getId());
+//            newUser.setUsername(u.getUsername());
+//            newUser.setFirstName(u.getFirstName());
+//            newUser.setLastName(u.getLastName());
+//            friends.add(newUser);
+//        }
+//        return friends;
+//    }
+
     @Transactional
-    public Set<User> getUserFriends(String username) {
+    public UserWithFriendsDto getUserWithFriends(String username) {
 
         User user = usersRepository.findByUsername(username);
-        Set<User> friends = new HashSet<>();
-        User newUser;
-        for (User u : user.getFriends()) {
-            newUser = new User();
-            newUser.setId(u.getId());
-            newUser.setUsername(u.getUsername());
-            newUser.setFirstName(u.getFirstName());
-            newUser.setLastName(u.getLastName());
-            friends.add(newUser);
-        }
-        return friends;
+        return modelMapper.map(user, UserWithFriendsDto.class);
     }
 
+
+//    replaced by getAllUsers
 //    @Transactional
 //    public Set<User> getAllUsersInfo() {
 //
@@ -116,11 +126,6 @@ public class UserService {
         return allUsers;
     }
 
-
-    public User findUserByUsername(String username) {
-        return usersRepository.findByUsername(username);
-    }
-
     @Transactional
     public Notification addNotificationToUser(String username, String eventType) {
         User receiver = findUserByUsername(username);
@@ -140,15 +145,6 @@ public class UserService {
         User user = usersRepository.findByUsername(username);
         user.getNotifications().removeIf(notification -> notification.getId().equals(notificationId));
         usersRepository.save(user);
-    }
-
-    @Transactional
-    public void addCurrentUserFollowing(String username) {
-        User currentUser = getCurrentUser();
-        User following = usersRepository.findByUsername(username);
-        currentUser.addFollowing(following);
-        usersRepository.save(currentUser);
-
     }
 
     @Transactional
@@ -194,6 +190,14 @@ public class UserService {
     }
 
     @Transactional
+    public void addCurrentUserFollowing(String username) {
+        User currentUser = getCurrentUser();
+        User following = usersRepository.findByUsername(username);
+        currentUser.addFollowing(following);
+        usersRepository.save(currentUser);
+    }
+
+    @Transactional
     public boolean isCurrentUserFollowerOf(User maybeFollower) {
         User currentUser = getCurrentUser();
         return getFollowersOfUser(currentUser.getUsername()).contains(maybeFollower);
@@ -209,7 +213,7 @@ public class UserService {
             newUser = n.getAuthor();
             follower.add(newUser);
         }
-        Set<User> friends = getUserFriends(username);
+        Set<User> friends = getUserWithFriends(username).getFriends();
         follower.removeAll(friends);
         return follower;
     }

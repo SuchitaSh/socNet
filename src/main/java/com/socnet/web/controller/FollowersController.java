@@ -1,5 +1,6 @@
 package com.socnet.web.controller;
 
+import com.socnet.dto.UserWithFriendsDto;
 import com.socnet.persistence.entities.User;
 import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,25 +25,23 @@ public class FollowersController {
         this.userService = userService;
     }
 
-    @GetMapping(value={"/followers", "/friends"})
-    public String getFollowers(Model model, HttpServletRequest request){
+    @GetMapping(value = {"/followers", "/friends"})
+    public String getFollowers(Model model, HttpServletRequest request) {
         String path = request.getServletPath();
         if (path.equals("/followers")) {
             System.out.println("followers");
             Set<User> followers = userService.getFollowersOfUser(userService.getCurrentUser().getUsername());
-            if(followers.isEmpty()){
+            if (followers.isEmpty()) {
                 return "followers";
             }
             model.addAttribute("users", followers);
-        }
-        else if (path.equals("/friends")) {
-            Set<User> friends = userService.getCurrentUserFriends();
-            if(friends.isEmpty()){
+        } else if (path.equals("/friends")) {
+            Set<User> friends = userService.getCurrentUserWithFriends().getFriends();
+            if (friends.isEmpty()) {
                 return "followers";
             }
             model.addAttribute("users", friends);
         }
-
 
         return "followers";
     }

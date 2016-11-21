@@ -34,7 +34,7 @@ public class MessageService {
     }
 
     private String makeKey(String senderUsername, String receiverUserName) {
-        if (senderUsername.compareTo(receiverUserName) > 0) {
+        if (senderUsername.compareTo(receiverUserName) < 0) {
             return senderUsername + ":" + receiverUserName;
         }
         return receiverUserName + ":" + senderUsername;

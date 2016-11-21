@@ -1,5 +1,6 @@
 package com.socnet.service;
 
+import com.socnet.dto.BasicUserDto;
 import com.socnet.dto.UserWithFriendsDto;
 import com.socnet.persistence.entities.Notification;
 import com.socnet.persistence.entities.User;
@@ -88,22 +89,33 @@ public class UserService {
         return friends;
     }
 
+//    @Transactional
+//    public Set<User> getAllUsersInfo() {
+//
+//        Set<User> allUsers = new HashSet<>();
+//        User newUser;
+//        for (User u : usersRepository.findAll()) {
+//            newUser = new User();
+//            newUser.setId(u.getId());
+//            newUser.setUsername(u.getUsername());
+//            newUser.setFirstName(u.getFirstName());
+//            newUser.setLastName(u.getLastName());
+//            allUsers.add(newUser);
+//        }
+//
+//        return allUsers;
+//    }
+
     @Transactional
-    public Set<User> getAllUsersInfo() {
+    public Set<BasicUserDto> getAllUsers() {
 
-        Set<User> allUsers = new HashSet<>();
-        User newUser;
-        for (User u : usersRepository.findAll()) {
-            newUser = new User();
-            newUser.setId(u.getId());
-            newUser.setUsername(u.getUsername());
-            newUser.setFirstName(u.getFirstName());
-            newUser.setLastName(u.getLastName());
-            allUsers.add(newUser);
+        Set<BasicUserDto> allUsers = new HashSet<>();
+        for (User user : usersRepository.findAll()) {
+            allUsers.add(modelMapper.map(user, BasicUserDto.class));
         }
-
         return allUsers;
     }
+
 
     public User findUserByUsername(String username) {
         return usersRepository.findByUsername(username);

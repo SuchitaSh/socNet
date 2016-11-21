@@ -1,10 +1,11 @@
 package com.socnet.service;
 
 import com.socnet.persistence.repository.MessageRepository;
+import com.socnet.utils.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Ruslan Lazin
@@ -18,20 +19,26 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    public void addMessage(String senderUsername, String receiverUserName, String text) {
-        String key = makeKey(senderUsername, receiverUserName);
-        messageRepository.addMessage(key, text);
+    public void addMessage(Message message) {
+        String key = makeKey(message.getSender(), message.getDestination());
+        messageRepository.addMessage(key, message.getMessage());
     }
 
-    public List<String> getAllMessages(String senderUsername, String receiverUserName) {
-        String key = makeKey(senderUsername, receiverUserName);
-        return messageRepository.getAllMessages(key);
+    public List<Message> getAllMessages(String participantOneUserName, String participantTwoUserName) {
+        String key = makeKey(participantOneUserName, participantTwoUserName);
+        List<Message> messages = new ArrayList<>();
+        Message m = new Message();
+        m.setDestination(participantOneUserName);
+        m.setSender(participantTwoUserName);
+        m.setMessage("stub");
+        messages.add(m);
+        return messages;
     }
 
-    public List<String> getLastMessages(String senderUsername, String receiverUserName, int quantity) {
-        String key = makeKey(senderUsername, receiverUserName);
-        return messageRepository.getLastMessages(key, quantity);
-    }
+//    public List<String> getLastMessages(String senderUsername, String receiverUserName, int quantity) {
+//        String key = makeKey(senderUsername, receiverUserName);
+//        return messageRepository.getLastMessages(key, quantity);
+//    }
 
     private String makeKey(String senderUsername, String receiverUserName) {
         if (senderUsername.compareTo(receiverUserName) < 0) {

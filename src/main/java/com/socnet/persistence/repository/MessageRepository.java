@@ -1,14 +1,16 @@
 package com.socnet.persistence.repository;
 
+import com.socnet.utils.Message;
+
 import java.util.List;
 
 /**
  * @author Ruslan Lazin
  */
 public interface MessageRepository {
-    public void addMessage(String key, String text);
+    void add(String key, Message message);
 
-    public List<String> getAllMessages(String key);
+    List<Message> getAll(String key);
 
-    public List<String> getLastMessages(String key, int quantity);
+    List<Message> getLast(String key, int quantity);
 }

@@ -116,6 +116,9 @@
 		 <div id = "chat-area" class="chat_area">
 		 <div class = "messages-area">
 		 <ul id = "messages" style = "overflow: auto;">
+		 
+		 
+		 
 		 </ul>
 		 </div>
 		 </div><!--chat_area-->

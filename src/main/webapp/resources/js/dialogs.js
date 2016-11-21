@@ -30,8 +30,7 @@ function subscribeOnMessages(){
     		$('#chat-area').animate({scrollTop: scrollHeight}, 1);
 	
     		var destination = "/app/message.addMessage";
-    		stompClient.send(destination, {});    		
-     			
+    			
     	});
 }); 
 }
@@ -69,7 +68,8 @@ function sendMessage(){
 		$('#chat-area').animate({scrollTop: scrollHeight}, 1);
 		$('#message').val("");
     	var destination = "/app/message.private";
-    	stompClient.send(destination, {}, JSON.stringify({'message': message, 'destination' : user}));
+    	var sender = localStorage.getItem("username");
+    	stompClient.send(destination, {}, JSON.stringify({'message': message, 'destination' : user, 'sender' : sender}));
    
     });
 	

@@ -37,6 +37,7 @@
                         <p>{{message}}</p>
 						<div class="chat_time pull-left">09:40PM</div>
                      </div>
+		</li>
 </script>
 
 <script id="another-user-message" type="text/template">
@@ -48,6 +49,7 @@
                         <p>{{message}}</p>
 						<div class="chat_time pull-left">09:40PM</div>
                      </div>
+		</li>
 </script>
 
   
@@ -117,7 +119,30 @@
 		 <div class = "messages-area">
 		 <ul id = "messages" style = "overflow: auto;">
 		 
-		 
+		 	<c:forEach var = "message" items="${messages}">
+	 			<c:if test="${message.sender eq user.username }">
+	 			  <li class="left clearfix admin_chat">
+                     <span class="chat-img1 pull-right">
+                     <img src="/resources/usersImages/${user.id}.png" class="img-circle">
+                     </span>
+                     <div class="chat-body1 clearfix">
+                        <p>${message.message}</p>
+						<div class="chat_time pull-left">09:40PM</div>
+                     </div>
+					</li>
+	 			</c:if>	
+	 			<c:if test="${message.sender eq userPicked}">
+	 				<li class="left clearfix admin_chat">
+                     <span class="chat-img1 pull-left">
+                     <img src="/resources/usersImages/{{imageId}}.png" class="img-circle">
+                     </span>
+                     <div class="chat-body1 clearfix">
+                        <p>${message.message}</p>
+						<div class="chat_time pull-left">09:40PM</div>
+                     </div>
+		</li>	
+	 			</c:if>	 		
+		 	</c:forEach>
 		 
 		 </ul>
 		 </div>

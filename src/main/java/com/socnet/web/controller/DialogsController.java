@@ -53,20 +53,19 @@ public class DialogsController {
 
         UserWithFriendsDto currentUser = userService.getCurrentUserWithFriends();
         Set<User> friends = currentUser.getFriends();
- //       List<String> messages = messageService.getAllMessages(usernameStorage.getUsername(), username);
+        List<Message> messages = messageService.getAllMessages(usernameStorage.getUsername(), username);
         model.addAttribute("friends", friends);
         model.addAttribute("userPicked", username);
         model.addAttribute("user", currentUser);
- //       model.addAttribute("messages", messages);
+        model.addAttribute("messages", messages);
        
         return "dialogs";
     }
 
     @MessageMapping("/message.private")
     public void sendMessage(Message message) {
-        System.out.println("fuck2");
- //       messageService.addMessage(message.getSender(), message.getDestination(), message.getMessage());
-        
-        simpMessagingTemplate.convertAndSend("/topic/messages/" + message.getDestination(), message.getMessage());
-    }
+    	System.out.println("fuck");
+		messageService.addMessage(message);
+		simpMessagingTemplate.convertAndSend("/topic/messages/" + message.getDestination(), message.getMessage());
+	}
 }

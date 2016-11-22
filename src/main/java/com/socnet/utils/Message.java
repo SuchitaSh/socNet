@@ -2,65 +2,77 @@ package com.socnet.utils;
 
 import java.io.Serializable;
 
-public class Message implements Serializable {
-    private static final long serialVersionUID = 4907958828438185177L;
-    private String message;
-    private String sender;
-    private String destination;
+public class Message implements Serializable{
 
-    public Message() {
-    }
+	private static final long serialVersionUID = 1L;
+	private String message;
+	private String sender;
+	private String destination;
+	
+	public Message() {
+	}
+	
+	public String getMessage() {
+		return message;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public String getDestination() {
+		return destination;
+	}
 
-    public String getDestination() {
-        return destination;
-    }
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
 
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
+	public String getSender() {
+		return sender;
+	}
 
-    public String getSender() {
-        return sender;
-    }
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((destination == null) ? 0 : destination.hashCode());
+		result = prime * result + ((message == null) ? 0 : message.hashCode());
+		result = prime * result + ((sender == null) ? 0 : sender.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Message message1 = (Message) o;
-
-        if (!message.equals(message1.message)) return false;
-        if (!sender.equals(message1.sender)) return false;
-        return destination.equals(message1.destination);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = message.hashCode();
-        result = 31 * result + sender.hashCode();
-        result = 31 * result + destination.hashCode();
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "message='" + message + '\'' +
-                ", sender='" + sender + '\'' +
-                ", destination='" + destination + '\'' +
-                '}';
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Message other = (Message) obj;
+		if (destination == null) {
+			if (other.destination != null)
+				return false;
+		} else if (!destination.equals(other.destination))
+			return false;
+		if (message == null) {
+			if (other.message != null)
+				return false;
+		} else if (!message.equals(other.message))
+			return false;
+		if (sender == null) {
+			if (other.sender != null)
+				return false;
+		} else if (!sender.equals(other.sender))
+			return false;
+		return true;
+	}
+	
+	
+	
 }

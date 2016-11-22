@@ -2,15 +2,15 @@ package com.socnet.persistence.impl;
 
 import com.socnet.persistence.repository.MessageRepository;
 import com.socnet.utils.Message;
+import com.socnet.utils.ObjectToStringSerializer;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Ruslan Lazin
@@ -18,38 +18,83 @@ import java.util.stream.Collectors;
 
 @Component
 public class MessageRepositoryRedisImpl implements MessageRepository {
-    private JedisPool jedisPool;
-    private RedisSerializer<Message> redisSerializer;
 
     @Autowired
-    public MessageRepositoryRedisImpl(JedisPool jedisPool, RedisSerializer<Message> redisSerializer) {
-        this.jedisPool = jedisPool;
-        this.redisSerializer = redisSerializer;
-    }
+    private JedisPool jedisPool;
 
     @Override
-    public void add(String key, Message message) {
+    public void addMessage(String key, Message message) {
         Jedis jedis = jedisPool.getResource();
-        jedis.lpush(key.getBytes(), redisSerializer.serialize(message));
+        jedis.rpush(key, ObjectToStringSerializer.serialize(message));
         jedis.close();
     }
 
     @Override
-    public List<Message> getAll(String key) {
+    public List<Message> getAllMessages(String key) {
         Jedis jedis = jedisPool.getResource();
-        List<byte[]> rows = jedis.lrange(key.getBytes(), 0, -1);
+        List<String> messagesStr = jedis.lrange(key, 0, -1);
         jedis.close();
-        return rows.stream().map(row -> redisSerializer.deserialize(row)).collect(Collectors.toList());
+        
+        System.out.println(messagesStr.isEmpty());
+        
+        for(String message : messagesStr){
+        	System.out.println(message + " message");
+        }
+        
+        if(! messagesStr.isEmpty()){
+	        List<Message> messages = new ArrayList<>();
+	        for(String message : messagesStr){
+	        	messages.add((Message)(ObjectToStringSerializer.deserialize(message)));
+	        }
+	        	return messages;
+	    }
+        else{
+        	return null;
+        }
     }
 
     @Override
-    public List<Message> getLast(String key, int quantity) {
+    public List<Message> getLastMessages(String key, int quantity) {
         Jedis jedis = jedisPool.getResource();
         if (quantity <= 0) {
             throw new IllegalArgumentException("Tried to read " + quantity + " messages.");
         }
-        List<byte[]> rows = jedis.lrange(key.getBytes(), 0, -1);
+        List<String> messagesStr = jedis.lrange(key, 0, quantity - 1);
         jedis.close();
-        return rows.stream().map(row -> redisSerializer.deserialize(row)).collect(Collectors.toList());
+        
+        List<Message> messages = new ArrayList<>();
+        for(String message : messagesStr){
+        	messages.add((Message)(ObjectToStringSerializer.deserialize(message)));
+        }
+        
+        return messages;
     }
+    
+    
+//    @Override
+//    public void addMessage(String key, String text) {
+//        Jedis jedis = jedisPool.getResource();
+//        jedis.lpush(key, text);
+//        jedis.close();
+//    }
+//
+//    @Override
+//    public List<String> getAllMessages(String key) {
+//        Jedis jedis = jedisPool.getResource();
+//        List<String> messages = jedis.lrange(key, 0, -1);
+//        jedis.close();
+//        return messages;
+//    }
+//
+//    @Override
+//    public List<String> getLastMessages(String key, int quantity) {
+//        Jedis jedis = jedisPool.getResource();
+//        if (quantity <= 0) {
+//            throw new IllegalArgumentException("Tried to read " + quantity + " messages.");
+//        }
+//        List<String> messages = jedis.lrange(key, 0, quantity - 1);
+//        jedis.close();
+//        return messages;
+//    }
+
 }

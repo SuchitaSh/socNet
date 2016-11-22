@@ -4,6 +4,8 @@
 
 function getUserInfo(){
 	
+	console.log(localStorage.getItem("username"));
+	
 	var pathname = window.location.pathname;
 	var index = pathname.lastIndexOf("/")
 	var user = pathname.substring(index, pathname.length)

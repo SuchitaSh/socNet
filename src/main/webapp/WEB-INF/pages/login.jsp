@@ -35,7 +35,7 @@
             <c:if test="${wronglogin}"><p>Login or password are incorrect. Try again</p></c:if>
             <input id = "login" type="text" name="login" placeholder="username" autocomplete="off"/>
             <input type="password" name="password" placeholder="password"/>
-            <input class="submit" type="submit" value="Login">
+            <button id = "login-button" class="submit" type = "button">Login</button>
             <p class="message">Not registered? <a href="#" onclick="toggle_visibility(); return false;" class="message">Create an account</a></p>
         </form>
     </div>

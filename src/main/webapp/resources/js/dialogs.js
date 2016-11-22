@@ -4,7 +4,10 @@
 
 
 function subscribeOnMessages(){
-		
+
+	var scrollHeight = $("#chat-area").prop("scrollHeight");
+	$('#chat-area').animate({scrollTop: scrollHeight}, 1);
+	
 	console.log("hello");
 	var stompClient;
 	var socket = new SockJS('/socnetws');

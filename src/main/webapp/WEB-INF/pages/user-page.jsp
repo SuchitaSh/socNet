@@ -55,7 +55,6 @@
                         <c:out value="${user.firstName} ${user.lastName}" />
                     </div>
                     <div class="profile-usertitle-job">
-                        Developer
                     </div>
                 </div>
                 <!-- END SIDEBAR USER TITLE -->

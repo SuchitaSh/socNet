@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Friends</title>
+<title>All users</title>
 
   <spring:url value="/resources/css/style.css" var="styleCss" />
   <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapMinCss" />

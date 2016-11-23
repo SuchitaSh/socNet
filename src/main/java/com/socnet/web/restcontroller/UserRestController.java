@@ -1,13 +1,12 @@
 package com.socnet.web.restcontroller;
 
+import com.socnet.dto.BasicUserDto;
+import com.socnet.persistence.entities.User;
 import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.socnet.persistence.entities.User;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserRestController {
@@ -39,5 +38,22 @@ public class UserRestController {
         user.setPosts(null);
 
         return user;
+    }
+    
+    // TODO: this method works in the context of current user
+    // TODO: replace basicUserDto with something smaller
+    @PostMapping(path = "/api/user/{username}/followings", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> follow(@PathVariable String username, @RequestBody BasicUserDto follower) {
+        System.out.println("follow()");
+        userService.addCurrentUserFollowing(follower.getUsername());
+
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping(path = "/api/user/{username}/followings/{following}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> unfollow(@PathVariable String username, @PathVariable String following) {
+    	// TODO: proper return value
+    	userService.removeCurrentUserFollowing(following);
+        return ResponseEntity.ok().build();
     }
 }

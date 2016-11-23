@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class UserService {
@@ -196,6 +199,26 @@ public class UserService {
         currentUser.addFollowing(following);
         usersRepository.save(currentUser);
     }
+    
+    @Transactional
+	public void removeCurrentUserFollowing(String followingUsername) {
+    	User currentUser = getCurrentUser();
+    	User following = usersRepository.findByUsername(followingUsername);
+    	currentUser.removeFollowing(following);
+    	usersRepository.save(currentUser);
+	}
+
+    @Transactional
+    public boolean isCurrentUserFollowing(User maybeFollowing) {
+        User currentUser = getCurrentUser();
+        return currentUser.getFollowings().contains(maybeFollowing);
+    }
+
+    @Transactional
+    public boolean isUserFollowsCurrentUser(String username) {
+        User user = usersRepository.findByUsername(username);
+        return user.getFollowings().contains(getCurrentUser());
+    }
 
     @Transactional
     public boolean isCurrentUserFollowerOf(User maybeFollower) {
@@ -221,4 +244,6 @@ public class UserService {
     public boolean isUserOnline(String username) {
         return onlineUsersStorage.isOnline(username);
     }
+
+
 }

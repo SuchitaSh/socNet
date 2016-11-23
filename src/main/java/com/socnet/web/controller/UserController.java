@@ -45,13 +45,13 @@ public class UserController {
         model.addAttribute("user", someone);
         model.addAttribute("currentUser", userService.getCurrentUser());
 
-        if (userService.isCurrentUserFollowerOf(userService.findUserByUsername(username))) {
-            model.addAttribute("follower", true);
-        }
+        boolean following = userService.isCurrentUserFollowing(userService.findUserByUsername(username));
+        model.addAttribute("following", following);
 
-        if (userService.isCurrentUserFriendOf(someone)) {
-            model.addAttribute("friend", true);
-        }
+        boolean follower = userService.isUserFollowsCurrentUser(username);
+        model.addAttribute("follower", follower);
+
+        model.addAttribute("friend", follower && following);
 
     	return "user-page";
     }

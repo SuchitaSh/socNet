@@ -63,20 +63,23 @@
            
                 <div class="profile-userbuttons">
 
-                    <c:if test="${follower}">
-                        <button id="follow-button" type="button" class="btn btn-success btn-sm"
-                                data-following="${following}"
-                                data-following-message="In your friends list" data-not-following-message="Add to friends"
-                                data-hover-message="Remove from friends">Add to friends</button>
-                    </c:if>
+                    <c:if test="${not isCurrent}">
 
-                    <c:if test="${!follower}">
-                        <button id = "follow-button" type="button" class="btn btn-success btn-sm"
-                                data-following="${following}"
-                                data-following-message="Request sent" data-not-following-message="Follow"
-                                data-hover-message="Cancel request">Follow</button>
-                    </c:if>
+                        <c:if test="${follower}">
+                            <button id="follow-button" type="button" class="btn btn-success btn-sm"
+                                    data-following="${following}"
+                                    data-following-message="In your friends list" data-not-following-message="Add to friends"
+                                    data-hover-message="Remove from friends">Add to friends</button>
+                        </c:if>
 
+                        <c:if test="${!follower}">
+                            <button id = "follow-button" type="button" class="btn btn-success btn-sm"
+                                    data-following="${following}"
+                                    data-following-message="Request sent" data-not-following-message="Follow"
+                                    data-hover-message="Cancel request">Follow</button>
+                        </c:if>
+
+                    </c:if>
 
                     <button id = "message-button" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
                         <span class="glyphicon glyphicon-envelope fix-glyphicon-button"> </span>

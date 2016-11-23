@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
 public class UserController {
@@ -32,10 +33,7 @@ public class UserController {
     public String showHomePage(Model model) {
         User user = userService.getCurrentUser();
 
-        model.addAttribute(user);
-        model.addAttribute("currentUser", userService.getCurrentUser());
-
-        return "home";
+        return "redirect:/home/"+ user.getUsername();
     }
     
     @GetMapping("/home/{username}")
@@ -51,7 +49,12 @@ public class UserController {
         boolean follower = userService.isUserFollowsCurrentUser(username);
         model.addAttribute("follower", follower);
 
-        model.addAttribute("friend", follower && following);
+        if (someone.equals(userService.getCurrentUser())) {
+            model.addAttribute("isCurrent", true);
+            model.addAttribute("friend", true);
+        } else {
+            model.addAttribute("friend", follower && following);
+        }
 
     	return "user-page";
     }

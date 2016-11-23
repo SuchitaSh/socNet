@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.socnet.persistence.entities.User;
+import com.socnet.service.MessageService;
 import com.socnet.service.UserService;
 import com.socnet.service.UsernameStorage;
 import com.socnet.utils.Message;
@@ -25,14 +26,18 @@ import com.socnet.utils.Message;
 @Controller
 public class DialogsController {
 
-    private List<String> messages = new ArrayList<String>(50);
-    private UserService userService;
+	private UserService userService;
     private SimpMessagingTemplate simpMessagingTemplate;
-
+    private MessageService messageService;
+    private UsernameStorage usernameStorage;
+    
     @Autowired
-    public DialogsController(UserService userService, SimpMessagingTemplate simpMessagingTemplate) {
+    public DialogsController(UserService userService, SimpMessagingTemplate simpMessagingTemplate,
+    						 MessageService messageService, UsernameStorage usernameStorage) {
         this.userService = userService;
         this.simpMessagingTemplate = simpMessagingTemplate;
+        this.messageService = messageService;
+        this.usernameStorage = usernameStorage;
     }
 
     @GetMapping("/dialogs")
@@ -48,25 +53,19 @@ public class DialogsController {
 
         UserWithFriendsDto currentUser = userService.getCurrentUserWithFriends();
         Set<User> friends = currentUser.getFriends();
+        List<Message> messages = messageService.getAllMessages(usernameStorage.getUsername(), username);
         model.addAttribute("friends", friends);
         model.addAttribute("userPicked", username);
         model.addAttribute("user", currentUser);
-
+        model.addAttribute("messages", messages);
+       
         return "dialogs";
-    }
-
-
-    @MessageMapping("/message.addMessage")
-    public void addMessage(Message message) {
-        System.out.println("fuck1");
-        messages.add(message.getMessage());
     }
 
     @MessageMapping("/message.private")
     public void sendMessage(Message message) {
-        System.out.println("fuck2");
-        messages.add(message.getMessage());
-
-        simpMessagingTemplate.convertAndSend("/topic/messages/" + message.getDestination(), message.getMessage());
-    }
+    	System.out.println("fuck");
+		messageService.addMessage(message);
+		simpMessagingTemplate.convertAndSend("/topic/messages/" + message.getDestination(), message.getMessage());
+	}
 }

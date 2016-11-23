@@ -16,6 +16,18 @@ body {
     right: 0px;
 }
 
+.btn-success.faded-reversible {
+    background: #89a588 !important;
+}
+
+.btn-success.faded-reversible:hover, .btn-success.faded-reversible:active {
+    background: #4cae4c !important;
+}
+
+.fix-glyphicon-button {
+    line-height: inherit !important;
+}
+
 /* Profile container */
 .profile {
     margin: 1px 0;

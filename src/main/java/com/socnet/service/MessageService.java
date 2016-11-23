@@ -1,10 +1,11 @@
 package com.socnet.service;
 
 import com.socnet.persistence.repository.MessageRepository;
+import com.socnet.utils.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Ruslan Lazin
@@ -18,17 +19,17 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    public void addMessage(String senderUsername, String receiverUserName, String text) {
-        String key = makeKey(senderUsername, receiverUserName);
-        messageRepository.addMessage(key, text);
+    public void addMessage(Message message) {
+        String key = makeKey(message.getSender(), message.getDestination());
+        messageRepository.addMessage(key, message);
     }
 
-    public List<String> getAllMessages(String senderUsername, String receiverUserName) {
-        String key = makeKey(senderUsername, receiverUserName);
+    public List<Message> getAllMessages(String participantOneUserName, String participantTwoUserName) {
+        String key = makeKey(participantOneUserName, participantTwoUserName);
         return messageRepository.getAllMessages(key);
-    }
+        }
 
-    public List<String> getLastMessages(String senderUsername, String receiverUserName, int quantity) {
+    public List<Message> getLastMessages(String senderUsername, String receiverUserName, int quantity) {
         String key = makeKey(senderUsername, receiverUserName);
         return messageRepository.getLastMessages(key, quantity);
     }

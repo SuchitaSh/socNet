@@ -12,6 +12,8 @@ $(function () {
 
 function getUserInfo(){
 	
+//	console.log(localStorage.getItem("username"));
+//
 	var pathname = window.location.pathname;
 	var index = pathname.lastIndexOf("/")
 	var user = pathname.substring(index, pathname.length)
@@ -94,21 +96,12 @@ function unfollow(user) {
 }
 
 function addToFriends(e){
-	var pathname = window.location.pathname;
-	var index = pathname.lastIndexOf("/")
-	var user = pathname.substring(index, pathname.length)
-        if(user == "/home")
-            user = "";
-	
-	var getUrl = "/api/addToFriends" + user;
-	$.get(getUrl);
-
     notify(user);
 
-    var $this = $(this);
-
-    $this.html('In your friends list');
-    $this.addClass('faded-reversible');
+//    var $this = $(this);
+//
+//    $this.html('In your friends list');
+//    $this.addClass('faded-reversible');
 }
 
 function notify(user) {

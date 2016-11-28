@@ -1,16 +1,11 @@
 package com.socnet.web.controller;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import com.socnet.dto.UserWithFriendsDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +16,7 @@ import com.socnet.persistence.entities.User;
 import com.socnet.service.MessageService;
 import com.socnet.service.UserService;
 import com.socnet.service.UsernameStorage;
-import com.socnet.utils.Message;
+import com.socnet.persistence.entities.Message;
 
 @Controller
 public class DialogsController {
@@ -64,8 +59,7 @@ public class DialogsController {
 
     @MessageMapping("/message.private")
     public void sendMessage(Message message) {
-    	System.out.println("fuck");
 		messageService.addMessage(message);
-		simpMessagingTemplate.convertAndSend("/topic/messages/" + message.getDestination(), message.getMessage());
+		simpMessagingTemplate.convertAndSend("/topic/messages/" + message.getReceiver(), message.getMessage());
 	}
 }

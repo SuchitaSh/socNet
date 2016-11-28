@@ -16,7 +16,7 @@ import com.socnet.persistence.entities.User;
 import com.socnet.service.MessageService;
 import com.socnet.service.UserService;
 import com.socnet.service.UsernameStorage;
-import com.socnet.utils.Message;
+import com.socnet.persistence.entities.Message;
 
 @Controller
 public class DialogsController {

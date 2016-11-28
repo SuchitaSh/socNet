@@ -1,4 +1,4 @@
-package com.socnet.utils;
+package com.socnet.persistence.entities;
 
 import java.io.Serializable;
 

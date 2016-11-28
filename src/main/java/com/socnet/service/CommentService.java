@@ -48,13 +48,9 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment addCommentToPost(Long postId, String text) { //now return Comment
+    public Comment addCommentToPost(Long postId, String text) {
         Comment comment = new Comment();
-        User author = userService.getCurrentUser();
-        if (author == null) {
-            throw new EntityNotFoundException();  //todo other exception?
-        }
-        comment.setUser(author);
+        comment.setUser(userService.getCurrentUser());
         Post post = postsRepository.findById(postId);
         if (post == null) {
             throw new EntityNotFoundException();

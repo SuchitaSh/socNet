@@ -29,7 +29,7 @@ public class MessageRepositoryRedisImpl implements MessageRepository {
     @Override
     public void addMessage(String key, Message message) {
         Jedis jedis = jedisPool.getResource();
-        jedis.lpush(key.getBytes(), redisSerializer.serialize(message));
+        jedis.rpush(key.getBytes(), redisSerializer.serialize(message));
         jedis.close();
     }
 
@@ -48,7 +48,7 @@ public class MessageRepositoryRedisImpl implements MessageRepository {
         if (quantity <= 0) {
             throw new IllegalArgumentException("Tried to read " + quantity + " messages.");
         }
-        List<byte[]> rows = jedis.lrange(key.getBytes(), 0, -1);
+        List<byte[]> rows = jedis.lrange(key.getBytes(), -quantity, -1);
         jedis.close();
         if (rows.isEmpty()) return null;
         return rows.stream().map(row -> redisSerializer.deserialize(row)).collect(Collectors.toList());

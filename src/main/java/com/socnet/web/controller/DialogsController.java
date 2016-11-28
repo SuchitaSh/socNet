@@ -59,7 +59,6 @@ public class DialogsController {
 
     @MessageMapping("/message.private")
     public void sendMessage(Message message) {
-    	System.out.println("fuck");
 		messageService.addMessage(message);
 		simpMessagingTemplate.convertAndSend("/topic/messages/" + message.getReceiver(), message.getMessage());
 	}

@@ -3,15 +3,14 @@ package com.socnet.utils;
 import java.io.Serializable;
 
 public class Message implements Serializable{
-
 	private static final long serialVersionUID = 1L;
 	private String message;
 	private String sender;
-	private String destination;
-	
+	private String receiver;
+
 	public Message() {
 	}
-	
+
 	public String getMessage() {
 		return message;
 	}
@@ -20,12 +19,12 @@ public class Message implements Serializable{
 		this.message = message;
 	}
 
-	public String getDestination() {
-		return destination;
+	public String getReceiver() {
+		return receiver;
 	}
 
-	public void setDestination(String destination) {
-		this.destination = destination;
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
 	}
 
 	public String getSender() {
@@ -40,7 +39,7 @@ public class Message implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((destination == null) ? 0 : destination.hashCode());
+		result = prime * result + ((receiver == null) ? 0 : receiver.hashCode());
 		result = prime * result + ((message == null) ? 0 : message.hashCode());
 		result = prime * result + ((sender == null) ? 0 : sender.hashCode());
 		return result;
@@ -55,10 +54,10 @@ public class Message implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Message other = (Message) obj;
-		if (destination == null) {
-			if (other.destination != null)
+		if (receiver == null) {
+			if (other.receiver != null)
 				return false;
-		} else if (!destination.equals(other.destination))
+		} else if (!receiver.equals(other.receiver))
 			return false;
 		if (message == null) {
 			if (other.message != null)
@@ -72,7 +71,7 @@ public class Message implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
+
+
+
 }

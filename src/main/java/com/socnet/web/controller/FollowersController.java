@@ -45,5 +45,4 @@ public class FollowersController {
 
         return "followers";
     }
-
 }

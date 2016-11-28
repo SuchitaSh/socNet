@@ -250,7 +250,6 @@ public class User {
         return "User [id=" + id + ", userName=" + username + "]";
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

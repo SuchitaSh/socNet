@@ -20,7 +20,7 @@ public class MessageService {
     }
 
     public void addMessage(Message message) {
-        String key = makeKey(message.getSender(), message.getDestination());
+        String key = makeKey(message.getSender(), message.getReceiver());
         messageRepository.addMessage(key, message);
     }
 

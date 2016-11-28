@@ -188,8 +188,7 @@ public class UserService {
 
     @Transactional
     public boolean isCurrentUserFriendOf(User maybeFriend) {
-        User currentUser = getCurrentUser();
-        return currentUser.getFriends().contains(maybeFriend);
+        return getCurrentUser().getFriends().contains(maybeFriend);
     }
 
     @Transactional
@@ -210,8 +209,7 @@ public class UserService {
 
     @Transactional
     public boolean isCurrentUserFollowing(User maybeFollowing) {
-        User currentUser = getCurrentUser();
-        return currentUser.getFollowings().contains(maybeFollowing);
+        return getCurrentUser().getFollowings().contains(maybeFollowing);
     }
 
     @Transactional
@@ -222,24 +220,28 @@ public class UserService {
 
     @Transactional
     public boolean isCurrentUserFollowerOf(User maybeFollower) {
-        User currentUser = getCurrentUser();
-        return getFollowersOfUser(currentUser.getUsername()).contains(maybeFollower);
+        return getFollowersOfUser(principal.getUsername()).contains(maybeFollower);
     }
 
     @Transactional
     public Set<User> getFollowersOfUser(String username) {
-        User user = usersRepository.findByUsername(username);
-        Set<User> follower = new HashSet<>();
-        User newUser = new User();
-        Set<Notification> notifications = user.getNotifications();
-        for (Notification n : notifications) {
-            newUser = n.getAuthor();
-            follower.add(newUser);
-        }
-        Set<User> friends = getUserWithFriends(username).getFriends();
-        follower.removeAll(friends);
-        return follower;
+        return usersRepository.getFollowersByUsername(username);
     }
+//      replaced 28.11 RL
+//    @Transactional
+//    public Set<User> getFollowersOfUser(String username) {
+//        User user = usersRepository.findByUsername(username);
+//        Set<User> follower = new HashSet<>();
+//        User newUser = new User();
+//        Set<Notification> notifications = user.getNotifications();
+//        for (Notification n : notifications) {
+//            newUser = n.getAuthor();
+//            follower.add(newUser);
+//        }
+//        Set<User> friends = getUserWithFriends(username).getFriends();
+//        follower.removeAll(friends);
+//        return follower;
+//    }
 
     public boolean isUserOnline(String username) {
         return onlineUsersStorage.isOnline(username);

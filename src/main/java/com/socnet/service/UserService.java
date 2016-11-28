@@ -224,6 +224,11 @@ public class UserService {
     }
 
     @Transactional
+    public Set<User> getFollowersOfCurrentUser() {
+        return usersRepository.getFollowersByUsername(principal.getUsername());
+    }
+
+    @Transactional
     public Set<User> getFollowersOfUser(String username) {
         return usersRepository.getFollowersByUsername(username);
     }

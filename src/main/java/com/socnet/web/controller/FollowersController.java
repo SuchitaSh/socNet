@@ -30,7 +30,7 @@ public class FollowersController {
         String path = request.getServletPath();
         if (path.equals("/followers")) {
             System.out.println("followers");
-            Set<User> followers = userService.getFollowersOfUser(userService.getCurrentUser().getUsername());
+            Set<User> followers = userService.getFollowersOfCurrentUser();
             if (followers.isEmpty()) {
                 return "followers";
             }

@@ -31,6 +31,8 @@ $(function () {
             post.author.username = post.author.username || username;
 
             $post = templates['post'].clone();  //todo remove socNet
+            var editLink = '<a href="/posts/edit/' + post.id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
+            var deleteLink = '<a href="/posts/delete/' + post.id + '"><i class="glyphicon glyphicon-remove"></i></a>';
             var postLink = '<a href="/posts/' + post.id + '">' + post.title + '</a>';
             var authorLink = '<a href="/home/' + post.author.username + '">' +
                                  post.author.firstName + " " + post.author.lastName +
@@ -39,6 +41,8 @@ $(function () {
             $post.find('.placeholder-title').html(postLink);
             $post.find('.placeholder-post').html(post.text);
             $post.find('.placeholder-author').html(authorLink);
+            $post.find('.placeholder-remove').html(deleteLink);
+            $post.find('.placeholder-edit').html(editLink);
             $posts.prepend($post);
             // TODO: add all posts in one batch
         });
@@ -134,4 +138,8 @@ function makeArray(maybeArray) {
     }
 
     return maybeArray;
+}
+
+function removePost() {
+    alert("helo");
 }

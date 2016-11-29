@@ -39,10 +39,11 @@ public class UserController {
     @GetMapping("/home/{username}")
     public String showUserHomePage(@PathVariable String username, Model model){
         User someone = userService.findUserByUsername(username);
+        User currentUser = userService.getCurrentUser();
 
         model.addAttribute("user", someone);
-        model.addAttribute("currentUser", userService.getCurrentUser());
-        if (someone.equals(userService.getCurrentUser())) {
+        model.addAttribute("currentUser", currentUser);
+        if (someone.equals(currentUser)) {
             model.addAttribute("isCurrent", true);
             model.addAttribute("friend", true);
         }

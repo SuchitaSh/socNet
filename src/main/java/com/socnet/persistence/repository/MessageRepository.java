@@ -2,7 +2,7 @@ package com.socnet.persistence.repository;
 
 import java.util.List;
 
-import com.socnet.utils.Message;
+import com.socnet.persistence.entities.Message;
 
 /**
  * @author Ruslan Lazin

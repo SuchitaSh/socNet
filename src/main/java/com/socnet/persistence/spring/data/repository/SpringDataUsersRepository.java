@@ -13,4 +13,5 @@ public interface SpringDataUsersRepository extends JpaRepository<User, Long>{
 	User findByUsername(String username);
 	User findById(Long id);
 	Set<User> getFollowingsByUsername(String username);
+	Set<User> getFollowersByUsername(String username);
 }

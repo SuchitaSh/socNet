@@ -1,12 +1,8 @@
 package com.socnet.persistence.entities;
 
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,234 +11,257 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(name = "username", unique = true)
-	private String username;
+    @Column(name = "username", unique = true, nullable = false)
+    private String username;
 
-	@Column(name = "password")
-	private String password;
+    @Column(name = "password", nullable = false)
+    private String password;
 
-	@Column(name = "first_name")
-	private String firstName;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
 
-	@Column(name = "last_name")
-	private String lastName;
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
-	@Column(name = "email")
-	private String email;
+    @Column(name = "email", nullable = false)
+    private String email;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "date_of_birth")
-	private Date dateOfBirth;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_of_birth")
+    private Date dateOfBirth;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Post> posts = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Post> posts = new HashSet<>();
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(name = "friends",
-			joinColumns = @JoinColumn(name = "first_user_id"),
-			inverseJoinColumns = @JoinColumn(name = "second_user_id"))
-	private Set<User> followings = new HashSet<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "friends",
+            joinColumns = @JoinColumn(name = "first_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "second_user_id"))
+    private Set<User> followings = new HashSet<>();
 
-	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Notification> notifications = new HashSet<>();
+    @ManyToMany(mappedBy = "followings")
+    private Set<User> followers = new HashSet<>();
 
-	public User() {
-	}
 
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Notification> notifications = new HashSet<>();
 
-	public Long getId() {
-		return id;
-	}
+    public User() {
+    }
 
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
 
-	public String getUsername() {
-		return username;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public String getUsername() {
+        return username;
+    }
 
 
-	public String getPassword() {
-		return password;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
 
-	public String getLastName() {
-		return lastName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
 
-	public String getEmail() {
-		return email;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
 
-	@JsonIgnore
-	public Set<Post> getPosts() {
-		return posts;
-	}
 
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
-	public void setPosts(Set<Post> posts) {
-		this.posts = posts;
-	}
+    @JsonIgnore
+    public Set<Post> getPosts() {
+        return posts;
+    }
 
-	public void addPost(Post post){
-		if(post == null){
-			throw new NullPointerException("Can't add null post");
-		}
-		posts.add(post);
-		if(post.getUser() == null)
-			post.setUser(this);
 
-	}
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
+    }
 
-	public void removePost(Post post){
+    public void addPost(Post post) {
+        if (post == null) {
+            throw new NullPointerException("Can't add null post");
+        }
+        posts.add(post);
+        if (post.getUser() == null)
+            post.setUser(this);
 
-		posts.remove(post);
-		post.setUser(null);
+    }
 
-	}
+    public void removePost(Post post) {
 
-	@JsonIgnore
-	public Set<User> getFollowings() {
-		return followings;
-	}
+        posts.remove(post);
+        post.setUser(null);
 
+    }
 
-	public void setFollowings(Set<User> followings) {
-		this.followings = followings;
-	}
+    @JsonIgnore
+    public Set<User> getFollowings() {
+        return followings;
+    }
 
-	public void addFollowing(User user){
-		if(user == null){
-			throw new NullPointerException("Can't add null user");
-		}
 
-		followings.add(user);
+    public void setFollowings(Set<User> followings) {
+        this.followings = followings;
+    }
 
-	}
+    public void addFollowing(User user) {
+        if (user == null) {
+            throw new NullPointerException("Can't add null user as following");
+        }
 
-	public void removeFollowing(User user){
+        followings.add(user);
+        if (!user.getFollowers().contains(this)) {
+            user.addFollower(this);
+        }
 
-		followings.remove(user);
+    }
 
-	}
+    public void removeFollowing(User user) {
 
-	@JsonIgnore
-	public Set<Notification> getNotifications() {
-		return notifications;
-	}
+        followings.remove(user);
 
+    }
 
-	public void setNotifications(Set<Notification> notifications) {
-		this.notifications = notifications;
-	}
+    public Set<User> getFollowers() {
+        return followers;
+    }
 
-	public void addNotification(Notification notification){
+    public void setFollowers(Set<User> followers) {
+        this.followers = followers;
+    }
 
-		if(notification == null){
-			throw new NullPointerException("Can't pass null notification");
-		}
+    public void addFollower(User follower) {
+        if (follower == null) {
+            throw new NullPointerException("Cant't add null user as follower");
+        }
 
-		notifications.add(notification);
+        this.followers.add(follower);
+        if (!follower.followings.contains(this)) {
+            follower.addFollowing(this);
+        }
+    }
 
-		if(notification.getReceiver() == null){
-			notification.setReceiver(this);
-		}
-	}
+    public void removeFollower(User follower) {
+        this.followers.remove(follower);
+    }
 
-	public void removeNotification(Notification notification){
 
-		notifications.remove(notification);
-		notification.setReceiver(null);
+    @JsonIgnore
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
 
-	}
 
+    public void setNotifications(Set<Notification> notifications) {
+        this.notifications = notifications;
+    }
 
-	@JsonIgnore
-	public Set<User> getFriends(){
-		Set<User> result = new HashSet<>();
+    public void addNotification(Notification notification) {
 
-		for(User user : getFollowings()){
-			if( user.getFollowings().contains(this)) {
-				result.add(user);
-			}
-		}
+        if (notification == null) {
+            throw new NullPointerException("Can't pass null notification");
+        }
 
-		return result;
-	}
+        notifications.add(notification);
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", userName=" + username + "]";
-	}
+        if (notification.getReceiver() == null) {
+            notification.setReceiver(this);
+        }
+    }
 
-//	@Override   (stackOverflow! RL)
-//	public String toString() {
-//		return "User [id=" + id + ", userName=" + username + ", password=" + password + ", firstName=" + firstName
-//				+ ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", posts=" + posts + ", followings="
-//				+ followings + "]";
-//	}
+    public void removeNotification(Notification notification) {
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+        notifications.remove(notification);
+        notification.setReceiver(null);
 
-		User user = (User) o;
+    }
 
-		return id.equals(user.id);
 
-	}
+    @JsonIgnore
+    public Set<User> getFriends() {
+        Set<User> result = new HashSet<>();
 
-	@Override
-	public int hashCode() {
-		return id.hashCode();
-	}
+        for (User user : getFollowings()) {
+            if (user.getFollowings().contains(this)) {
+                result.add(user);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", userName=" + username + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id.equals(user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

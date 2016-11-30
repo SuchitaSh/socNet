@@ -1,7 +1,7 @@
 package com.socnet.service;
 
 import com.socnet.persistence.repository.MessageRepository;
-import com.socnet.utils.Message;
+import com.socnet.persistence.entities.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,7 @@ public class MessageService {
     }
 
     public void addMessage(Message message) {
-        String key = makeKey(message.getSender(), message.getDestination());
+        String key = makeKey(message.getSender(), message.getReceiver());
         messageRepository.addMessage(key, message);
     }
 

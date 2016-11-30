@@ -2,6 +2,8 @@ package com.socnet.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import java.util.Objects;
+
 import javax.persistence.*;
 
 @Entity
@@ -71,12 +73,12 @@ public class Comment {
 
         Comment comment = (Comment) o;
 
-        return id.equals(comment.id);
+        return Objects.equals(id, comment.id);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id == null ? 0 : id.hashCode();
     }
 
     @Override

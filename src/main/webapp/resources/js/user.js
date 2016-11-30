@@ -1,19 +1,11 @@
 window.addEventListener('load', getUserInfo);
 
-var followMessage = {
-
-}
-
 $(function () {
-	$("#add-to-friends-button").click(addToFriends);
     $("#follow-button").click(onFollow);
     updateFollowButton($("#follow-button"));
 });
 
 function getUserInfo(){
-	
-//	console.log(localStorage.getItem("username"));
-//
 	var pathname = window.location.pathname;
 	var index = pathname.lastIndexOf("/")
 	var user = pathname.substring(index, pathname.length)
@@ -76,14 +68,12 @@ function enableHoverMessage($el) {
         $el.html(initText);
     }
 
-//    $el.hover(hover, hoverEnd);
     $el.on('mouseenter', hover);
     $el.on('mouseleave', hoverEnd);
 }
 
 function follow(user) {
 	var getUrl = "/api/addToFriends" + user;
-//	$.get(getUrl);
 
 	// TODO: remove dummy when UserRestController get fixed
 	ajax('/api/user/'+ 'dummy'  + '/followings', 'POST', { username: user.substring(1) })
@@ -93,15 +83,6 @@ function follow(user) {
 
 function unfollow(user) {
 	ajax('/api/user/'+ 'dummy'  + '/followings/' + user.substring(1), 'DELETE')
-}
-
-function addToFriends(e){
-    notify(user);
-
-//    var $this = $(this);
-//
-//    $this.html('In your friends list');
-//    $this.addClass('faded-reversible');
 }
 
 function notify(user) {

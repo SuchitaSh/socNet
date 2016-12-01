@@ -1,5 +1,7 @@
 package com.socnet.persistence.entities;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,60 +15,79 @@ import javax.persistence.Table;
 @Table(name = "notifications")
 public class Notification {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name = "event_type")
-	private String eventType;
-	
-	@ManyToOne
-	@JoinColumn(name = "author_id")
-	private User author;
-	
-	@ManyToOne
-	@JoinColumn(name = "receiver_id")
-	private User receiver;
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "event_type")
+    private String eventType;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
+
+    @ManyToOne
+    @JoinColumn(name = "receiver_id")
+    private User receiver;
+
     public Notification() {
-	}
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getEventType() {
-		return eventType;
-	}
+    public String getEventType() {
+        return eventType;
+    }
 
-	public void setEventType(String eventType) {
-		this.eventType = eventType;
-	}
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
 
-	public User getAuthor() {
-		return author;
-	}
+    public User getAuthor() {
+        return author;
+    }
 
-	public void setAuthor(User author) {
-		this.author = author;
-	}
+    public void setAuthor(User author) {
+        this.author = author;
+    }
 
-	public User getReceiver() {
-		return receiver;
-	}
+    public User getReceiver() {
+        return receiver;
+    }
 
-	public void setReceiver(User receiver) {
-		this.receiver = receiver;
-		
-		if(! receiver.getNotifications().contains(this))
-			receiver.addNotification(this);
-	}
-    
-    
-    
-	
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
+
+        if (!receiver.getNotifications().contains(this))
+            receiver.addNotification(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Notification that = (Notification) o;
+
+        return Objects.equals(id,  that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id == null ? 0 : id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "id=" + id +
+                ", eventType='" + eventType + '\'' +
+                '}';
+    }
 }

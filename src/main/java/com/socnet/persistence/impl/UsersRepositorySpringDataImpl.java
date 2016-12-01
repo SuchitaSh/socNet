@@ -37,8 +37,13 @@ public class UsersRepositorySpringDataImpl implements UsersRepository {
 	}
 
 	@Override
+	public Set<User> getFollowersByUsername(String username) {
+		return repository.getFollowingsByUsername(username);
+	}
+
+	@Override
 	public Set<User> findAll() {
-		return new HashSet(repository.findAll());
+		return new HashSet<User>(repository.findAll());
 	}
 	
 }

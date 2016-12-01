@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class UserService {
@@ -185,8 +188,7 @@ public class UserService {
 
     @Transactional
     public boolean isCurrentUserFriendOf(User maybeFriend) {
-        User currentUser = getCurrentUser();
-        return currentUser.getFriends().contains(maybeFriend);
+        return getCurrentUser().getFriends().contains(maybeFriend);
     }
 
     @Transactional
@@ -196,29 +198,59 @@ public class UserService {
         currentUser.addFollowing(following);
         usersRepository.save(currentUser);
     }
+    
+    @Transactional
+	public void removeCurrentUserFollowing(String followingUsername) {
+    	User currentUser = getCurrentUser();
+    	User following = usersRepository.findByUsername(followingUsername);
+    	currentUser.removeFollowing(following);
+    	usersRepository.save(currentUser);
+	}
+
+    @Transactional
+    public boolean isCurrentUserFollowing(User maybeFollowing) {
+        return getCurrentUser().getFollowings().contains(maybeFollowing);
+    }
+
+    @Transactional
+    public boolean isUserFollowsCurrentUser(String username) {
+        User user = usersRepository.findByUsername(username);
+        return user.getFollowings().contains(getCurrentUser());
+    }
 
     @Transactional
     public boolean isCurrentUserFollowerOf(User maybeFollower) {
-        User currentUser = getCurrentUser();
-        return getFollowersOfUser(currentUser.getUsername()).contains(maybeFollower);
+        return getFollowersOfUser(principal.getUsername()).contains(maybeFollower);
+    }
+
+    @Transactional
+    public Set<User> getFollowersOfCurrentUser() {
+        return usersRepository.getFollowersByUsername(principal.getUsername());
     }
 
     @Transactional
     public Set<User> getFollowersOfUser(String username) {
-        User user = usersRepository.findByUsername(username);
-        Set<User> follower = new HashSet<>();
-        User newUser = new User();
-        Set<Notification> notifications = user.getNotifications();
-        for (Notification n : notifications) {
-            newUser = n.getAuthor();
-            follower.add(newUser);
-        }
-        Set<User> friends = getUserWithFriends(username).getFriends();
-        follower.removeAll(friends);
-        return follower;
+        return usersRepository.getFollowersByUsername(username);
     }
+//      replaced 28.11 RL
+//    @Transactional
+//    public Set<User> getFollowersOfUser(String username) {
+//        User user = usersRepository.findByUsername(username);
+//        Set<User> follower = new HashSet<>();
+//        User newUser = new User();
+//        Set<Notification> notifications = user.getNotifications();
+//        for (Notification n : notifications) {
+//            newUser = n.getAuthor();
+//            follower.add(newUser);
+//        }
+//        Set<User> friends = getUserWithFriends(username).getFriends();
+//        follower.removeAll(friends);
+//        return follower;
+//    }
 
     public boolean isUserOnline(String username) {
         return onlineUsersStorage.isOnline(username);
     }
+
+
 }

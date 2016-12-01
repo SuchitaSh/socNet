@@ -54,21 +54,34 @@
                         <c:out value="${user.firstName} ${user.lastName}" />
                     </div>
                     <div class="profile-usertitle-job">
-                        Developer
                     </div>
                 </div>
                 <!-- END SIDEBAR USER TITLE -->
                 <!-- SIDEBAR BUTTONS -->
            
                 <div class="profile-userbuttons">
-                    <c:if test="${!isCurrent}">
-                    <c:if test="${!friend}">
-                    <c:if test="${follower}"><button id = "add-to-friends-button" type="button" class="btn btn-success btn-sm">Add to friend</button></c:if>
-                    <c:if test="${!follower}"><button id = "add-to-friends-button" type="button" class="btn btn-success btn-sm">Follow</button></c:if></c:if>
-                    <c:if test="${friend}"><p>${user.username} is your friend</p></c:if>
 
-                    <button id = "message-button" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Message</button>
+                    <c:if test="${not isCurrent}">
+
+                        <c:if test="${follower}">
+                            <button id="follow-button" type="button" class="btn btn-success btn-sm"
+                                    data-following="${following}"
+                                    data-following-message="In your friends list" data-not-following-message="Add to friends"
+                                    data-hover-message="Remove from friends">Add to friends</button>
+                        </c:if>
+
+                        <c:if test="${!follower}">
+                            <button id = "follow-button" type="button" class="btn btn-success btn-sm"
+                                    data-following="${following}"
+                                    data-following-message="Request sent" data-not-following-message="Follow"
+                                    data-hover-message="Cancel request">Follow</button>
+                        </c:if>
+
                     </c:if>
+
+                    <button id = "message-button" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
+                        <span class="glyphicon glyphicon-envelope fix-glyphicon-button"> </span>
+                    </button>
                 </div>
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->

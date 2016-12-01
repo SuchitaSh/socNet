@@ -70,6 +70,9 @@ $(function () {
                 text: $formPostText.val(),
                 author: {
                     id: currentUserId,
+                    username: username,
+                    lastName: lastName,
+                    firstName: firstName
                 }
             });
             $postForm.find('*').val('');

@@ -72,7 +72,7 @@ function sendMessage(){
 		$('#message').val("");
     	var destination = "/app/message.private";
     	var sender = localStorage.getItem("username");
-    	stompClient.send(destination, {}, JSON.stringify({'message': message, 'destination' : user, 'sender' : sender}));
+    	stompClient.send(destination, {}, JSON.stringify({'message': message, 'receiver' : user, 'sender' : sender}));
    
     });
 	

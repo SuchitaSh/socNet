@@ -11,7 +11,10 @@ public interface UsersRepository{
 
 	User findByUsername(String username);
 	User findById(Long id);
-	Set<User> findAll();
+
+    Set<User> getFollowersByUsername(String username);
+
+    Set<User> findAll();
 	Set<User> getFollowingsByUsername(String username);
 	User save(User user);
 	

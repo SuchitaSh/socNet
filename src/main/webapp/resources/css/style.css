@@ -280,4 +280,5 @@ body .no-padding {
 }
 div.inline {
     display: inline;
+    margin-left: 5px;
 }

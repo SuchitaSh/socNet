@@ -21,7 +21,6 @@ public class UserRestController {
     public User getUser(@PathVariable String username) {
         System.out.println(username);
         User user = userService.findUserByUsername(username);
-
         user.setFollowings(null);
         user.setPosts(null);
         user.setNotifications(null);

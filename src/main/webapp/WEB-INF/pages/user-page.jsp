@@ -76,12 +76,13 @@
                                     data-following-message="Request sent" data-not-following-message="Follow"
                                     data-hover-message="Cancel request">Follow</button>
                         </c:if>
+                        <button id = "message-button" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
+                            <span class="glyphicon glyphicon-envelope fix-glyphicon-button"> </span>
+                        </button>
 
                     </c:if>
 
-                    <button id = "message-button" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
-                        <span class="glyphicon glyphicon-envelope fix-glyphicon-button"> </span>
-                    </button>
+
                 </div>
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->

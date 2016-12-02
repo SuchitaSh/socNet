@@ -38,28 +38,36 @@ public class DialogsController {
     @GetMapping("/dialogs")
     public String getDialogs(Model model) {
         Set<User> friends = userService.getCurrentUserWithFriends().getFriends();
-        model.addAttribute("friends", friends);
-
+        model.addAttribute("friends", messageService.getUserUnreadMessagesCountMap(
+        		usernameStorage.getName(), friends));
         return "dialogs";
     }
 
     @GetMapping("/dialogs/{username}")
     public String getUserDialogs(@PathVariable String username, Model model) {
-
+    	String receiverUsername = usernameStorage.getUsername();
         UserWithFriendsDto currentUser = userService.getCurrentUserWithFriends();
         Set<User> friends = currentUser.getFriends();
-        List<Message> messages = messageService.getAllMessages(usernameStorage.getUsername(), username);
-        model.addAttribute("friends", friends);
+        List<Message> messages = messageService.getAllMessages(receiverUsername, username);
+        model.addAttribute("friends", messageService.getUserUnreadMessagesCountMap(
+        		usernameStorage.getName(), friends));
         model.addAttribute("userPicked", username);
         model.addAttribute("user", currentUser);
         model.addAttribute("messages", messages);
        
+        messageService.setUnreadMessagesCountToNull(username, receiverUsername);
+        
         return "dialogs";
     }
 
     @MessageMapping("/message.private")
     public void sendMessage(Message message) {
 		messageService.addMessage(message);
-		simpMessagingTemplate.convertAndSend("/topic/messages/" + message.getReceiver(), message.getMessage());
+		System.out.println("/topic/messages/" + message.getReceiver() +
+				"/" + message.getSender());
+		simpMessagingTemplate.convertAndSend("/topic/messages/" + message.getReceiver() +
+													"/" + message.getSender(), message);
+		simpMessagingTemplate.convertAndSend("/topic/messages/" + message.getReceiver(), message);
+
 	}
 }

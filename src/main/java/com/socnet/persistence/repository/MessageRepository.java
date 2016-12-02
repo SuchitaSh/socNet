@@ -8,9 +8,15 @@ import com.socnet.persistence.entities.Message;
  * @author Ruslan Lazin
  */
 public interface MessageRepository {
-    public void addMessage(String key, Message message);
+    void addMessage(String key, Message message);
 
-    public List<Message> getAllMessages(String key);
+    List<Message> getAllMessages(String key);
 
-    public List<Message> getLastMessages(String key, int quantity);
+    List<Message> getLastMessages(String key, int quantity);
+    
+    int getUnreadMessagesCount(String username);
+    
+    int getUnreadMessagesCountPerSender(String sender, String receiver);
+    
+    void setUnreadMessagesCountToNull(String sender, String receiver);
 }

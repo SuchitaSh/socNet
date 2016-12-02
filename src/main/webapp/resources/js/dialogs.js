@@ -2,25 +2,29 @@
  * 
  */
 
+var pathname = window.location.pathname;
+var index = pathname.lastIndexOf("/")
+var user = pathname.substring(index + 1, pathname.length);
+	
 
 function subscribeOnMessages(){
 
 	var scrollHeight = $("#chat-area").prop("scrollHeight");
 	$('#chat-area').animate({scrollTop: scrollHeight}, 1);
 	
-	console.log("hello");
 	var stompClient;
 	var socket = new SockJS('/socnetws');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function () {
-    	stompClient.subscribe("/topic/messages/" + localStorage.getItem("username"), function (message) {
-   
+    	stompClient.subscribe("/topic/messages/" + localStorage.getItem("username")+"/"+user,
+    			function (message) {
+
+    		message = JSON.parse(message.body);
     		var id = $("#id").innerHTML;
-    		var message = message.body;
-    		
+    		var locMessage = message.message;
     		var data = {
     				"imageId" : id,
-    				"message" : message
+    				"message" : locMessage
     		};
 
 
@@ -33,7 +37,8 @@ function subscribeOnMessages(){
     		$('#chat-area').animate({scrollTop: scrollHeight}, 1);
 	
     		var destination = "/app/message.addMessage";
-    			
+    		
+    		readAllMessages();
     	});
 }); 
 }
@@ -43,11 +48,6 @@ function sendMessage(){
 	if(! $("#message").val()){
 		return;
 	}
-	
-	console.log("1");
-	var pathname = window.location.pathname;
-	var index = pathname.lastIndexOf("/")
-	var user = pathname.substring(index + 1, pathname.length);
 	
 	var stompClient;
 	var socket = new SockJS('/socnetws');
@@ -64,7 +64,7 @@ function sendMessage(){
 		var template = $("#current-user-message").html();
 		
 		var html = Mustache.render(template, data);
-		
+				
 		$("#messages").append(html);
 		
 		var scrollHeight = $("#chat-area").prop("scrollHeight");
@@ -75,10 +75,18 @@ function sendMessage(){
     	stompClient.send(destination, {}, JSON.stringify({'message': message, 'receiver' : user, 'sender' : sender}));
    
     });
+}
+
+function readAllMessages(){
+	$.get("/api/dialogs/readAll", {"senderUsername" : user});
+	var toHideClass = ".contact_sec_" + user;
+	$(toHideClass).hide();
 	
 }
 
-window.onload = subscribeOnMessages;
+
+window.addEventListener('load', subscribeOnMessages);
+window.addEventListener('load', readAllMessages);
 
 $(function () {
 	 $("#send-button").click(function() { sendMessage(); });

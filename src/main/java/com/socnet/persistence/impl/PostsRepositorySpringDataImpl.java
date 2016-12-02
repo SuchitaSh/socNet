@@ -30,7 +30,7 @@ public class PostsRepositorySpringDataImpl implements PostsRepository {
 	public Set<Post> findByUser(User user) {
 		return repository.findByUser(user);
 	}
-	
+
 	@Override
 	public Post save(Post post) {
 		return repository.save(post);
@@ -41,5 +41,13 @@ public class PostsRepositorySpringDataImpl implements PostsRepository {
 	public List<Post> findByUserOrderByIdAsc(User user) {
 		return repository.findByUserOrderByIdAsc(user);
 	}
+
+	@Override
+	public List<Post> findByIdSliced(Long userId, Long fromPost) {
+		return repository.findTop10ByUserIdAndIdLessThanOrderByIdDesc(userId, fromPost);
+	}
+	
+	
+	
 
 }

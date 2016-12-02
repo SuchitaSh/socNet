@@ -7,11 +7,14 @@ import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
 import com.socnet.persistence.repository.PostsRepository;
 import com.socnet.persistence.repository.UsersRepository;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -94,4 +97,25 @@ public class PostService {
     public Post getPost(Long postId) {
         return postsRepository.findById(postId);
     }
+
+    /**
+     *  Get a slice of user's posts. The slice contains no more than a specified in PostRepository
+     *  number of elements. Iterating over slices possible by varying the fromPost parameter which
+     *  specifies the last post id retrieved by previous call to getUserPostsSlice
+     *
+     *  Note: posts ordered by id in a descending way
+     * @param userId is the id of user posts of whom should be retrieved
+     * @param fromPost all post will have id < fromPost
+     * @return list of posts
+     */
+	public List<BasicPostDto> getUserPostsSlice(long userId, long fromPost) {
+		List<BasicPostDto> posts = new ArrayList<>();
+		
+		List<BasicPostDto> basicPosts =  postsRepository.findByIdSliced(userId, fromPost)
+	                		.stream()
+	                		.map(post -> modelMapper.map(post, BasicPostDto.class))
+	                		.collect(Collectors.toList());
+    	
+    	return basicPosts;
+	}
 }

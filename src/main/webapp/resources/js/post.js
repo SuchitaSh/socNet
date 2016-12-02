@@ -15,13 +15,15 @@ $(function () {
 
     // Logic
 
-    retrievePosts();
+//    retrievePosts();
 
     registerEventHandlers();
 
+    createInfiScroll();
+
     // Functions
 
-    function addPosts(posts) {
+    function addPosts(posts, invOrder) {
 
         posts = makeArray(posts);
 
@@ -39,22 +41,78 @@ $(function () {
             $post.find('.placeholder-title').html(postLink);
             $post.find('.placeholder-post').html(post.text);
             $post.find('.placeholder-author').html(authorLink);
-            $posts.prepend($post);
+
+            if(invOrder) {
+                $posts.prepend($post);
+            } else {
+                $posts.append($post);
+            }
             // TODO: add all posts in one batch
         });
     }
 
-    function retrievePosts() {
-        getJson('/api/users/' + userId + '/posts')
+    function createInfiScroll() {
+        var enabled = true;
+        var lastScrollTop = 0;
+        var loadingThreshold = 0.9;
+        var loading = false;
+        var firstFired = false;
+        var lastPost;
+
+        function _tryLoad() {
+            if(loading)
+                return;
+
+            var scrollTop = $(window).scrollTop();
+            var scrollDelta = scrollTop - lastScrollTop;
+            lastScrollTop = scrollTop;
+
+            if (scrollDelta < 0 && firstFired)
+                return;
+
+            var scrollHeight = $(window).height() - window.innerHeight;
+            var relativeScroll = scrollTop / scrollHeight;
+
+            if(relativeScroll < loadingThreshold && firstFired)
+                return;
+
+             firstFired = true;
+
+            loading = true;
+            retrievePosts(function (posts) {
+                if(posts.length == 0) {
+                    enabled = false;
+                    return;
+                }
+
+                loading = false;
+                lastPost = posts[posts.length - 1].id;
+            }, lastPost);
+        };
+
+        _tryLoad();
+
+        $(window).scroll(_tryLoad);
+    }
+
+    function retrievePosts(cb, fromPost) {
+        var filterStr = '';
+        if(fromPost) {
+            filterStr += '?from=' + fromPost;
+        }
+        getJson('/api/users/' + userId + '/posts' + filterStr)
             .success(function (posts) {
                 addPosts(posts);
+
+                if(cb) {
+                    cb(posts);
+                }
             });
     }
 
     function sendPost(post) {
-        addPosts(post);
-        postJson('/api/users/' + userId + '/posts', post).
-        success(console.log);
+        addPosts(post, true);
+        postJson('/api/users/' + userId + '/posts', post);
     }
 
     function registerEventHandlers() {

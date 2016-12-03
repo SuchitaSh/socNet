@@ -5,9 +5,9 @@
 <script src="//cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/stomp.js' />"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/subscribe.js' />"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/navbar.js' />"></script>
 
-	
- <div class="container">
+<div class="container">
 <nav class="navbar navbar-default">
 <div class="container-fluid">
     <div class="navbar-header">
@@ -17,8 +17,8 @@
       <li><a href="/home">Home</a></li>
       <li><a href="/friends">Friends</a></li>
       <li><a href="/followers">Followers</a></li>
-      <li><a href="/all-users">All Users</a></li>
-      <li><a href="/dialogs">Messages</a></li>
+      <li ><a href="/all-users">All Users</a></li>
+      <li><a id = "dialogs" href="/dialogs">Messages</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
      	<li><a href="/settings">Settings</a></li>

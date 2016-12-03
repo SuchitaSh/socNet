@@ -81,18 +81,30 @@
                  </div>
             <div class="member_list">
                <ul class="list-unstyled">
-              <c:forEach var = "friend" items = "${friends}"><li class="left clearfix">
-              		<c:if test="friend.username eq userPicked">
-              		<p id = "id" hidden>friend.id</p>
+              <c:forEach var = "entry" items = "${friends}"><li class="left clearfix">
+              		<c:if test="${entry.key.username eq userPicked}">
+              		<p id = "id" hidden>entry.key.id</p>
               		</c:if>
-              	     <span class="chat-img pull-left">
-                     <img src="/resources/usersImages/${friend.id}.png" class="img-circle">
+               	     <span class="chat-img pull-left">
+                     <img src="/resources/usersImages/${entry.key.id}.png" class="img-circle">
                      </span> 
-                      <div class="chat-body clearfix" onclick="window.location = '/dialogs/${friend.username}'"> 
+                      <div class="chat-body clearfix" onclick="window.location = '/dialogs/${entry.key.username}'"> 
                         <div class="header_sec">
-                           <strong class="primary-font">${friend.firstName} ${friend.lastName}</strong> <strong class="pull-right">
+                           <strong class="primary-font">${entry.key.firstName} ${entry.key.lastName}</strong> <strong class="pull-right">
                            09:45AM</strong>
                         </div>
+	                        <c:if test="${entry.value ne 0}">
+	                        <c:set var = "username" value = "${entry.key.username}"/>
+		                        <div class="contact_sec_${username}">
+		                           <span id = "num_of_messages_${username}" class="badge pull-right" style = "visibility: visible;">${entry.value}</span>
+		                        </div>
+		                    </c:if>
+		                     <c:if test="${entry.value eq 0}">
+	                        <c:set var = "username" value = "${entry.key.username}"/>
+		                        <div class="contact_sec">
+		                           <span id = "num_of_messages_${username}" class="badge pull-right" style = "visibility: hidden;">${entry.value}</span>
+		                        </div>
+		                    </c:if>
                      </div>
                      </a>
                   </li>
@@ -139,8 +151,7 @@
 		</li>	
 	 			</c:if>	 		
 		 	</c:forEach>
-		 
-		 </ul>
+			 </ul>
 		 </div>
 		 </div><!--chat_area-->
           <div id = "#message-container" class="message_write">

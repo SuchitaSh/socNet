@@ -9,14 +9,12 @@
     <title>Contact</title>
 
     <spring:url value="/resources/css/style.css" var="styleCss" />
-    <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapMinCss" />
     <spring:url value="/resources/css/bootstrap-theme.min.css" var="bootstrapThemeMinCss" />
     <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />
     <spring:url value="/resource/css/navbar.css" var = "navbarCss"/>
     <spring:url value="/resources/html/navbar.html" var = "navbarHtml"/>
 
     <link rel="stylesheet" type="text/css" href="${styleCss}">
-    <link rel="stylesheet" type="text/css" href="${bootstrapMinCss}">
     <link rel="stylesheet" type="text/css" href="${bootstrapThemeMinCss}">
     <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
     <link rel="stylesheet" type="text/css" href="${navbarCss}">

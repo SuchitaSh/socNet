@@ -1,9 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-            <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">    
-    <script src="//cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
- <script type="text/javascript" src="<c:url value='/resources/js/stomp.js' />"></script>
-	 <script type="text/javascript" src="<c:url value='/resources/js/subscribe.js' />"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/stomp.js' />"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/subscribe.js' />"></script>
 
 	
  <div class="container">

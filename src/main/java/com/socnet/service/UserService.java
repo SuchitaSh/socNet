@@ -1,19 +1,23 @@
 package com.socnet.service;
 
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.socnet.dto.BasicUserDto;
 import com.socnet.dto.UserWithFriendsDto;
 import com.socnet.persistence.entities.Notification;
 import com.socnet.persistence.entities.User;
 import com.socnet.persistence.repository.UsersRepository;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
 
 @Service
 public class UserService {
@@ -224,13 +228,24 @@ public class UserService {
     }
 
     @Transactional
-    public Set<User> getFollowersOfCurrentUser() {
-        return usersRepository.getFollowersByUsername(principal.getUsername());
+    public List<BasicUserDto> getFollowersOfCurrentUser() {
+        return getFollowersOfUser(getCurrentUser().getUsername());
     }
-
+    
+    // TODO: move getFollowersOfUser logic to UsersRepository
+    // TODO: test for N+1 query problem
     @Transactional
-    public Set<User> getFollowersOfUser(String username) {
-        return usersRepository.getFollowersByUsername(username);
+    public List<BasicUserDto> getFollowersOfUser(String username) {
+    	User user = usersRepository.findByUsername(username);
+    	Set<User> followers = new HashSet<>(user.getFollowers());
+    	Set<User> followings = user.getFollowings();
+    	followers.removeAll(followings);
+    	
+    	List<BasicUserDto> userDtos = followers.stream()
+    	        .map(u -> modelMapper.map(u, BasicUserDto.class))
+    	        .collect(Collectors.toList());
+    	
+        return userDtos;
     }
 //      replaced 28.11 RL
 //    @Transactional

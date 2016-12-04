@@ -1,12 +1,18 @@
 package com.socnet.web.restcontroller;
 
-import com.socnet.dto.BasicUserDto;
-import com.socnet.persistence.entities.User;
-import com.socnet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.socnet.dto.BasicUserDto;
+import com.socnet.persistence.entities.User;
+import com.socnet.service.UserService;
 
 @RestController
 public class UserRestController {
@@ -19,7 +25,6 @@ public class UserRestController {
 
     @GetMapping(path = "api/user/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public User getUser(@PathVariable String username) {
-        System.out.println(username);
         User user = userService.findUserByUsername(username);
         user.setFollowings(null);
         user.setPosts(null);
@@ -43,9 +48,7 @@ public class UserRestController {
     // TODO: replace basicUserDto with something smaller
     @PostMapping(path = "/api/user/{username}/followings", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> follow(@PathVariable String username, @RequestBody BasicUserDto follower) {
-        System.out.println("follow()");
         userService.addCurrentUserFollowing(follower.getUsername());
-
         return ResponseEntity.ok().build();
     }
 

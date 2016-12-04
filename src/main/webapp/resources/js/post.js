@@ -66,6 +66,8 @@ $(function () {
         });
     }
 
+    // TODO: Separate into class and methods for clarity
+    // TODO: Alter to be suitable for general purpose infinity scrolling
     function createInfiScrollPosts() {
         var enabled = true;
         var lastScrollTop = 0;
@@ -164,6 +166,9 @@ $(function () {
                     username: username,
                     lastName: lastName,
                     firstName: firstName
+                },
+                user: {
+                    id: userId
                 }
             });
             $postForm.find('*').val('');
@@ -172,77 +177,3 @@ $(function () {
 
 });
 
-function getJson(url, data) {
-    return $.ajax(url, {
-        method: 'GET',
-        data: data,
-        dataType: 'json',
-        contentType: 'application/json',
-    });
-}
-
-function postJson(url, data) {
-    return $.ajax(url, {
-        method: 'POST',
-        data: JSON.stringify(data),
-        dataType: 'json',
-        contentType: 'application/json',
-    });
-}
-
-function deleteJson(url, data) {
-    return $.ajax(url, {
-        method: 'DELETE',
-        data: JSON.stringify(data),
-        dataType: 'json',
-        contentType: 'application/json',
-    });
-}
-
-function getTemplates(remove) {
-    var templateSources = getTemplatesSources(remove);
-
-    var templates = {};
-    Object.keys(templateSources).forEach(function (templateName) {
-        templates[templateName] = $(templateSources[templateName]);
-    });
-
-    return templates;
-}
-
-function getTemplatesSources(remove) {
-    var templates = {};
-    var templateScripts = [];
-
-    $('script').each(function (i, el) {
-        var $el = $(el);
-        var templateName = $el.data('template-name');
-
-        if (templateName === undefined) {
-            return;
-        }
-
-        templates[templateName] = $el.html();
-        templateScripts.push($el);
-    })
-
-    if (remove === true) {
-        templateScripts.forEach(function (el) {
-            el.remove();
-        });
-    }
-
-    return templates;
-}
-
-function makeArray(maybeArray) {
-    if (!(maybeArray instanceof Array)) {
-        return [maybeArray];
-    }
-
-    return maybeArray;
-}
-
-function removePost() {
-    alert("helo");
-}

@@ -9,13 +9,14 @@
     <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss"/>
     <spring:url value="/resources/css/navbar.css" var="navbarCss"/>
     <spring:url value="/resources/html/navbar.jsp" var="navbarHtml"/>
+    <spring:url value="/resources/js/lib/jquery.js" var = "jqueryJs"/>
 
     <link rel="stylesheet" type="text/css" href="${styleCss}">
     <link rel="stylesheet" type="text/css" href="${bootstrapThemeMinCss}">
     <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
     <link rel="stylesheet" type="text/css" href="${navbarCss}">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="${jqueryJs}"></script>
 
 </head>
 <body>

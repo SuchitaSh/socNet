@@ -38,6 +38,11 @@ public class PostsRepositorySpringDataImpl implements PostsRepository {
 	}
 
 	@Override
+	public void delete(Long id) {
+		repository.delete(id);
+	}
+
+	@Override
 	public List<Post> findByUserOrderByIdAsc(User user) {
 		return repository.findByUserOrderByIdAsc(user);
 	}

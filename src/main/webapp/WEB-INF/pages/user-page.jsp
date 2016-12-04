@@ -17,6 +17,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="<c:url value='/resources/js/user.js' />"></script>
+    <script type="text/javascript" src="<c:url value='/resources/js/modal.js' />"></script>
 </head>
 <body>
 
@@ -94,8 +95,6 @@
 
         <div class="col-md-9">
             <div class="profile-content">
-                <hr/>
-
                 <div class="row">
                     <div class="col-sm-12">
                         <h1>Posts</h1>
@@ -158,6 +157,32 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal-remove-post">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                Do you really want to delete that post?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="confirm-remove" class="btn btn-danger" data-dismiss="modal">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-remove-failed">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                Failed to remove post
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

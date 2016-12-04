@@ -7,13 +7,11 @@ import com.socnet.persistence.entities.Post;
 import com.socnet.persistence.entities.User;
 import com.socnet.persistence.repository.PostsRepository;
 import com.socnet.persistence.repository.UsersRepository;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,6 +69,20 @@ public class PostService {
         return selfPost || friendPost;
     }
 
+    private boolean hasPostDeletePermission(long postId, long userId) {
+        Post post = postsRepository.findById(postId);
+
+        if(post.getAuthor().getId().equals(userId)) {
+            return true;
+        }
+
+        if(post.getUser().getId().equals(userId)) {
+            return true;
+        }
+
+        return false;
+    }
+
 
     /**
      * @return Post entities with all comments
@@ -118,4 +130,16 @@ public class PostService {
     	
     	return basicPosts;
 	}
+
+    public void deletePost(long postId) {
+        postsRepository.delete(postId);
+    }
+
+    public void tryDeletePost(long postId) {
+        if(!hasPostDeletePermission(postId, userService.getCurrentUser().getId())) {
+            throw new AccessDeniedException();
+        }
+
+        deletePost(postId);
+    }
 }

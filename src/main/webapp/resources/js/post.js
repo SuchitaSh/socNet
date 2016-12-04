@@ -5,6 +5,9 @@ $(function () {
     var $postForm = $('#post-form');
     var $formPostTitle = $('#form-post-title');
     var $formPostText = $('#form-post-text');
+    var $confirmRemove = $('#confirm-remove');
+    var $modalRemovePost = $('#modal-remove-post');
+    var $modalRemoveFailed = $('#modal-remove-failed');
 
     var userId = $('#user-id').val();
     var currentUserId = $('#current-user-id').val();
@@ -15,11 +18,9 @@ $(function () {
 
     // Logic
 
-//    retrievePosts();
-
     registerEventHandlers();
 
-    createInfiScroll();
+    createInfiScrollPosts();
 
     // Functions
 
@@ -28,13 +29,14 @@ $(function () {
         posts = makeArray(posts);
 
         posts.forEach(function (post) {
-            post.author.firstName = post.author.firstName || firstName;
-            post.author.lastName = post.author.lastName || lastName;
-            post.author.username = post.author.username || username;
+            post.author.firstName = post.author.firstName;
+            post.author.lastName = post.author.lastName;
+            post.author.username = post.author.username;
 
             $post = templates['post'].clone();  //todo remove socNet
+
+            $post.attr('id', '__post_' + post.id);
             var editLink = '<a href="/posts/edit/' + post.id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
-            var deleteLink = '<a href="/posts/delete/' + post.id + '"><i class="glyphicon glyphicon-remove"></i></a>';
             var postLink = '<a href="/posts/' + post.id + '">' + post.title + '</a>';
             var authorLink = '<a href="/home/' + post.author.username + '">' +
                                  post.author.firstName + " " + post.author.lastName +
@@ -43,8 +45,17 @@ $(function () {
             $post.find('.placeholder-title').html(postLink);
             $post.find('.placeholder-post').html(post.text);
             $post.find('.placeholder-author').html(authorLink);
-            $post.find('.placeholder-remove').html(deleteLink);
-            $post.find('.placeholder-edit').html(editLink);
+
+            if(post.author.id === +currentUserId || post.user.id === +currentUserId) {
+                $post.find('.remove').click(function() {
+                    removePost(post.id);
+                });
+                $post.find('.edit').html(editLink);
+            } else {
+                $post.find('.remove').remove();
+                $post.find('edit').remove();
+            }
+
 
             if(invOrder) {
                 $posts.prepend($post);
@@ -55,7 +66,7 @@ $(function () {
         });
     }
 
-    function createInfiScroll() {
+    function createInfiScrollPosts() {
         var enabled = true;
         var lastScrollTop = 0;
         var loadingThreshold = 0.9;
@@ -114,6 +125,28 @@ $(function () {
             });
     }
 
+    function removePost(id) {
+        var $post = $('#__post_' + id);
+        $modalRemovePost.unbind('show.bs.modal')
+
+        $modalRemovePost.on('show.bs.modal', function(e) {
+            $confirmRemove.unbind('click');
+            $confirmRemove.click(function() {
+                $post.hide();
+                deleteJson('/api/posts/' + id)
+                    .fail(function() {
+                        $modalRemoveFailed.modal();
+                        $post.show();
+                    })
+                    .done(function() {
+                        $post.remove();
+                    });
+            });
+        });
+
+        $modalRemovePost.modal();
+    }
+
     function sendPost(post) {
         addPosts(post, true);
         postJson('/api/users/' + userId + '/posts', post);
@@ -151,6 +184,15 @@ function getJson(url, data) {
 function postJson(url, data) {
     return $.ajax(url, {
         method: 'POST',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json',
+    });
+}
+
+function deleteJson(url, data) {
+    return $.ajax(url, {
+        method: 'DELETE',
         data: JSON.stringify(data),
         dataType: 'json',
         contentType: 'application/json',

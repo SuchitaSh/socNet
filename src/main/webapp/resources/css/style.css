@@ -28,6 +28,28 @@ body {
     line-height: inherit !important;
 }
 
+.action {
+    cursor: pointer;
+}
+
+.rarefy-md {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.rarefy-md.important {
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+}
+
+.reveal-trigger .reveal-target {
+    visibility: hidden;
+}
+
+.reveal-trigger:hover .reveal-target {
+    visibility: visible;
+}
+
 /* Profile container */
 .profile {
     margin: 1px 0;

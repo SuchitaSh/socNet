@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,6 +69,20 @@ public class PostService {
         return selfPost || friendPost;
     }
 
+    private boolean hasPostDeletePermission(long postId, long userId) {
+        Post post = postsRepository.findById(postId);
+
+        if(post.getAuthor().getId().equals(userId)) {
+            return true;
+        }
+
+        if(post.getUser().getId().equals(userId)) {
+            return true;
+        }
+
+        return false;
+    }
+
 
     /**
      * @return Post entities with all comments
@@ -93,5 +108,38 @@ public class PostService {
      */
     public Post getPost(Long postId) {
         return postsRepository.findById(postId);
+    }
+
+    /**
+     *  Get a slice of user's posts. The slice contains no more than a specified in PostRepository
+     *  number of elements. Iterating over slices possible by varying the fromPost parameter which
+     *  specifies the last post id retrieved by previous call to getUserPostsSlice
+     *
+     *  Note: posts ordered by id in a descending way
+     * @param userId is the id of user posts of whom should be retrieved
+     * @param fromPost all post will have id < fromPost
+     * @return list of posts
+     */
+	public List<BasicPostDto> getUserPostsSlice(long userId, long fromPost) {
+		List<BasicPostDto> posts = new ArrayList<>();
+		
+		List<BasicPostDto> basicPosts =  postsRepository.findByIdSliced(userId, fromPost)
+	                		.stream()
+	                		.map(post -> modelMapper.map(post, BasicPostDto.class))
+	                		.collect(Collectors.toList());
+    	
+    	return basicPosts;
+	}
+
+    public void deletePost(long postId) {
+        postsRepository.delete(postId);
+    }
+
+    public void tryDeletePost(long postId) {
+        if(!hasPostDeletePermission(postId, userService.getCurrentUser().getId())) {
+            throw new AccessDeniedException();
+        }
+
+        deletePost(postId);
     }
 }

@@ -7,6 +7,7 @@ public class Message implements Serializable{
 	private String message;
 	private String sender;
 	private String receiver;
+	private boolean read;
 
 	public Message() {
 	}
@@ -35,6 +36,14 @@ public class Message implements Serializable{
 		this.sender = sender;
 	}
 
+	public boolean isRead() {
+		return read;
+	}
+	
+	public void setRead(boolean read) {
+		this.read = read;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

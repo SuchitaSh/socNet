@@ -12,5 +12,8 @@ public interface PostsRepository {
 	Set<Post> findByUser(User user);
 	Set<Post> findByTitle(String title);
 	Post save(Post post);
+	void delete(Long id);
 	List<Post> findByUserOrderByIdAsc(User user);
+	List<Post> findByIdSliced(Long userId, Long fromPost);
+
 }

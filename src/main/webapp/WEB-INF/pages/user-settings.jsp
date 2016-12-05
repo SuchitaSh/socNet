@@ -5,21 +5,19 @@
     <title>Welcome page</title>
 
     <spring:url value="/resources/css/style.css" var="styleCss" />
-    <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapMinCss" />
     <spring:url value="/resources/css/bootstrap-theme.min.css" var="bootstrapThemeMinCss" />
     <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />
 	<spring:url value="/resource/css/navbar.css" var = "navbarCss"/>
     <spring:url value="/resources/html/navbar.html" var = "navbarHtml"/>
-	
+    <spring:url value="/resources/js/lib/jquery.js" var = "jqueryJs"/>
+
 	
     <link rel="stylesheet" type="text/css" href="${styleCss}">
-    <link rel="stylesheet" type="text/css" href="${bootstrapMinCss}">
     <link rel="stylesheet" type="text/css" href="${bootstrapThemeMinCss}">
     <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="<c:url value='/resources/js/post.js' />"></script>
-	<script type="text/javascript" src="<c:url value='/resources/js/subscribe.js' />"></script>
+    <script src="${jqueryJs}"></script>
+	<script src="<c:url value='/resources/js/subscribe.js' />"></script>
 	
 </head>
 <body>

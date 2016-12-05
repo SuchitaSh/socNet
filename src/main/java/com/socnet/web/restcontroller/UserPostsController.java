@@ -23,16 +23,21 @@ public class UserPostsController {
         this.postService = postService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<BasicPostDto>> getAllPosts(@PathVariable long userId) {
-        List<BasicPostDto> userPosts = postService.getAllPostsOfUser(userId);
-        return ResponseEntity.ok(userPosts);
-    }
-
     @PostMapping
     public ResponseEntity<BasicPostDto> addPost(@PathVariable long userId, @RequestBody BasicPostDto post) {
         post.setUser(new BasicUserDto(userId));
         BasicPostDto newPost = postService.addPost(post);
         return ResponseEntity.ok(newPost);
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<BasicPostDto>> getAllPostsSlice(@PathVariable long userId,
+                                                               @RequestParam(required = false) Long from) {
+        if(from == null) {
+            from = Long.MAX_VALUE;
+        }
+
+    	List<BasicPostDto> posts = postService.getUserPostsSlice(userId, from);
+    	return ResponseEntity.ok(posts);
     }
 }

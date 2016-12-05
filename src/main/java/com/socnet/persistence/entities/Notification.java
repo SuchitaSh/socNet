@@ -1,5 +1,7 @@
 package com.socnet.persistence.entities;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -73,12 +75,12 @@ public class Notification {
 
         Notification that = (Notification) o;
 
-        return id.equals(that.id);
+        return Objects.equals(id,  that.id);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id == null ? 0 : id.hashCode();
     }
 
     @Override

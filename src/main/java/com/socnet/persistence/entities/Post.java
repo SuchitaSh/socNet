@@ -132,7 +132,7 @@ public class Post {
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id == null ? 0 : id.hashCode();
     }
 
     @Override

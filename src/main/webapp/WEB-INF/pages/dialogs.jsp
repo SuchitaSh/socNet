@@ -9,25 +9,22 @@
 <title>Dialogs</title>
 
  <spring:url value="/resources/css/style.css" var="styleCss" />
- <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapMinCss" />
  <spring:url value="/resources/css/bootstrap-theme.min.css" var="bootstrapThemeMinCss" />
  <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />
  <spring:url value="/resource/css/navbar.css" var = "navbarCss"/>
  <spring:url value="/resources/html/navbar.html" var = "navbarHtml"/>
+ <spring:url value="/resources/js/lib/jquery.js" var = "jqueryJs"/>
 
-  <link rel="stylesheet" type="text/css" href="${styleCss}">
-  <link rel="stylesheet" type="text/css" href="${bootstrapMinCss}">
-  <link rel="stylesheet" type="text/css" href="${bootstrapThemeMinCss}">
-  <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
-  <link rel="stylesheet" type="text/css" href="${navbarCss}">
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/dialogs.css'/>">
+ <link rel="stylesheet" type="text/css" href="${styleCss}">
+ <link rel="stylesheet" type="text/css" href="${bootstrapThemeMinCss}">
+ <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
+ <link rel="stylesheet" type="text/css" href="${navbarCss}">
+ <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/dialogs.css'/>">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script type="text/javascript" src="<c:url value='/resources/js/mustache.js' />"></script>
-	<script type="text/javascript" src="<c:url value='/resources/js/dialogs.js' />"></script>
+ <script src="${jqueryJs}"></script>
+ <script src="<c:url value='/resources/js/lib/mustache.js' />"></script>
+ <script src="<c:url value='/resources/js/dialogs.js' />"></script>
 	
-
-
 <script id="current-user-message" type="text/template">
       <li class="left clearfix admin_chat">
                      <span class="chat-img1 pull-right">
@@ -85,18 +82,30 @@
                  </div>
             <div class="member_list">
                <ul class="list-unstyled">
-              <c:forEach var = "friend" items = "${friends}"><li class="left clearfix">
-              		<c:if test="friend.username eq userPicked">
-              		<p id = "id" hidden>friend.id</p>
+              <c:forEach var = "entry" items = "${friends}"><li class="left clearfix">
+              		<c:if test="${entry.key.username eq userPicked}">
+              		<p id = "id" hidden>entry.key.id</p>
               		</c:if>
-              	     <span class="chat-img pull-left">
-                     <img src="/resources/usersImages/${friend.id}.png" class="img-circle">
+               	     <span class="chat-img pull-left">
+                     <img src="/resources/usersImages/${entry.key.id}.png" class="img-circle">
                      </span> 
-                      <div class="chat-body clearfix" onclick="window.location = '/dialogs/${friend.username}'"> 
+                      <div class="chat-body clearfix" onclick="window.location = '/dialogs/${entry.key.username}'"> 
                         <div class="header_sec">
-                           <strong class="primary-font">${friend.firstName} ${friend.lastName}</strong> <strong class="pull-right">
+                           <strong class="primary-font">${entry.key.firstName} ${entry.key.lastName}</strong> <strong class="pull-right">
                            09:45AM</strong>
                         </div>
+	                        <c:if test="${entry.value ne 0}">
+	                        <c:set var = "username" value = "${entry.key.username}"/>
+		                        <div class="contact_sec_${username}">
+		                           <span id = "num_of_messages_${username}" class="badge pull-right" style = "visibility: visible;">${entry.value}</span>
+		                        </div>
+		                    </c:if>
+		                     <c:if test="${entry.value eq 0}">
+	                        <c:set var = "username" value = "${entry.key.username}"/>
+		                        <div class="contact_sec">
+		                           <span id = "num_of_messages_${username}" class="badge pull-right" style = "visibility: hidden;">${entry.value}</span>
+		                        </div>
+		                    </c:if>
                      </div>
                      </a>
                   </li>
@@ -143,8 +152,7 @@
 		</li>	
 	 			</c:if>	 		
 		 	</c:forEach>
-		 
-		 </ul>
+			 </ul>
 		 </div>
 		 </div><!--chat_area-->
           <div id = "#message-container" class="message_write">

@@ -5,27 +5,22 @@
     <title>Welcome page</title>
 
     <spring:url value="/resources/css/style.css" var="styleCss" />
-    <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapMinCss" />
     <spring:url value="/resources/css/bootstrap-theme.min.css" var="bootstrapThemeMinCss" />
     <spring:url value="/resources/css/bootstrap.css" var="bootstrapCss" />
     <spring:url value="/resources/css/navbar.css" var = "navbarCss"/>
     <spring:url value="/resources/html/navbar.html" var = "navbarHtml"/>
+    <spring:url value="/resources/js/lib/util.js" var = "utilJs"/>
+    <spring:url value="/resources/js/lib/jquery.js" var = "jqueryJs"/>
 
     <link rel="stylesheet" type="text/css" href="${styleCss}">
-    <link rel="stylesheet" type="text/css" href="${bootstrapMinCss}">
     <link rel="stylesheet" type="text/css" href="${bootstrapThemeMinCss}">
     <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
     <link rel="stylesheet" type="text/css" href="${navbarCss}">
 
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
-    <script type="text/javascript" src="<c:url value='/resources/js/stomp.js' />"></script>
+    <script src="${jqueryJs}"></script>
     <script type="text/javascript" src="<c:url value='/resources/js/user.js' />"></script>
-	<script src="//cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
-	<script type="text/javascript" src="<c:url value='/resources/js/subscribe.js' />"></script>
-	
+    <script type="text/javascript" src="<c:url value='/resources/js/lib/modal.js' />"></script>
+    <script type="text/javascript" src="${utilJs}"></script>
 </head>
 <body>
 
@@ -55,7 +50,6 @@
                         <c:out value="${user.firstName} ${user.lastName}" />
                     </div>
                     <div class="profile-usertitle-job">
-                        Developer
                     </div>
                 </div>
                 <!-- END SIDEBAR USER TITLE -->
@@ -78,12 +72,13 @@
                                     data-following-message="Request sent" data-not-following-message="Follow"
                                     data-hover-message="Cancel request">Follow</button>
                         </c:if>
+                        <button id = "message-button" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
+                            <span class="glyphicon glyphicon-envelope fix-glyphicon-button"> </span>
+                        </button>
 
                     </c:if>
 
-                    <button id = "message-button" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
-                        <span class="glyphicon glyphicon-envelope fix-glyphicon-button"> </span>
-                    </button>
+
                 </div>
                 <!-- END SIDEBAR BUTTONS -->
                 <!-- SIDEBAR MENU -->
@@ -103,8 +98,6 @@
 
         <div class="col-md-9">
             <div class="profile-content">
-                <hr/>
-
                 <div class="row">
                     <div class="col-sm-12">
                         <h1>Posts</h1>
@@ -129,6 +122,7 @@
 
                 <br/>
                 <div id="posts">
+
                 </div>
 
             </div>
@@ -166,6 +160,32 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal-remove-post">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                Do you really want to delete that post?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="confirm-remove" class="btn btn-danger" data-dismiss="modal">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-remove-failed">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                Failed to remove post
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

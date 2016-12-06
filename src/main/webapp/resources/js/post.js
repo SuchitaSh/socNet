@@ -1,6 +1,5 @@
 $(function () {
     // Cache
-
     var $posts = $('#posts');
     var $postForm = $('#post-form');
     var $formPostTitle = $('#form-post-title');
@@ -33,21 +32,22 @@ $(function () {
             post.author.lastName = post.author.lastName;
             post.author.username = post.author.username;
 
-            $post = templates['post'].clone();  //todo remove socNet
-
+            $post = templates['post'].clone();
             $post.attr('id', '__post_' + post.id);
             var editLink = '<a href="/posts/edit/' + post.id + '"><i class="glyphicon glyphicon-pencil"></i></a>';
             var postLink = '<a href="/posts/' + post.id + '">' + post.title + '</a>';
             var authorLink = '<a href="/home/' + post.author.username + '">' +
-                                 post.author.firstName + " " + post.author.lastName +
-                             '</a>'
+                post.author.firstName + " " + post.author.lastName +
+                '</a>';
 
             $post.find('.placeholder-title').html(postLink);
             $post.find('.placeholder-post').html(post.text);
             $post.find('.placeholder-author').html(authorLink);
 
-            if(post.author.id === +currentUserId || post.user.id === +currentUserId) {
-                $post.find('.remove').click(function() {
+            retrieveAllCommentsOfPost($post, post);     /*ADDING COMMENTS*/
+
+            if (post.author.id === +currentUserId || post.user.id === +currentUserId) {
+                $post.find('.remove').click(function () {
                     removePost(post.id);
                 });
                 $post.find('.edit').html(editLink);
@@ -57,11 +57,13 @@ $(function () {
             }
 
 
-            if(invOrder) {
+            if (invOrder) {
                 $posts.prepend($post);
             } else {
                 $posts.append($post);
             }
+
+
             // TODO: add all posts in one batch
         });
     }
@@ -77,7 +79,7 @@ $(function () {
         var lastPost;
 
         function _tryLoad() {
-            if(loading)
+            if (loading)
                 return;
 
             var scrollTop = $(window).scrollTop();
@@ -90,14 +92,14 @@ $(function () {
             var scrollHeight = $(window).height() - window.innerHeight;
             var relativeScroll = scrollTop / scrollHeight;
 
-            if(relativeScroll < loadingThreshold && firstFired)
+            if (relativeScroll < loadingThreshold && firstFired)
                 return;
 
-             firstFired = true;
+            firstFired = true;
 
             loading = true;
             retrievePosts(function (posts) {
-                if(posts.length == 0) {
+                if (posts.length == 0) {
                     enabled = false;
                     return;
                 }
@@ -105,7 +107,7 @@ $(function () {
                 loading = false;
                 lastPost = posts[posts.length - 1].id;
             }, lastPost);
-        };
+        }
 
         _tryLoad();
 
@@ -114,14 +116,14 @@ $(function () {
 
     function retrievePosts(cb, fromPost) {
         var filterStr = '';
-        if(fromPost) {
+        if (fromPost) {
             filterStr += '?from=' + fromPost;
         }
         getJson('/api/users/' + userId + '/posts' + filterStr)
             .success(function (posts) {
                 addPosts(posts);
 
-                if(cb) {
+                if (cb) {
                     cb(posts);
                 }
             });
@@ -129,18 +131,18 @@ $(function () {
 
     function removePost(id) {
         var $post = $('#__post_' + id);
-        $modalRemovePost.unbind('show.bs.modal')
+        $modalRemovePost.unbind('show.bs.modal');
 
-        $modalRemovePost.on('show.bs.modal', function(e) {
+        $modalRemovePost.on('show.bs.modal', function (e) {
             $confirmRemove.unbind('click');
-            $confirmRemove.click(function() {
+            $confirmRemove.click(function () {
                 $post.hide();
                 deleteJson('/api/posts/' + id)
-                    .fail(function() {
+                    .fail(function () {
                         $modalRemoveFailed.modal();
                         $post.show();
                     })
-                    .done(function() {
+                    .done(function () {
                         $post.remove();
                     });
             });
@@ -173,6 +175,65 @@ $(function () {
             });
             $postForm.find('*').val('');
         });
+    }
+
+    /*COMMENTS SECTION*/
+
+    function addComments(comments, $post) {
+
+        comments = makeArray(comments);
+        var $comments = $post.find('.comments');
+        comments.forEach(function (comment) {
+            comment.user = comment.user || {};
+            var authorLink = link("/home/" + comment.user.username,
+                comment.user.firstName + " " + comment.user.lastName);
+
+            $comment = templates['comment'].clone();
+            $comment.find('.placeholder-comment').html(comment.text);
+            $comment.find('.placeholder-author').html(authorLink);
+
+            $comments.prepend($comment);
+        });
+    }
+
+    function retrieveAllCommentsOfPost($post, post) {
+        $post.find('.btn-success').click(function () {
+            addComment(post.id);
+        });
+        getJson('/api/posts/' + post.id + '/comments')
+            .success(function (comments) {
+                addComments(comments, $post);
+            });
+    }
+
+    function addComment(postId) {
+        var $post = $('#__post_' + postId);
+        var $commentsForm = $post.find('#comments-form');
+        var $formCommentText = $post.find('#form-comment-text');
+
+        var comment = {
+            text: $formCommentText.val(),
+            user: {
+                username: username,
+                firstName: firstName,
+                lastName: lastName
+            }
+        };
+        sendComment(postId, comment);
+        addComments(comment, $post);
+        $commentsForm.find('*').val('');
+    }
+
+
+    function sendComment(postId, comment) {
+        postJson('/api/posts/' + postId + '/comments', comment);
+    }
+
+
+    function link(href, text) {
+        return '<a href="' + href + '">' +
+            text +
+            '</a>';
     }
 
 });

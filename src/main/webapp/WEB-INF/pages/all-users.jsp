@@ -36,8 +36,37 @@
                     <span class="title">Contacts</span>
                    </div>
                 
-                <ul class="list-group" id="contact-list">
-                   </ul>
+                   <ul class="list-group" id="contact-list">
+                    <c:forEach var="user" items="${users}">
+                    <li class="list-group-item clearfix">
+                        <div class="col-xs-12 col-sm-3">
+                            <img src="http://api.randomuser.me/portraits/men/49.jpg" class= "img-responsive img-circle" />
+                            </div>
+                        <div class="col-xs-12 col-sm-9">
+                            <div class="profile-usertitle-name">
+                                <a href = "/home/${user.username}">  ${user.firstName}
+                                     ${user.lastName} </a>
+                                </div>
+                            <a>Write message</a>
+                            <div>
+                            <c:if test = "${user.status == 'UNKNOWN'}">
+                            	<button class = "btn" style = "background-color: #ffeb3c">Follow</button>
+                            </c:if>
+                            <c:if test = "${user.status == 'FOLLOWING'}">
+                            	<button class = "btn" style = "background-color: #ff9700">Unfollow</button>
+                            </c:if>
+                            <c:if test = "${user.status == 'FOLLOWER'}">
+                            	<button class = "btn" style = "background-color: #ff5621">Add to friends</button>
+                            </c:if>
+                            <c:if test = "${user.status == 'FRIEND'}">
+                            	<button class = "btn" style = "background-color: #617e8c">Remove from friends</button>
+                            </c:if>
+                            </div>
+                            </div>
+                        <div class="clearfix"></div>
+                        </li>
+                    </c:forEach>
+                </ul>
                                 </div>
             </div>
         </div>

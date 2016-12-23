@@ -246,6 +246,28 @@ public class User {
         return result;
     }
 
+    @JsonIgnore
+    public boolean isFollowing(Long id){
+    	return followings.stream()
+    			.peek(x -> {}) //TODO:find better solution for lazy loading
+    			.anyMatch(x -> x.getId().equals(id));
+    }
+    
+    @JsonIgnore
+    public boolean isFollower(Long id){
+    	System.out.println("isFollower");
+    	return followers.stream()
+    			.peek(x -> {}) //TODO:find better solution for lazy loading
+    			.anyMatch(x -> x.getId().equals(id));
+    }
+    
+    @JsonIgnore
+    public boolean isFriend(Long id){
+    	boolean isFriend = isFollower(id) && isFollowing(id);
+    	System.out.println(isFriend);
+    	return isFriend;
+    }
+    
     @Override
     public String toString() {
         return "User [id=" + id + ", userName=" + username + "]";

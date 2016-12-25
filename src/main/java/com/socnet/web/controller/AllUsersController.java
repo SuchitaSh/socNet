@@ -22,10 +22,7 @@ public class AllUsersController {
 	
     @GetMapping("/all-users")
     public String allUsers(Model model) {
-    	List<UserWithFollowingStatusDto> allUsers = userService.getAllUsersWithCurrentUserFollowingStatus();
-	
-    	allUsers.stream().forEach(x -> System.out.println(x.getFirstName() + " " + x.getLastName() + ":" + x.getStatus()));
-    
+    	List<UserWithFollowingStatusDto> allUsers = userService.getAllUsersWithCurrentUserFollowingStatus();    
     	model.addAttribute("users", allUsers);
         return "all-users";
     }

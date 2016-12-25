@@ -12,7 +12,8 @@ public class UserWithFollowingStatusDto {
 	private String lastName;
 	private String email;
 	private Date dateOfBirth;
-	private UserStatus status;
+	private boolean following;
+	private boolean follower;
 	
 	public UserWithFollowingStatusDto() {}
 	
@@ -52,15 +53,16 @@ public class UserWithFollowingStatusDto {
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-
-	public UserStatus getStatus() {
-		return status;
+	public boolean isFollower() {
+		return follower;
 	}
-	
-	public void setStatus(UserStatus status) {
-		this.status = status;
+	public void setFollower(boolean follower) {
+		this.follower = follower;
 	}
-	
-	
-
+	public boolean isFollowing() {
+		return following;
+	}
+	public void setFollowing(boolean following) {
+		this.following = following;
+	}
 }

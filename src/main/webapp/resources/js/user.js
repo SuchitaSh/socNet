@@ -83,8 +83,8 @@ function follow(user) {
 
 function unfollow(user) {
 	ajax('/api/user/'+ 'dummy'  + '/followings/' + user.substring(1), 'DELETE')
+	
 }
-
 function notify(user) {
 	var stompClient = null;
 

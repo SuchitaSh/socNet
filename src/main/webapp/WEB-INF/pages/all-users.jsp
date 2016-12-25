@@ -18,9 +18,11 @@
   <link rel="stylesheet" type="text/css" href="${bootstrapThemeMinCss}">
   <link rel="stylesheet" type="text/css" href="${bootstrapCss}">
   <link rel="stylesheet" type="text/css" href="${navbarCss}">
+  
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script type="text/javascript" src="<c:url value='/resources/js/all-users.js' />"></script>
+  
   
     
 </head>
@@ -49,18 +51,24 @@
                                 </div>
                             <a>Write message</a>
                             <div>
-                            <c:if test = "${user.status == 'UNKNOWN'}">
-                            	<button class = "btn" style = "background-color: #ffeb3c">Follow</button>
-                            </c:if>
-                            <c:if test = "${user.status == 'FOLLOWING'}">
-                            	<button class = "btn" style = "background-color: #ff9700">Unfollow</button>
-                            </c:if>
-                            <c:if test = "${user.status == 'FOLLOWER'}">
-                            	<button class = "btn" style = "background-color: #ff5621">Add to friends</button>
-                            </c:if>
-                            <c:if test = "${user.status == 'FRIEND'}">
-                            	<button class = "btn" style = "background-color: #617e8c">Remove from friends</button>
-                            </c:if>
+                            <c:set var = "follower" value = "${user.follower}"/>
+                            <c:set var = "following" value = "${user.following}"/>
+                            
+                            <c:if test="${follower}">
+                            <button type="button" id = "${user.id}" class="btn btn-success btn-sm follow-button"
+                                    data-username = "${user.username}"
+                                    data-following="${following}"
+                                    data-following-message="In your friends list" data-not-following-message="Add to friends"
+                                    data-hover-message="Remove from friends">Add to friends</button>
+                      		 </c:if>
+
+                        	<c:if test="${!follower}">
+                        	<button type="button" id = "${user.id}" class="btn btn-success btn-sm follow-button"
+                                    data-username = "${user.username}"
+                                    data-following="${following}"
+                                    data-following-message="Request sent" data-not-following-message="Follow"
+                                    data-hover-message="Cancel request">Follow</button>
+                        </c:if>
                             </div>
                             </div>
                         <div class="clearfix"></div>

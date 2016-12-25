@@ -20,29 +20,22 @@ public class UserWithStatusMap extends PropertyMap<User, UserWithFollowingStatus
 	@Override
 	protected void configure() {
 		
-	Converter<Long, UserStatus> conv = new AbstractConverter<Long, UserStatus>() {
-		protected UserStatus convert(Long id) {
-			return getStatus(id);
+	Converter<Long, Boolean> followingConverter = new AbstractConverter<Long, Boolean>() {
+		protected Boolean convert(Long id) {
+			return currentUser.isFollowing(id);
 		}
 	};
-		using(conv).map(source.getId()).setStatus(null);
+	
+	Converter<Long, Boolean> followerConverter = new AbstractConverter<Long, Boolean>() {
+		protected Boolean convert(Long id) {
+			return currentUser.isFollower(id);
+		}
+	};
+	
+		using(followingConverter).map(source.getId()).setFollowing(false);
+		using(followerConverter).map(source.getId()).setFollower(false);
 	}
 	
-	private UserStatus getStatus(Long id){
-				
-		if(currentUser.isFriend(id)){
-			return UserStatus.FRIEND;
-		}
-		else if(currentUser.isFollower(id)){
-			return UserStatus.FOLLOWER;
-			}
-		else if(currentUser.isFollowing(id)){
-			return UserStatus.FOLLOWING;
-		}
-		else{
-			return UserStatus.UNKNOWN;
-		}
 	
-	}
 
 }
